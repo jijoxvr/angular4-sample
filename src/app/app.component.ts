@@ -20,7 +20,7 @@ export class AppComponent {
           this.isLoggedIn = true;
           localStorage.setItem('userData', JSON.stringify(auth));
           if(window.location.hash == "#/login")
-            this.router.navigate(['']);
+            this.router.navigate(['my-profile']);
         }
       }
     );

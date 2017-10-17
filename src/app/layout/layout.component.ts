@@ -12,8 +12,8 @@ import { Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/co
 export class LayoutComponent {
 
     navItems = [
-        { name: 'home', route: '/home' },
-        { name: 'test2', route: '/test1' },
+        { name: 'Home', route: '' },
+        { name: 'Profile', route: 'my-profile' },
 
     ];
 

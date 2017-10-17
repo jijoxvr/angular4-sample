@@ -1,24 +1,11 @@
 <mat-sidenav-container class="demo-root" fullscreen>
-    <mat-sidenav #start>
-        <mat-nav-list>
-            <a *ngFor="let navItem of navItems" mat-list-item (click)="start.close()" routerLinkActive #routerLinkActiveInstance="routerLinkActive"
-                [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" [routerLink]="[navItem.route]">
-                {{navItem.name}}
-            </a>
 
-            <hr>
-
-            <a mat-list-item tabindex="-1" (click)="start.close()" [routerLink]="['/baseline']">
-                Baseline
-            </a>
-        </mat-nav-list>
-        <button mat-button tabindex="-1" (click)="start.close()">CLOSE</button>
-    </mat-sidenav>
     <div>
         <mat-toolbar color="primary">
-            <button mat-icon-button (click)="start.open('mouse')">
+            <button mat-icon-button>
                 <mat-icon>menu</mat-icon>
             </button>
+
             <div class="demo-toolbar">
                 <h1>Insureturn</h1>
                 <div>
@@ -29,14 +16,24 @@
                         {{root.dir.toUpperCase()}}
                     </button>
                     <button mat-button (click)="logout()" title="Logout">
-                           Logout
+                        Logout
                     </button>
                 </div>
             </div>
         </mat-toolbar>
 
-        <div #root="dir" dir="ltr" class="demo-content">
-            <router-outlet></router-outlet>
+        <div #root="dir" dir="ltr" class="app-main-content">
+            <div class="demo-nav-bar">
+                <nav mat-tab-nav-bar aria-label="weather navigation links" [backgroundColor]="'primary'">
+                    <a mat-tab-link *ngFor="let navItem of navItems" mat-list-item routerLinkActive #routerLinkActiveInstance="routerLinkActive"
+                        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1" [routerLink]="[navItem.route]">
+                        {{navItem.name}}
+                    </a>
+                </nav>
+                <div class="app-content">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
         </div>
     </div>
 </mat-sidenav-container>

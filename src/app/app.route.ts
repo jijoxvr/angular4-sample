@@ -8,15 +8,9 @@ import { ModuleWithProviders } from "@angular/core";
 
 export const routes: Routes = [{
         path: '',
-        component: LayoutComponent,
+        loadChildren : "./user/user.module#UserModule",
         canActivate: [AuthGuard],
-        children: [{
-                path: '',
-                loadChildren: './dashboard/dashboard.module#DashboardModule',
-                data: { pageTitle: 'DashBoard' },
-                
-            }
-        ]
+        
     },{
         path: 'admin',
         loadChildren: './admin/admin.module#AdminModule',

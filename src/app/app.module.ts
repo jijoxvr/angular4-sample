@@ -11,11 +11,10 @@ import { MaterialModule } from "./material/material.module";
 import { LayoutModule } from "./layout/layout.module";
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './login/login.gaurd';
-import { HomeComponent } from './home/home.component';
+import { HomeModule } from './home/home.module';
 import { routing } from "./app.route";
 
 export const firebaseConfig = {
-  //
 };
 
 
@@ -23,9 +22,6 @@ export const firebaseConfig = {
   declarations: [
     AppComponent,
     LoginComponent,
-    AppComponent,
-    LoginComponent,
-    HomeComponent
   ],
   providers: [
     AngularFireAuth,
@@ -40,7 +36,8 @@ export const firebaseConfig = {
     LayoutModule,
     AngularFireModule.initializeApp(firebaseConfig),
     routing,
-    MaterialModule
+    MaterialModule,
+    HomeModule,
   ],
   bootstrap: [AppComponent]
 })

@@ -16,12 +16,9 @@
     user() {
       if (localStorage.getItem('userData')) {
         this.userData = JSON.parse(localStorage.getItem('userData'));
-        console.log(this.userData);
       }
       else {
-        console.log("No Data");
       }
-
     }
 
   }

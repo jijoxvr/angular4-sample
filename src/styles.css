@@ -1,2 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/* @import "~@angular/material/prebuilt-themes/pink-bluegrey.css"; */
+
+.p-l-10{
+    padding-left: 10px; 
+}
+
+.title-color{
+    color: #424242!important;
+}
+
+.pull-right{
+    float: right!important;
+}
+
+.text-align-right{
+    text-align: right!important;
+}
+
+.font-25{
+    font-size: 25px!important;
+}

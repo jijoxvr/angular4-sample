@@ -15,12 +15,21 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
   
   loginWithTwitter() {
-    this.angularFire.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
+    this.angularFire.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider()).then(s=>{
+      console.log(s)
+    });
   }
   
   loginWithFB(){
     let provider = new firebase.auth.FacebookAuthProvider()
-    this.angularFire.auth.signInWithPopup(provider);
+    provider.addScope("user_birthday")
+    this.angularFire.auth.signInWithPopup(provider).then(s=>{
+      console.log(s.credential.accessToken)
+      console.log(s.user.refreshToken)
+      this.angularFire.idToken.subscribe(idToken=>{
+        console.log(idToken)
+      })
+    });
   }
   
 }
