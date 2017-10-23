@@ -16,7 +16,7 @@
           <button mat-button color="warn" *ngIf="policy.status != 4">Cancel</button>
           <button mat-button color="primary" *ngIf="policy.status == 0">Make Payement</button>
           <button mat-button color="primary" *ngIf="policy.status == 1">Generate Activation Link</button>
-          <button mat-button color="primary" *ngIf="policy.status == 3">Make Claim</button>
+          <button mat-button color="primary" (click)="askConfirmationForClaim(policy)" *ngIf="policy.status == 3">Make Claim</button>
           <button mat-button color="primary" *ngIf="policy.status == '4'">View Claim Details</button>
           <button mat-button color="primary">View Policy Details</button>
         </mat-card-actions>
@@ -26,20 +26,32 @@
     </div>
   </div>
 </div>
-<!-- <ng-template let-data let-dialogRef="dialogRef">
-  <h2 mat-dialog-title>Confiramtion Box</h2>
-
+<ng-template let-data #claimConfirmationDialogRef>
+  
+  <h2 mat-dialog-title>Are you sure ?</h2>
   <mat-dialog-content>
-
+    <p>You will be asked to submit following details</p>
+    <ul>
+      <li>Copy of ID Card (KTP. SIM, Passport, KITAS)</li>
+      <li>Original Proof of Ownership</li>
+      <li>For theft claims: an original police report letter</li>
+      <li>Official and original receipts for the costs of repair from authorized service center or replacement together with any report detailing required repairs</li>
+      <li>Video documentation which explaining the chronologywith true statement 
+        <strong>(Make sure your webcame is working properly)</strong>
+      </li>
+      <li>Photograph of damaged unit from all side angles</li>
+      <li>Photograph of damaged (forced entry) home or car</li>
+      <li>Proof of medical record summary from Hospital for Bodily Injury (loss due to robbery benefit)</li>
+    </ul>
   </mat-dialog-content>
-  <mat-dialog-actions [attr.align]="'right'">
-    <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
-    <button mat-button color="secondary">Show in Dialog</button>
+
+  <mat-dialog-actions class="pull-right">
+    <button mat-raised-button color="primary" (click)="claimConfirmDialogRef.close(true)">Proceed</button>
+    <button mat-raised-button color="warn" (click)="claimConfirmDialogRef.close(false)">Not Now</button>
   </mat-dialog-actions>
+</ng-template>
 
-</ng-template>  -->
 
-
-<mat-card class="col-sm-12 col-md-12" *ngIf="isLoading">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+<mat-card class="col-sm-12 col-md-12 pull-right" *ngIf="isLoading">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </mat-card>

@@ -5,7 +5,9 @@
 .p-l-10{
     padding-left: 10px; 
 }
-
+.m-l-10 {
+    margin-left: 10px!important;
+}
 .title-color{
     color: #424242!important;
 }
@@ -20,4 +22,9 @@
 
 .font-25{
     font-size: 25px!important;
+}
+
+.mat-input-container{
+    padding-bottom: 5px;
+    padding-left: 5px;
 }

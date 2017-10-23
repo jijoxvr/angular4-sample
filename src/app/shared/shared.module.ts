@@ -9,6 +9,8 @@ import { MaterialModule } from "../material/material.module";
 import { AjaxService } from "./ajax-api/ajax.service";
 import { JsonApiService } from "./ajax-api/json-api.service";
 import { WebStorageService } from "./ajax-api/web-storage.service";
+import { FileInputComponent } from './file-input/file-input.component';
+import { ByteFormatPipe } from './pipes/byte-format.pipe';
 
 @NgModule({
   imports: [
@@ -16,17 +18,22 @@ import { WebStorageService } from "./ajax-api/web-storage.service";
     MaterialModule
   ],
   declarations: [
-    VideoRecordComponent
+    VideoRecordComponent,
+    FileInputComponent,
+    ByteFormatPipe
   ],
   exports: [
-    VideoRecordComponent
+    VideoRecordComponent,
+    FileInputComponent,
+    ByteFormatPipe
   ],
   providers:[
     AjaxService,
     JsonApiService,
     WebStorageService,
     CookieService,
-    CurrencyPipe
+    CurrencyPipe,
+    ByteFormatPipe
   ]
 })
 export class SharedModule { }

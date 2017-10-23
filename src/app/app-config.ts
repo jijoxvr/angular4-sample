@@ -1,5 +1,5 @@
 export const AppConfig = {
-    'apiBaseUrl' : "https://e5d1825b.ngrok.io/",
+    'apiBaseUrl' : "http://localhost:3000/",
     'defaultCurrency' : 'IDR'
     
 }

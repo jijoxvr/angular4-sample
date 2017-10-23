@@ -1,0 +1,154 @@
+<h2 mat-dialog-title>Please complete all the three steps</h2>
+<mat-dialog-content>
+  <mat-horizontal-stepper [linear]="true">
+    <mat-step [stepControl]="basicFormGroup">
+      <form [formGroup]="basicFormGroup">
+        <ng-template matStepLabel>Fill basic details</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Insurance No" formControlName="insurance_ref" required>
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Damage type" formControlName="damage_type" required>
+            <mat-option *ngFor="let types of damageTypes" [value]="types.value">
+              {{ types.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Claim amount" formControlName="claim_amount" required>
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+        <div>
+          <button class="pull-right" mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="documentFormGroup" optional>
+      <form [formGroup]="documentFormGroup">
+        <ng-template matStepLabel>Upload required Documents</ng-template>
+        <!--  -->
+        <mat-form-field>
+          <app-file-input formControlName="id_proof" placeholder="Your id proof" required></app-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-error *ngIf="documentFormGroup.get('id_proof').hasError('required')">
+            Please select a file
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('id_proof').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('id_proof')?.getError('maxContentSize').maxSize | byteFormat}} ({{documentFormGroup.get('id_proof')?.getError('maxContentSize').actualSize
+            | byteFormat}}).
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('id_proof').hasError('fileType')">
+            Invalid File Type
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <app-file-input formControlName="invoice" placeholder="Device invoice" required></app-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-error *ngIf="documentFormGroup.get('invoice').hasError('required')">
+            Please select a file
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('invoice').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('invoice')?.getError('maxContentSize').maxSize | byteFormat}} ({{documentFormGroup.get('invoice')?.getError('maxContentSize').actualSize
+            | byteFormat}}).
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('invoice').hasError('fileType')">
+            Invalid File Type
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <app-file-input formControlName="fir" placeholder="Police Report" required></app-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-error *ngIf="documentFormGroup.get('fir').hasError('required')">
+            Please select a file
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('fir').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('fir')?.getError('maxContentSize').maxSize | byteFormat}} ({{documentFormGroup.get('fir')?.getError('maxContentSize').actualSize
+            | byteFormat}}).
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('fir').hasError('fileType')">
+            Invalid File Type
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <app-file-input formControlName="expense_reciept" placeholder="Repair/Replace Invoice" required></app-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-error *ngIf="documentFormGroup.get('expense_reciept').hasError('required')">
+            Please select a file
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('expense_reciept').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('expense_reciept')?.getError('maxContentSize').maxSize | byteFormat}}
+            ({{documentFormGroup.get('expense_reciept')?.getError('maxContentSize').actualSize | byteFormat}}).
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('expense_reciept').hasError('fileType')">
+            Invalid File Type
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <app-file-input formControlName="hospital_report" placeholder="Medical Report" required></app-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-error *ngIf="documentFormGroup.get('hospital_report').hasError('required')">
+            Please select a file
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('hospital_report').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('hospital_report')?.getError('maxContentSize').maxSize | byteFormat}}
+            ({{documentFormGroup.get('hospital_report')?.getError('maxContentSize').actualSize | byteFormat}}).
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('hospital_report').hasError('fileType')">
+            Invalid File Type
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <app-file-input formControlName="device_photos" placeholder="Device Photos" required multiple></app-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-error *ngIf="documentFormGroup.get('device_photos').hasError('required')">
+            Please select a file
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('device_photos').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('device_photos')?.getError('maxContentSize').maxSize | byteFormat}}
+            ({{documentFormGroup.get('device_photos')?.getError('maxContentSize').actualSize | byteFormat}}).
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('device_photos').hasError('fileType')">
+            Invalid File Type
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <app-file-input formControlName="entity_photos" placeholder="Entity photos" required multiple></app-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-error *ngIf="documentFormGroup.get('entity_photos').hasError('required')">
+            Please select a file
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('entity_photos').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('entity_photos')?.getError('maxContentSize').maxSize | byteFormat}}
+            ({{documentFormGroup.get('entity_photos')?.getError('maxContentSize').actualSize | byteFormat}}).
+          </mat-error>
+          <mat-error *ngIf="documentFormGroup.get('entity_photos').hasError('fileType')">
+            Invalid File Type
+          </mat-error>
+        </mat-form-field>
+        <div>
+          <button class="pull-right m-l-10" mat-raised-button color="primary" matStepperNext>Next</button>
+          <button class="pull-right" mat-raised-button color="warn" matStepperPrevious>Back</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <form>
+        <ng-template matStepLabel>Confirm your information</ng-template>
+        Everything seems correct.
+        <div>
+          <button mat-button>Done</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+</mat-dialog-content>
+
+<!-- <mat-dialog-actions class="pull-right">
+  <button mat-raised-button color="primary" (click)="dialogRef.close()">Proceed</button>
+  <button mat-raised-button color="warn" (click)="dialogRef.close()">Not Now</button>
+</mat-dialog-actions> -->

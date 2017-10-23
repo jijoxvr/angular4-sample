@@ -15,6 +15,7 @@ import { HomeModule } from './home/home.module';
 import { routing } from "./app.route";
 
 export const firebaseConfig = {
+
 };
 
 
