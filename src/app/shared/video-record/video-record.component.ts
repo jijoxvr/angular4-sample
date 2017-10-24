@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit,Output, EventEmitter } from '@angular/core';
 declare var require: any;
 let RecordRTC = require('recordrtc/RecordRTC.min');
 
@@ -11,11 +11,18 @@ export class VideoRecordComponent implements OnInit, AfterViewInit {
 
   private stream: MediaStream;
   private recordRTC: any;
+  private recordRTCPromise: any;
+  private isRecording: boolean = false;
+  private isRecordingCompleted: boolean = false;
+  private recordedBlob: any;
+
+  @Output()
+  private onSubmission =  new EventEmitter<any>();
+
   @ViewChild('video') video;
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     // set the initial state of the video
@@ -43,12 +50,15 @@ export class VideoRecordComponent implements OnInit, AfterViewInit {
     this.stream = stream;
     this.recordRTC = RecordRTC(stream, options);
     this.recordRTC.startRecording();
+    this.isRecording = true;
+    this.isRecordingCompleted = false;
     let video: HTMLVideoElement = this.video.nativeElement;
     video.src = window.URL.createObjectURL(stream);
     this.toggleControls();
   }
 
   errorCallback() {
+    alert('No Media device found')
     //handle error here
   }
 
@@ -57,7 +67,9 @@ export class VideoRecordComponent implements OnInit, AfterViewInit {
     let recordRTC = this.recordRTC;
     video.src = audioVideoWebMURL;
     this.toggleControls();
-    var recordedBlob = recordRTC.getBlob();
+    this.recordedBlob = recordRTC.getBlob();
+    this.isRecording = false;
+    this.isRecordingCompleted = true;
     recordRTC.getDataURL(function (dataURL) { });
   }
 
@@ -74,8 +86,6 @@ export class VideoRecordComponent implements OnInit, AfterViewInit {
         audio: true
       })
       .then(this.successCallback.bind(this), this.errorCallback.bind(this));
-
-
   }
 
   stopRecording() {
@@ -86,8 +96,10 @@ export class VideoRecordComponent implements OnInit, AfterViewInit {
     stream.getVideoTracks().forEach(track => track.stop());
   }
 
-  download() {
+  submitRecording() {
+    this.isRecordingCompleted = false;
     this.recordRTC.save('video.webm');
+    this.onSubmission.emit(this.recordedBlob);
   }
 
 }

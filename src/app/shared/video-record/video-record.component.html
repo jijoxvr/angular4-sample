@@ -1,12 +1,10 @@
 <div class="row">
-  <div class="col-xs-12">
+  <mat-card class="col-xs-12 col-md-12">
     <video #video class="video"></video>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <button mat-raised-button color="primary" (click)="startRecording()"> Record </button>
-    <button mat-raised-button color="primary"(click) ="stopRecording()"> Stop</button>
-    <button mat-raised-button color="primary" (click)="download()"> Download</button>
-  </div>
+    <div class="video-controls">
+      <button *ngIf="!isRecording" mat-raised-button color="primary" (click)="startRecording()"> Record </button>
+      <button *ngIf="isRecording" mat-raised-button color="primary" (click)="stopRecording()"> Stop</button>
+      <button *ngIf="isRecordingCompleted" mat-raised-button color="primary" (click)="submitRecording()"> Submit</button>
+    </div>
+  </mat-card>
 </div>

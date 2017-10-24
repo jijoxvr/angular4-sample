@@ -15,21 +15,27 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
   
   loginWithTwitter() {
-    this.angularFire.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider()).then(s=>{
-      console.log(s)
+    this.angularFire.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider()).then(success=>{
+      this.loginSuccess(success);
     });
   }
   
   loginWithFB(){
     let provider = new firebase.auth.FacebookAuthProvider()
     provider.addScope("user_birthday")
-    this.angularFire.auth.signInWithPopup(provider).then(s=>{
-      console.log(s.credential.accessToken)
-      console.log(s.user.refreshToken)
-      this.angularFire.idToken.subscribe(idToken=>{
-        console.log(idToken)
-      })
+    this.angularFire.auth.signInWithPopup(provider).then(success=>{
+      this.loginSuccess(success);
     });
+  }
+
+  loginSuccess(success) {
+    // console.log(success.credential.accessToken)
+    // console.log(success.user.refreshToken)
+    // this.angularFire.idToken.subscribe(idToken=>{
+    //   console.log(idToken)
+    // })
+    localStorage.setItem('userData', JSON.stringify(success.user));
+    this.router.navigate(['my-profile']);
   }
   
 }

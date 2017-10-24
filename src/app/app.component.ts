@@ -10,24 +10,18 @@ export class AppComponent {
   public isLoggedIn: boolean;
   constructor(public angularFire: AngularFireAuth, private router: Router) {
     
-    this.angularFire.authState.subscribe(
-      (auth) => {
-        if(auth == null) {
-          this.router.navigate(['login']);
-          this.isLoggedIn = false;
-        }
-        else {
-          this.isLoggedIn = true;
-          localStorage.setItem('userData', JSON.stringify(auth));
-          if(window.location.hash == "#/login")
-            this.router.navigate(['my-profile']);
-        }
-      }
-    );
+    // this.angularFire.authState.subscribe(
+    //   (auth) => {
+    //     if(auth) {
+    //       this.isLoggedIn = true;
+    //       localStorage.setItem('userData', JSON.stringify(auth));
+    //       if(window.location.hash == "#/login")
+    //         this.router.navigate(['my-profile']);
+    //     }
+    //   }
+    // );
   }
 
-  logout() {
-    this.angularFire.auth.signOut();
-  }
+ 
  
 }

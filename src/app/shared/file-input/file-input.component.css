@@ -13,4 +13,5 @@ input {
 
 .filename {
     display: inline-block;
+    word-break: break-all;
 }

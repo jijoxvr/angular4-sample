@@ -1,5 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Router } from "@angular/router";
 import { Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -21,6 +22,7 @@ export class LayoutComponent {
     constructor(
         private _element: ElementRef,
         private _renderer: Renderer2,
+        private router: Router,
         private _overlayContainer: OverlayContainer,
         public angularFire: AngularFireAuth) { }
 
@@ -39,6 +41,8 @@ export class LayoutComponent {
 
     logout() {
         this.angularFire.auth.signOut();
+        localStorage.clear()
+        this.router.navigate(['login']);
     }
 
 

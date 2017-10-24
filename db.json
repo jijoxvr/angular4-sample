@@ -1,0 +1,44 @@
+{
+  "users": [
+    { "id": 1, "name": "test-1", "group": "group1", "gender": "male", "age": 21 },
+    { "id": 2, "name": "test-2", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 3, "name": "test-3", "group": "group2", "gender": "male", "age": 21  },
+    { "id": 4, "name": "test-4", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 5, "name": "test-5", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 6, "name": "test-6", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 7, "name": "test-7", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 8, "name": "test-8", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 9, "name": "test-9", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 10, "name": "test-10", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 11, "name": "test-11", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 12, "name": "test-12", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 13, "name": "test-13", "group": "group2", "gender": "male", "age": 21  },
+    { "id": 14, "name": "test-14", "group": "group2", "gender": "male", "age": 21  },
+    { "id": 15, "name": "test-15", "group": "group2", "gender": "male", "age": 21  },
+    { "id": 16, "name": "test-16", "group": "group1", "gender": "male", "age": 21  },
+    { "id": 17, "name": "test-17", "group": "group2", "gender": "male", "age": 21  },
+    { "id": 18, "name": "test-18", "group": "group1", "gender": "male", "age": 21  }
+  ],
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ],
+  "profile": { "name": "typicode" },
+  "insurances": [
+   { "id": 1, "user_id" : 1 , "status" : 0, "valid_from" : "20/12/2017", "valid_to" : "20/12/2018", "amount" : "1000" , "insured_product" : "one plus 1", "ref_no": "INS121"},
+   { "id": 2, "user_id" : 1 , "status" : 1, "valid_from" : "20/12/2017", "valid_to" : "20/12/2018", "amount" : "2000" , "insured_product" : "one plus 2", "ref_no": "INS122"},
+   { "id": 3, "user_id" : 1 , "status" : 2, "valid_from" : "20/12/2017", "valid_to" : "20/12/2018", "amount" : "3000" , "insured_product" : "one plus 3", "ref_no": "INS123", "days_left_to_make_claim": "4"},
+   { "id": 4, "user_id" : 1 , "status" : 3, "valid_from" : "20/12/2017", "valid_to" : "20/12/2018", "amount" : "4000" , "insured_product" : "one plus 3t", "ref_no": "INS124", "coverage":2000},
+   { "id": 5, "user_id" : 1 , "status" : 4, "valid_from" : "20/12/2017", "valid_to" : "20/12/2018", "amount" : "5000" , "insured_product" : "one plus 5", "ref_no": "INS125"},
+   { "id": 6, "user_id" : 5 , "status" : 0, "valid_from" : "20/12/2017", "valid_to" : "20/12/2018", "amount" : "1000" , "insured_product" : "one plus 3", "ref_no": "INS126"}
+  ],
+  "statusenum": {
+    "insurance" : {
+      "0" : "Payment Pending",
+      "1" : "Activation Pending",
+      "2" : "Acivated (unable to clain)",
+      "3" : "Activation Completed",
+      "4" : "Claimed"
+    }
+  }
+ 
+}

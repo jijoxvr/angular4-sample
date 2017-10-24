@@ -23,12 +23,13 @@ export class FileValidators {
         }
     }
 
-    static fileType(type: string): ValidatorFn {
+    static fileType(formats: Array<string>): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } => {
             const file = control && control.value ? (control.value as FileInput).files : [];
             let hasError = false;
             file.forEach(f => {
-                if (f.type != type) {
+                let fileFormat = f.name.split('.').pop();
+                if (!formats.includes(fileFormat)) {
                    hasError = true;
                    return;
                 }

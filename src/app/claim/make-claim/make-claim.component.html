@@ -1,6 +1,6 @@
-<h2 mat-dialog-title>Please complete all the three steps</h2>
+<h2 mat-dialog-title>Please complete all three steps</h2>
 <mat-dialog-content>
-  <mat-horizontal-stepper [linear]="true">
+  <mat-horizontal-stepper [linear]="false">
     <mat-step [stepControl]="basicFormGroup">
       <form [formGroup]="basicFormGroup">
         <ng-template matStepLabel>Fill basic details</ng-template>
@@ -135,12 +135,55 @@
       </form>
     </mat-step>
 
+    <mat-step [stepControl]="videoFormGroup">
+      <app-video-record (onSubmission)="onRecordComplete($event)"></app-video-record>
+      <form [formGroup]="videoFormGroup">
+        <ng-template matStepLabel>Video Proof</ng-template>
+        <mat-form-field [hidden]="true">
+          <app-file-input formControlName="video_proof" placeholder="Video proof" required multiple></app-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+        <div>
+          <button class="pull-right m-l-10" mat-raised-button color="primary" matStepperNext>Next</button>
+          <button class="pull-right" mat-raised-button color="warn" matStepperPrevious>Back</button>
+        </div>
+      </form>
+    </mat-step>
+
     <mat-step>
       <form>
         <ng-template matStepLabel>Confirm your information</ng-template>
-        Everything seems correct.
+        <div *ngIf="uploadProgress.idProof" class="progress-container">
+          <span>Uploading id proof</span>
+          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.idProof" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+        </div>
+        <div *ngIf="uploadProgress.invoice" class="progress-container">
+          <span>Uploading invoice</span>
+          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.invoice" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+        </div>
+        <div *ngIf="uploadProgress.fir" class="progress-container">
+          <span>Uploading FIR</span>
+          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.fir" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+        </div>
+        <div *ngIf="uploadProgress.expenseReciept" class="progress-container">
+          <span>Uploading your expense proof</span>
+          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.expenseReciept" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+        </div>
+        <div *ngIf="uploadProgress.hospitalReport" class="progress-container">
+          <span>Uploading hospital proof</span>
+          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.hospitalReport" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+        </div>
+        <div *ngFor="let photo of uploadProgress.devicePhotos" class="progress-container">
+          <span>Uploading device images</span>
+          <mat-progress-spinner [mode]="'determinate'" [value]="photo" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+        </div>
+        <div *ngFor="let photo of uploadProgress.entityPhotos" class="progress-container">
+          <span>Uploading entity images</span>
+          <mat-progress-spinner [mode]="'determinate'" [value]="photo" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+        </div>
         <div>
-          <button mat-button>Done</button>
+          <button class="pull-right" (click)="makeClaimRequest()" mat-raised-button color="primary">Submit Calim Request</button>
         </div>
       </form>
     </mat-step>
