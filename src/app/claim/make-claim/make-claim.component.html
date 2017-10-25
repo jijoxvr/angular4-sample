@@ -5,19 +5,23 @@
       <form [formGroup]="basicFormGroup">
         <ng-template matStepLabel>Fill basic details</ng-template>
         <mat-form-field>
-          <input matInput placeholder="Insurance No" formControlName="insurance_ref" required>
+          <input matInput placeholder="Reference No" formControlName="insuranceRef" required>
           <mat-error>This field is required</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Damage type" formControlName="damage_type" required>
-            <mat-option *ngFor="let types of damageTypes" [value]="types.value">
-              {{ types.label }}
+          <mat-select placeholder="Reason for claim" formControlName="claimReason" required>
+            <mat-option *ngFor="let reason of claimReason" [value]="reason.value">
+              {{ reason.label }}
             </mat-option>
           </mat-select>
           <mat-error>This field is required</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Claim amount" formControlName="claim_amount" required>
+        <mat-form-field *ngIf="claimReasonSelected">
+          <mat-select placeholder="Precise Reason" formControlName="exactReason" required>
+            <mat-option *ngFor="let reason of exactReason[selectedReason]" [value]="reason.value">
+              {{ reason.label }}
+            </mat-option>
+          </mat-select>
           <mat-error>This field is required</mat-error>
         </mat-form-field>
         <div>
@@ -30,21 +34,21 @@
       <form [formGroup]="documentFormGroup">
         <ng-template matStepLabel>Upload required Documents</ng-template>
         <!--  -->
-        <mat-form-field>
-          <app-file-input formControlName="id_proof" placeholder="Your id proof" required></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('idProof')">
+          <app-file-input formControlName="idProof" placeholder="Your id proof" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('id_proof').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('idProof').hasError('required')">
             Please select a file
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('id_proof').hasError('maxContentSize')">
-            The total size must not exceed {{documentFormGroup.get('id_proof')?.getError('maxContentSize').maxSize | byteFormat}} ({{documentFormGroup.get('id_proof')?.getError('maxContentSize').actualSize
+          <mat-error *ngIf="documentFormGroup.get('idProof').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('idProof')?.getError('maxContentSize').maxSize | byteFormat}} ({{documentFormGroup.get('idProof')?.getError('maxContentSize').actualSize
             | byteFormat}}).
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('id_proof').hasError('fileType')">
+          <mat-error *ngIf="documentFormGroup.get('idProof').hasError('fileType')">
             Invalid File Type
           </mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field *ngIf="documentFormGroup.get('invoice')">
           <app-file-input formControlName="invoice" placeholder="Device invoice" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
           <mat-error *ngIf="documentFormGroup.get('invoice').hasError('required')">
@@ -58,7 +62,7 @@
             Invalid File Type
           </mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field *ngIf="documentFormGroup.get('fir')">
           <app-file-input formControlName="fir" placeholder="Police Report" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
           <mat-error *ngIf="documentFormGroup.get('fir').hasError('required')">
@@ -72,59 +76,59 @@
             Invalid File Type
           </mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <app-file-input formControlName="expense_reciept" placeholder="Repair/Replace Invoice" required></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('expenseReciept')">
+          <app-file-input formControlName="expenseReciept" placeholder="Repair/Replace Invoice" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('expense_reciept').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('expenseReciept').hasError('required')">
             Please select a file
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('expense_reciept').hasError('maxContentSize')">
-            The total size must not exceed {{documentFormGroup.get('expense_reciept')?.getError('maxContentSize').maxSize | byteFormat}}
-            ({{documentFormGroup.get('expense_reciept')?.getError('maxContentSize').actualSize | byteFormat}}).
+          <mat-error *ngIf="documentFormGroup.get('expenseReciept').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('expenseReciept')?.getError('maxContentSize').maxSize | byteFormat}}
+            ({{documentFormGroup.get('expenseReciept')?.getError('maxContentSize').actualSize | byteFormat}}).
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('expense_reciept').hasError('fileType')">
+          <mat-error *ngIf="documentFormGroup.get('expenseReciept').hasError('fileType')">
             Invalid File Type
           </mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <app-file-input formControlName="hospital_report" placeholder="Medical Report" required></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('hospitalReport')">
+          <app-file-input formControlName="hospitalReport" placeholder="Medical Report" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('hospital_report').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('hospitalReport').hasError('required')">
             Please select a file
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('hospital_report').hasError('maxContentSize')">
-            The total size must not exceed {{documentFormGroup.get('hospital_report')?.getError('maxContentSize').maxSize | byteFormat}}
-            ({{documentFormGroup.get('hospital_report')?.getError('maxContentSize').actualSize | byteFormat}}).
+          <mat-error *ngIf="documentFormGroup.get('hospitalReport').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('hospitalReport')?.getError('maxContentSize').maxSize | byteFormat}}
+            ({{documentFormGroup.get('hospitalReport')?.getError('maxContentSize').actualSize | byteFormat}}).
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('hospital_report').hasError('fileType')">
+          <mat-error *ngIf="documentFormGroup.get('hospitalReport').hasError('fileType')">
             Invalid File Type
           </mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <app-file-input formControlName="device_photos" placeholder="Device Photos" required multiple></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('devicePhotos')">
+          <app-file-input formControlName="devicePhotos" placeholder="Device Photos" required multiple></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('device_photos').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('devicePhotos').hasError('required')">
             Please select a file
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('device_photos').hasError('maxContentSize')">
-            The total size must not exceed {{documentFormGroup.get('device_photos')?.getError('maxContentSize').maxSize | byteFormat}}
-            ({{documentFormGroup.get('device_photos')?.getError('maxContentSize').actualSize | byteFormat}}).
+          <mat-error *ngIf="documentFormGroup.get('devicePhotos').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('devicePhotos')?.getError('maxContentSize').maxSize | byteFormat}}
+            ({{documentFormGroup.get('devicePhotos')?.getError('maxContentSize').actualSize | byteFormat}}).
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('device_photos').hasError('fileType')">
+          <mat-error *ngIf="documentFormGroup.get('devicePhotos').hasError('fileType')">
             Invalid File Type
           </mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <app-file-input formControlName="entity_photos" placeholder="Entity photos" required multiple></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('entityPhotos')">
+          <app-file-input formControlName="entityPhotos" placeholder="Entity photos" required multiple></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('entity_photos').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('entityPhotos').hasError('required')">
             Please select a file
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('entity_photos').hasError('maxContentSize')">
-            The total size must not exceed {{documentFormGroup.get('entity_photos')?.getError('maxContentSize').maxSize | byteFormat}}
-            ({{documentFormGroup.get('entity_photos')?.getError('maxContentSize').actualSize | byteFormat}}).
+          <mat-error *ngIf="documentFormGroup.get('entityPhotos').hasError('maxContentSize')">
+            The total size must not exceed {{documentFormGroup.get('entityPhotos')?.getError('maxContentSize').maxSize | byteFormat}}
+            ({{documentFormGroup.get('entityPhotos')?.getError('maxContentSize').actualSize | byteFormat}}).
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('entity_photos').hasError('fileType')">
+          <mat-error *ngIf="documentFormGroup.get('entityPhotos').hasError('fileType')">
             Invalid File Type
           </mat-error>
         </mat-form-field>
@@ -140,7 +144,7 @@
       <form [formGroup]="videoFormGroup">
         <ng-template matStepLabel>Video Proof</ng-template>
         <mat-form-field [hidden]="true">
-          <app-file-input formControlName="video_proof" placeholder="Video proof" required multiple></app-file-input>
+          <app-file-input formControlName="videoProof" placeholder="Video proof" required multiple></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
           <mat-error>This field is required</mat-error>
         </mat-form-field>
@@ -155,32 +159,58 @@
       <form>
         <ng-template matStepLabel>Confirm your information</ng-template>
         <div *ngIf="uploadProgress.idProof" class="progress-container">
-          <span>Uploading id proof</span>
-          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.idProof" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+          <li>
+            <span>Uploading id proof</span>
+            <mat-progress-spinner *ngIf="uploadProgress.idProof != 100" [mode]="'determinate'" [value]="uploadProgress.idProof" color="warn"
+              [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+            <i *ngIf="uploadProgress.idProof == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
+          </li>
         </div>
         <div *ngIf="uploadProgress.invoice" class="progress-container">
-          <span>Uploading invoice</span>
-          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.invoice" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+          <li>
+            <span>Uploading invoice</span>
+            <mat-progress-spinner *ngIf="uploadProgress.invoice != 100" [mode]="'determinate'" [value]="uploadProgress.invoice" color="warn"
+              [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+            <i *ngIf="uploadProgress.invoice == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
+          </li>
         </div>
         <div *ngIf="uploadProgress.fir" class="progress-container">
-          <span>Uploading FIR</span>
-          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.fir" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+          <li>
+            <span>Uploading FIR</span>
+            <mat-progress-spinner *ngIf="uploadProgress.fir != 100" [mode]="'determinate'" [value]="uploadProgress.fir" color="warn"
+              [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+            <i *ngIf="uploadProgress.fir == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
+          </li>
         </div>
         <div *ngIf="uploadProgress.expenseReciept" class="progress-container">
-          <span>Uploading your expense proof</span>
-          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.expenseReciept" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+          <li>
+            <span>Uploading your expense proof</span>
+            <mat-progress-spinner *ngIf="uploadProgress.expenseReciept != 100" [mode]="'determinate'" [value]="uploadProgress.expenseReciept"
+              color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+            <i *ngIf="uploadProgress.expenseReciept == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
+          </li>
         </div>
         <div *ngIf="uploadProgress.hospitalReport" class="progress-container">
-          <span>Uploading hospital proof</span>
-          <mat-progress-spinner [mode]="'determinate'" [value]="uploadProgress.hospitalReport" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+          <li>
+            <span>Uploading hospital proof</span>
+            <mat-progress-spinner *ngIf="uploadProgress.hospitalReport != 100" [mode]="'determinate'" [value]="uploadProgress.hospitalReport"
+              color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+            <i *ngIf="uploadProgress.hospitalReport == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
+          </li>
         </div>
-        <div *ngFor="let photo of uploadProgress.devicePhotos" class="progress-container">
-          <span>Uploading device images</span>
-          <mat-progress-spinner [mode]="'determinate'" [value]="photo" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+        <div *ngFor="let progress of uploadProgress.devicePhotos" class="progress-container">
+          <li>
+            <span>Uploading device images</span>
+            <mat-progress-spinner *ngIf="progress != 100" [mode]="'determinate'" [value]="progress" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+            <i *ngIf="progress == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
+          </li>
         </div>
-        <div *ngFor="let photo of uploadProgress.entityPhotos" class="progress-container">
-          <span>Uploading entity images</span>
-          <mat-progress-spinner [mode]="'determinate'" [value]="photo" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+        <div *ngFor="let progress of uploadProgress.entityPhotos" class="progress-container">
+          <li>
+            <span>Uploading entity images</span>
+            <mat-progress-spinner *ngIf="progress != 100" [mode]="'determinate'" [value]="progress" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+            <i *ngIf="progress == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
+          </li>
         </div>
         <div>
           <button class="pull-right" (click)="makeClaimRequest()" mat-raised-button color="primary">Submit Calim Request</button>
