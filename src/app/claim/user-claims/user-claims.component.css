@@ -1,0 +1,14 @@
+.loader {
+    min-height: 100px;
+    text-align: center;
+    align-content: center;
+}
+
+.card-container {
+    padding: 10px;
+}
+
+.ascent {
+    background-color: #d4809c;
+    color: #fff;
+}

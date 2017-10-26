@@ -12,6 +12,7 @@ import { UserRouting } from "./user.route";
 
 import { UserListComponent } from './user-list/user-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileCompleteComponent } from './user-profile-complete/user-profile-complete.component';
 
 @NgModule({
   imports: [
@@ -25,6 +26,6 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     LayoutModule,
     ClaimModule
   ],
-  declarations: [UserListComponent, UserProfileComponent]
+  declarations: [UserListComponent, UserProfileComponent, UserProfileCompleteComponent]
 })
 export class UserModule { }

@@ -8,7 +8,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class UserProfileComponent implements OnInit {
 
-  userData: any;
+  userData: any = {};
   constructor() {
     this.user();
   }
@@ -17,8 +17,14 @@ export class UserProfileComponent implements OnInit {
 
   user() {
     if (localStorage.getItem('userData')) {
-      this.userData = JSON.parse(localStorage.getItem('userData'));
-      console.log(this.userData)
+      let data = JSON.parse(localStorage.getItem('userData'));
+      this.userData = {
+        displayName : data.name,
+        email: data.email,
+        address: data.location ? data.location.name: 'N/A',
+        birthday: data.birthday,
+        photoURL: data.photoURL
+      }
     }
     else {
     }

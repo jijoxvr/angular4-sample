@@ -8,6 +8,7 @@ import { Observable } from "rxjs/Rx";
 import * as moment from "moment";
 import 'firebase/storage';
 import * as firebase from 'firebase/app';
+import { ClaimReason, ExactClaimGroupedReason } from "../../app-config";
 
 @Component({
   selector: 'app-make-claim',
@@ -27,22 +28,9 @@ export class MakeClaimComponent implements OnInit {
   tasks: Array<Promise<any>> = [];
 
 
-  claimReason = [
-    { value: 1, label: 'Damage' },
-    { value: 2, label: 'Lost' },
-  ]
+  claimReason = ClaimReason;
 
-  exactReason = {
-    2: [
-      { value: 2, label: 'Theft' },
-      { value: 3, label: 'Burglary' },
-      { value: 4, label: 'Robbery' },
-    ],
-    1: [
-      { value: 1, label: 'Accidental Damage' },
-      { value: 5, label: 'Liquid Damage' },
-    ]
-  }
+  exactReason = ExactClaimGroupedReason;
 
 
   uploadProgress = {
@@ -155,11 +143,12 @@ export class MakeClaimComponent implements OnInit {
     });
 
     let dataToServer = Object.assign(fileDict, {
-      'issueId': this.basicFormGroup.value.claimReason,
-      'insuranceId': this.data.ref_no,
+      'issue_id': this.basicFormGroup.value.claimReason,
+      'insurance_id': this.data.ref_no,
       'claimDay': moment().date(),
       'claimMonth': moment().month(),
-      'yearMonth': moment().year()
+      'claimYear': moment().year(),
+      'date_of_claim' : moment().format('MM/DD/YYYY')
     });
     console.log(dataToServer);
   }

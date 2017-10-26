@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div *ngFor="let claim of claims" class="col-sm-12 col-md-6 card-container">
+      <mat-card>
+        <mat-card-subtitle class="title-color">
+          <span>#{{claim.ref_no }}</span>
+          <span class="p-l-10">
+            <i class="fa fa-calender" aria-hidden="true"></i> {{claim.date_of_claim}}
+          </span>
+          <span class="p-l-10">
+            Reason for claim {{issuelabel[claim.issue_id]}}
+          </span>
+          <!-- <span style="float:right">{{getPolicyInfo(policy)}}</span> -->
+        </mat-card-subtitle>
+        <mat-card-title>
+
+          <!-- <span class="badge ascent">{{policy.amount | currency:defaultCurrency:true:'.0-0'}}</span> -->
+          <span [class]="getBadgeClass(claim.status)">{{claimStatusLabel[claim.status]}}</span>
+        </mat-card-title>
+        <mat-card-content>
+          <h6 style="text-align: center"> Documents Submitted</h6>
+          
+          <!-- <li *ngIf="claim."><here></li> -->
+        </mat-card-content>
+        <!-- <mat-card-actions>
+          <button mat-button color="warn" *ngIf="policy.status != 4">Cancel</button>
+          <button mat-button color="primary" *ngIf="policy.status == 0">Make Payement</button>
+          <button mat-button color="primary" *ngIf="policy.status == 1">Generate Activation Link</button>
+          <button mat-button color="primary" (click)="askConfirmationForClaim(policy)" *ngIf="policy.status == 3">Make Claim</button>
+          <button mat-button color="primary" *ngIf="policy.status == '4'">View Claim Details</button>
+          <button mat-button color="primary">View Policy Details</button>
+        </mat-card-actions> -->
+        <mat-card-footer>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<!-- <mat-card class="col-sm-12 col-md-12 pull-right" *ngIf="isLoading">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</mat-card> -->

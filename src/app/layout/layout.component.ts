@@ -1,7 +1,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from "@angular/router";
-import { Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewEncapsulation, AfterViewInit } from '@angular/core';
 
 @Component({
     selector: 'app-layout',
@@ -10,11 +10,12 @@ import { Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/co
     encapsulation: ViewEncapsulation.None,
     preserveWhitespaces: false,
 })
-export class LayoutComponent {
+export class LayoutComponent implements AfterViewInit {
 
     navItems = [
         { name: 'Home', route: '' },
-        { name: 'Profile', route: 'my-profile' },
+        { name: 'Claims', route: '/my-claims' },
+        { name: 'Profile', route: '/my-profile' },
 
     ];
 
@@ -25,6 +26,10 @@ export class LayoutComponent {
         private router: Router,
         private _overlayContainer: OverlayContainer,
         public angularFire: AngularFireAuth) { }
+
+    ngAfterViewInit(){
+        // this.router.navigate(['/login']);
+    }
 
     toggleFullscreen() {
         let elem = this._element.nativeElement.querySelector('.demo-content');
