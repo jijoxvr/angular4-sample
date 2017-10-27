@@ -32,7 +32,7 @@ export class LayoutComponent implements AfterViewInit {
     }
 
     toggleFullscreen() {
-        let elem = this._element.nativeElement.querySelector('.demo-content');
+        let elem = this._element.nativeElement.querySelector('.app-content');
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
         } else if (elem.webkitRequestFullScreen) {

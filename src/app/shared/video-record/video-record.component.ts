@@ -9,15 +9,15 @@ let RecordRTC = require('recordrtc/RecordRTC.min');
 })
 export class VideoRecordComponent implements OnInit, AfterViewInit {
 
-  private stream: MediaStream;
-  private recordRTC: any;
-  private recordRTCPromise: any;
-  private isRecording: boolean = false;
-  private isRecordingCompleted: boolean = false;
-  private recordedBlob: any;
+  public stream: MediaStream;
+  public recordRTC: any;
+  public recordRTCPromise: any;
+  public isRecording: boolean = false;
+  public isRecordingCompleted: boolean = false;
+  public recordedBlob: any;
 
   @Output()
-  private onSubmission =  new EventEmitter<any>();
+  public onSubmission =  new EventEmitter<any>();
 
   @ViewChild('video') video;
   constructor() { }
@@ -68,9 +68,8 @@ export class VideoRecordComponent implements OnInit, AfterViewInit {
     video.src = audioVideoWebMURL;
     this.toggleControls();
     this.recordedBlob = recordRTC.getBlob();
-    this.isRecording = false;
-    this.isRecordingCompleted = true;
     recordRTC.getDataURL(function (dataURL) { });
+    
   }
 
   startRecording() {
@@ -89,11 +88,13 @@ export class VideoRecordComponent implements OnInit, AfterViewInit {
   }
 
   stopRecording() {
+    this.isRecording = false;
     let recordRTC = this.recordRTC;
     recordRTC.stopRecording(this.processVideo.bind(this));
     let stream = this.stream;
     stream.getAudioTracks().forEach(track => track.stop());
     stream.getVideoTracks().forEach(track => track.stop());
+    this.isRecordingCompleted = true;
   }
 
   submitRecording() {

@@ -8,7 +8,9 @@ import { Observable } from "rxjs/Rx";
 import * as moment from "moment";
 import 'firebase/storage';
 import * as firebase from 'firebase/app';
-import { ClaimReason, ExactClaimGroupedReason } from "../../app-config";
+import { Router } from "@angular/router";
+import { ClaimReason, ExactClaimGroupedReason, APIUrls } from "../../app-config";
+import { AjaxService } from "../../shared";
 
 @Component({
   selector: 'app-make-claim',
@@ -17,6 +19,7 @@ import { ClaimReason, ExactClaimGroupedReason } from "../../app-config";
 })
 export class MakeClaimComponent implements OnInit {
 
+  recordedBlob: any;
   nameFormGroup: FormGroup;
   emailFormGroup: FormGroup;
 
@@ -26,6 +29,9 @@ export class MakeClaimComponent implements OnInit {
   claimReasonSelected: boolean = false;
   selectedReason: number;
   tasks: Array<Promise<any>> = [];
+
+  public submitting: boolean = false;
+  public uploading: boolean = false;
 
 
   claimReason = ClaimReason;
@@ -40,13 +46,15 @@ export class MakeClaimComponent implements OnInit {
     expenseReciept: 0,
     hospitalReport: 0,
     devicePhotos: [],
-    entityPhotos: []
+    entityPhotos: [],
+    videoProof: 0
   }
 
   constructor(
     public dialogRef: MatDialogRef<MakeClaimComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _formBuilder: FormBuilder,
-    public angularFire: AngularFireAuth) { }
+    public angularFire: AngularFireAuth, private ajaxService: AjaxService,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -71,9 +79,11 @@ export class MakeClaimComponent implements OnInit {
     });
 
     this.videoFormGroup = this._formBuilder.group({
-      videoProof: [{ value: undefined, disabled: true }, [Validators.required]],
+      isVideoProofSubmitted: ['', [Validators.required]],
 
     });
+
+
 
     this.basicFormGroup.get('claimReason').valueChanges.subscribe((value) => {
       this.selectedReason = value;
@@ -113,15 +123,52 @@ export class MakeClaimComponent implements OnInit {
   }
 
 
-  createDocumentFormGroup() {
+  checkVideo() {
+    if(this.videoFormGroup.get('isVideoProofSubmitted').invalid){
+      alert('Video record is mandatory')
+    }
+  }
+
+  checkDocumets() {
+    let fields = ['idProof', 'invoice', 'expenseReciept', 'fir', 'devicePhotos', 'hospitalReport', 'entityPhotos']
+    for (let field of fields) {
+      if (this.documentFormGroup.get(field)) {
+        this.documentFormGroup.get(field).markAsTouched();
+        this.documentFormGroup.get(field).updateValueAndValidity();
+      }
+    }
 
   }
 
   onRecordComplete(videBlob) {
     console.log(videBlob)
+    this.recordedBlob = videBlob;
+    this.videoFormGroup.get('isVideoProofSubmitted').setValue(true)
+  }
+
+  uploadVideo() {
+    let blob = this.recordedBlob
+    let path = 'claim/' + this.data.ref_no + '/' + 'video' + '/' + 'video.webm';
+    let storageRef = firebase.storage().ref().root.child(path);
+    let uploadTask = storageRef.put(blob);
+    this.tasks.push(new Promise((resolve, reject) => {
+      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+
+          this.uploadProgress['videoProof'] = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100;
+        }, (error) => {
+          // upload failed
+          reject(error)
+        }, () => {
+          // upload success
+          resolve({ name: 'videoProof', url: uploadTask.snapshot.downloadURL })
+        }
+      );
+    }))
   }
 
   makeClaimRequest() {
+    this.uploading = true;
     this.tasks = []
     this.extractAndTriggerUpload('idProof');
     this.extractAndTriggerUpload('invoice');
@@ -130,16 +177,26 @@ export class MakeClaimComponent implements OnInit {
     this.extractAndTriggerUpload('hospitalReport');
     this.extractAndTriggerUpload('devicePhotos', true);
     this.extractAndTriggerUpload('entityPhotos', true);
+    this.uploadVideo();
     Promise.all(this.tasks).then((files) => {
       console.log(files)
       this.submitDataToServer(files)
     })
   }
 
+
+
   submitDataToServer(files) {
-    let fileDict = {}
+    this.submitting = true;
+    let fileDict = {
+      devicePhotos: [],
+      entityPhotos: []
+    }
     files.forEach(file => {
-      fileDict[file.name] = file.url
+      if (file.name == 'devicePhotos' || file.name == 'entityPhotos')
+        fileDict[file.name].push(file.url)
+      else
+        fileDict[file.name] = file.url
     });
 
     let dataToServer = Object.assign(fileDict, {
@@ -148,9 +205,19 @@ export class MakeClaimComponent implements OnInit {
       'claimDay': moment().date(),
       'claimMonth': moment().month(),
       'claimYear': moment().year(),
-      'date_of_claim' : moment().format('MM/DD/YYYY')
+      'date_of_claim': moment().format('MM/DD/YYYY'),
+      'user_id': 1,
+      'ref_no': 'CLAIM#1', // to be removed
+      'status': 0, // to be removed
     });
     console.log(dataToServer);
+    this.ajaxService.execute({ url: APIUrls.addnewClaim, method: 'post', body: dataToServer })
+      .subscribe(data => {
+        console.log('Data from server', data);
+        this.dialogRef.close(true);
+        this.router.navigate(['my-claims']);
+      })
+
   }
 
   extractAndTriggerUpload(field, multiple = false) {
@@ -172,7 +239,7 @@ export class MakeClaimComponent implements OnInit {
   }
 
   uploadFile(field, file, index = -1) {
-    let path = 'claim/' + field + '/' + file.name;
+    let path = 'claim/' + this.data.ref_no + '/' + field + '/' + file.name;
     let storageRef = firebase.storage().ref().root.child(path);
     let uploadTask = storageRef.put(file);
     return new Promise((resolve, reject) => {
@@ -182,10 +249,10 @@ export class MakeClaimComponent implements OnInit {
             this.uploadProgress[field][index] = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100;
           else
             this.uploadProgress[field] = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100;
-        },(error) => {
+        }, (error) => {
           // upload failed
           reject(error)
-        },() => {
+        }, () => {
           // upload success
           resolve({ name: field, url: uploadTask.snapshot.downloadURL })
         }

@@ -16,7 +16,7 @@ import { routing } from "./app.route";
 import { FacebookModule } from 'ngx-facebook';
 
 export const firebaseConfig = {
- 
+
 };
 
 

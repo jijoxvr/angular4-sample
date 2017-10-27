@@ -133,7 +133,7 @@
           </mat-error>
         </mat-form-field>
         <div>
-          <button class="pull-right m-l-10" mat-raised-button color="primary" matStepperNext>Next</button>
+          <button class="pull-right m-l-10" mat-raised-button color="primary" (click)="checkDocumets()" matStepperNext>Next</button>
           <button class="pull-right" mat-raised-button color="warn" matStepperPrevious>Back</button>
         </div>
       </form>
@@ -144,19 +144,18 @@
       <form [formGroup]="videoFormGroup">
         <ng-template matStepLabel>Video Proof</ng-template>
         <mat-form-field [hidden]="true">
-          <app-file-input formControlName="videoProof" placeholder="Video proof" required multiple></app-file-input>
-          <mat-icon matSuffix>folder</mat-icon>
+          <input matInput placeholder="Video" formControlName="isVideoProofSubmitted" required>
           <mat-error>This field is required</mat-error>
         </mat-form-field>
         <div>
-          <button class="pull-right m-l-10" mat-raised-button color="primary" matStepperNext>Next</button>
+          <button class="pull-right m-l-10" mat-raised-button color="primary" (click)="checkVideo()" matStepperNext>Next</button>
           <button class="pull-right" mat-raised-button color="warn" matStepperPrevious>Back</button>
         </div>
       </form>
     </mat-step>
 
     <mat-step>
-      <form>
+      <form *ngIf="!submitting">
         <ng-template matStepLabel>Confirm your information</ng-template>
         <div *ngIf="uploadProgress.idProof" class="progress-container">
           <li>
@@ -198,24 +197,35 @@
             <i *ngIf="uploadProgress.hospitalReport == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
           </li>
         </div>
-        <div *ngFor="let progress of uploadProgress.devicePhotos" class="progress-container">
+        <div *ngFor="let progress of uploadProgress.devicePhotos; let index = index" class="progress-container">
           <li>
-            <span>Uploading device images</span>
+            <span>Uploading device images #{{index+1}}</span>
             <mat-progress-spinner *ngIf="progress != 100" [mode]="'determinate'" [value]="progress" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
             <i *ngIf="progress == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
           </li>
         </div>
-        <div *ngFor="let progress of uploadProgress.entityPhotos" class="progress-container">
+        <div *ngFor="let progress of uploadProgress.entityPhotos; let index = index" class="progress-container">
           <li>
-            <span>Uploading entity images</span>
+            <span>Uploading entity images #{{index+1}}</span>
             <mat-progress-spinner *ngIf="progress != 100" [mode]="'determinate'" [value]="progress" color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
             <i *ngIf="progress == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
+          </li>
+        </div>
+        <div *ngIf="uploadProgress.videoProof" class="progress-container">
+          <li>
+            <span>Uploading id proof</span>
+            <mat-progress-spinner *ngIf="uploadProgress.videoProof != 100" [mode]="'determinate'" [value]="uploadProgress.videoProof" color="warn"
+              [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
+            <i *ngIf="uploadProgress.videoProof == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;Completed</i>
           </li>
         </div>
         <div>
-          <button class="pull-right" (click)="makeClaimRequest()" mat-raised-button color="primary">Submit Calim Request</button>
+          <button class="pull-right" *ngIf="!uploading" (click)="makeClaimRequest()" mat-raised-button color="primary">Submit Calim Request</button>
         </div>
       </form>
+      <mat-card class="col-sm-12 col-md-12 loader-container" *ngIf="submitting" >
+        <mat-progress-spinner class="loader" mode="indeterminate"></mat-progress-spinner>
+      </mat-card>
     </mat-step>
   </mat-horizontal-stepper>
 

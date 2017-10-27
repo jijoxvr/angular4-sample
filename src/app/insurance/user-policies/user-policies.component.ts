@@ -20,10 +20,11 @@ export class UserPoliciesComponent implements OnInit {
   claimConfirmDialogRef: MatDialogRef<any> | null; // for pre-claim confirmation
   claimDialogRef: MatDialogRef<any> | null; // for claim form
 
-  private isLoading: boolean;
-  private policies: Array<any>;
-  private policyStatusLabel = PolicyStatus.label;
-  private defaultCurrency = AppConfig.defaultCurrency;
+  public isLoading: boolean;
+  public isResolved: boolean;
+  public policies: Array<any>;
+  public policyStatusLabel = PolicyStatus.label;
+  public defaultCurrency = AppConfig.defaultCurrency;
 
   @ViewChild('claimConfirmationDialogRef') template: TemplateRef<any>;
 
@@ -33,30 +34,32 @@ export class UserPoliciesComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.isResolved = false;
     this.ajaxService.execute({ url: APIUrls.insuranceList, params: { user_id: 1 } }).
       subscribe(response => {
         this.isLoading = false;
+        this.isResolved = true;
         this.policies = response;
       }, error => {
       })
   }
 
-  askConfirmationForClaim(policy) {
+  askConfirmationForClaim(policy, index) {
     claimDialogConfig.data = policy;
     this.claimConfirmDialogRef = this.dialog.open(this.template, claimConfirmDialogConfig);
     this.claimConfirmDialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.openClaimForm();
+        this.openClaimForm(index);
       }
     })
 
   }
 
-  openClaimForm() {
+  openClaimForm(index) {
     this.claimDialogRef = this.dialog.open(MakeClaimComponent, claimDialogConfig);
     this.claimDialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('here')
+        this.policies[index].status = 4;
       }
     })
   }
@@ -71,6 +74,10 @@ export class UserPoliciesComponent implements OnInit {
       case 3: return PolicyStatus.policyInfo[policy.status].replace('X', policy.valid_from).replace('Y', policy.valid_to);
       default: return PolicyStatus.policyInfo[policy.status];
     }
+  }
+
+  navigateToClaimTab(){
+    
   }
 
 

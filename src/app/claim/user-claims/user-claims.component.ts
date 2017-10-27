@@ -19,11 +19,12 @@ export class UserClaimsComponent implements OnInit {
   claimConfirmDialogRef: MatDialogRef<any> | null; // for pre-claim confirmation
   claimDialogRef: MatDialogRef<any> | null; // for claim form
 
-  private isLoading: boolean;
-  private claims: Array<any>;
-  private claimStatusLabel = ClaimStatus.label;
-  private defaultCurrency = AppConfig.defaultCurrency;
-  private issuelabel = ClaimLabels
+  public isLoading: boolean;
+  public isResolved: boolean;
+  public claims: Array<any>;
+  public claimStatusLabel = ClaimStatus.label;
+  public defaultCurrency = AppConfig.defaultCurrency;
+  public issuelabel = ClaimLabels
 
   // @ViewChild('claimConfirmationDialogRef') template: TemplateRef<any>;
 
@@ -34,9 +35,11 @@ export class UserClaimsComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.isResolved = false;
     this.ajaxService.execute({ url: APIUrls.claimList, params: { user_id: 1 } }).
       subscribe(response => {
         this.isLoading = false;
+        this.isResolved = true;
         this.claims = response;
       }, error => {
       })

@@ -1,5 +1,5 @@
 export const AppConfig = {
-    'apiBaseUrl': "http://localhost:3000/",
+    'apiBaseUrl': "https://cc059973.ngrok.io/",
     'defaultCurrency': 'IDR'
 
 }
@@ -8,7 +8,8 @@ export const APIUrls = {
     'loginWithFB': 'users/',
     'userList': 'users/',
     "insuranceList": "insurances/",
-    "claimList": "claims/"
+    "claimList": "claims/",
+    "addnewClaim": "claims/"
 }
 
 export const PolicyStatus = {
@@ -22,7 +23,7 @@ export const PolicyStatus = {
     policyInfo: {
         "0": "Complete payment for activating policy",
         "1": "Activate your policy using mobile",
-        "2": "X day(s) to make a claim",
+        "2": "You have to wait X day(s) to make a claim",
         "3": "Active from X to Y",
         "4": "You have made claim"
     },
@@ -71,4 +72,18 @@ export const ClaimLabels = {
     4: 'Robbery',
     1: 'Accidental Damage',
     5: 'Liquid Damage'
+}
+
+export const AppLabels = {
+
+    'buttonToCancelPolicy': 'Cancel',
+    'buttonToMakePayment' : 'Make Payment',
+    'buttonToViewPolicyDetails': 'View Policy Details',
+    'buttonToGenerateActvLink':  'Generate Activation Link',
+    'buttonToViewClaims': "View Claim Details",
+    'buttonToMakeClaim': "Make Claim",
+
+    'userHomeMenu': 'Home',
+    'userClaimsMenu': 'Claims',
+    'userProfileMenu': 'Profile'
 }

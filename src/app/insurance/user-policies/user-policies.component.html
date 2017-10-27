@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div *ngFor="let policy of policies" class="col-sm-12 col-md-6 card-container">
+    <div *ngFor="let policy of policies; let index = index" class="col-sm-12 col-md-6 card-container">
       <mat-card>
         <mat-card-subtitle class="title-color">
           <span>#{{policy.ref_no }}</span>
@@ -16,18 +16,25 @@
           <button mat-button color="warn" *ngIf="policy.status != 4">Cancel</button>
           <button mat-button color="primary" *ngIf="policy.status == 0">Make Payement</button>
           <button mat-button color="primary" *ngIf="policy.status == 1">Generate Activation Link</button>
-          <button mat-button color="primary" (click)="askConfirmationForClaim(policy)" *ngIf="policy.status == 3">Make Claim</button>
-          <button mat-button color="primary" *ngIf="policy.status == '4'">View Claim Details</button>
+          <button mat-button color="primary" (click)="askConfirmationForClaim(policy, index)" *ngIf="policy.status == 3">Make Claim</button>
+          <button mat-button color="primary" (click)="navigateToClaimTab()" *ngIf="policy.status == '4'">View Claim Details</button>
           <button mat-button color="primary">View Policy Details</button>
         </mat-card-actions>
         <mat-card-footer>
         </mat-card-footer>
       </mat-card>
     </div>
+    <mat-card *ngIf="isResolved && policies.length == 0" class="col-sm-12 col-md-12 no-records-card">
+      <h3>No Record Available</h3>
+    </mat-card>
+
+    <mat-card class="col-sm-12 col-md-12" *ngIf="isLoading">
+      <mat-progress-spinner class="loader" mode="indeterminate"></mat-progress-spinner>
+    </mat-card>
   </div>
 </div>
 <ng-template let-data #claimConfirmationDialogRef>
-  
+
   <h2 mat-dialog-title>Are you sure ?</h2>
   <mat-dialog-content>
     <p>You will be asked to submit following details</p>
@@ -35,8 +42,9 @@
       <li>Copy of ID Card (KTP. SIM, Passport, KITAS)</li>
       <li>Original Proof of Ownership</li>
       <li>For theft claims: an original police report letter</li>
-      <li>Official and original receipts for the costs of repair from authorized service center or replacement together with any report detailing required repairs</li>
-      <li>Video documentation which explaining the chronologywith true statement 
+      <li>Official and original receipts for the costs of repair from authorized service center or replacement together with
+        any report detailing required repairs</li>
+      <li>Video documentation which explaining the chronologywith true statement
         <strong>(Make sure your webcame is working properly)</strong>
       </li>
       <li>Photograph of damaged unit from all side angles</li>
@@ -50,8 +58,3 @@
     <button mat-raised-button color="warn" (click)="claimConfirmDialogRef.close(false)">Not Now</button>
   </mat-dialog-actions>
 </ng-template>
-
-
-<mat-card class="col-sm-12 col-md-12 pull-right" *ngIf="isLoading">
-  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-</mat-card>
