@@ -12,3 +12,6 @@
     background-color: #d4809c;
     color: #fff;
 }
+.mat-card{
+    min-height: 235px!important;
+}

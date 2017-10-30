@@ -9,7 +9,7 @@
             <span> {{claim.date_of_claim}} </span>
           </span>
           <span class="p-l-10">
-            Reason for claim <span style="color: red">{{issuelabel[claim.issue_id]}}</span>
+            {{appLabels.commonLabels.claimReason}} : <span style="color: red">{{issuelabel[claim.issue_id]}}</span>
           </span>
           <!-- <span style="float:right">{{getPolicyInfo(policy)}}</span> -->
         </mat-card-subtitle>
@@ -19,31 +19,31 @@
           <span [class]="getBadgeClass(claim.status)">{{claimStatusLabel[claim.status]}}</span>
         </mat-card-title>
         <mat-card-content>
-          <h6 style="text-align: center"> Documents Submitted</h6>
+          <h6 style="text-align: center">{{appLabels.commonLabels.documentsSubmited}}</h6>
 
           <li class="p-b-10" *ngIf="claim.idProof">
-            <a [href]="claim.idProof" target="_blank">Id Proof</a>
+            <a [href]="claim.idProof" target="_blank">{{appLabels.commonLabels.idProof}}</a>
           </li>
           <li class="p-b-10" *ngIf="claim.invoice">
-            <a [href]="claim.invoice" target="_blank">Invoice</a>
+            <a [href]="claim.invoice" target="_blank">{{appLabels.commonLabels.invoice}}</a>
           </li>
           <li class="p-b-10" *ngIf="claim.fir">
-            <a [href]="claim.fir" target="_blank">FIR</a>
+            <a [href]="claim.fir" target="_blank">{{appLabels.commonLabels.fir}}</a>
           </li>
           <li class="p-b-10" *ngIf="claim.videoProof">
-            <a [href]="claim.videoProof">Video</a>
+            <a [href]="claim.videoProof">{{appLabels.commonLabels.video}}</a>
           </li>
           <li class="p-b-10" *ngIf="claim.expenseReciept">
-            <a [href]="claim.expenseReciept" target="_blank">Expense Proof</a>
+            <a [href]="claim.expenseReciept" target="_blank">{{appLabels.commonLabels.expenseReciept}}</a>
           </li>
           <li class="p-b-10" *ngIf="claim.hospitalReport">
-            <a [href]="claim.hospitalReport" target="_blank">Hospital Report</a>
+            <a [href]="claim.hospitalReport" target="_blank">{{appLabels.commonLabels.hospitalReport}}</a>
           </li>
           <li class="p-b-10" *ngFor="let url of claim.devicePhotos; let i = index">
-            <a [href]="url" target="_blank">Device Photo #{{i + 1}}</a>
+            <a [href]="url" target="_blank">{{appLabels.commonLabels.devicePhotos}} #{{i + 1}}</a>
           </li>
           <li class="p-b-10" *ngFor="let url of claim.entityPhotos; let i = index">
-            <a [href]="url" target="_blank">Entity Photo #{{i + 1}}</a>
+            <a [href]="url" target="_blank">{{appLabels.commonLabels.entityPhotos}} #{{i + 1}}</a>
           </li>
         </mat-card-content>
         <!-- <mat-card-actions>
@@ -59,7 +59,7 @@
       </mat-card>
     </div>
     <mat-card *ngIf="isResolved && claims.length == 0" class="col-sm-12 col-md-12 no-records-card">
-      <h3>No Record Available</h3>
+      <h3>{{appLabels.commonLabels.noRecords}}</h3>
     </mat-card>
 
     <mat-card class="col-sm-12 col-md-12" *ngIf="isLoading">

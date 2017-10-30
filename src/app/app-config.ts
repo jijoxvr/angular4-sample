@@ -1,10 +1,10 @@
-export const AppConfig = {
-    'apiBaseUrl': "https://cc059973.ngrok.io/",
-    'defaultCurrency': 'IDR'
+export const AppConfig = { 
+    'apiBaseUrl': "http://localhost:3000/", // modify this to change API base url
+    'defaultCurrency': 'IDR' // modify this to change currency
 
 }
 
-export const APIUrls = {
+export const APIUrls = { // modify this only when service URL changes
     'loginWithFB': 'users/',
     'userList': 'users/',
     "insuranceList": "insurances/",
@@ -12,22 +12,22 @@ export const APIUrls = {
     "addnewClaim": "claims/"
 }
 
-export const PolicyStatus = {
-    label: {
+export const PolicyStatus = { 
+    label: { // modify this for changing laguage
         "0": "Payment Pending",
         "1": "Activation Pending",
-        "2": "Activated (unable to clain)",
+        "2": "Activation",
         "3": "Activation Completed",
         "4": "Claimed"
     },
-    policyInfo: {
+    policyInfo: { // modify this for changing laguage
         "0": "Complete payment for activating policy",
-        "1": "Activate your policy using mobile",
+        "1": "Please, Activate your policy using mobile",
         "2": "You have to wait X day(s) to make a claim",
         "3": "Active from X to Y",
         "4": "You have made claim"
     },
-    badgeClass: {
+    badgeClass: { // should not modiy this
         "0": "badge badge-danger",
         "1": "badge badge-warning",
         "2": "badge badge-warning",
@@ -37,36 +37,36 @@ export const PolicyStatus = {
 }
 
 export const ClaimStatus = {
-    label: {
+    label: { // modify this for changing laguage
         "0": "Processing",
         "1": "Claim Issued",
         "2": "Claim Rejected"
     },
-    badgeClass: {
+    badgeClass: { // should not modiy this
         "0": "badge badge-warning",
         "1": "badge badge-success",
         "2": "badge badge-danger"
     }
 }
 
-export const ClaimReason = [
+export const ClaimReason = [ // modify this for changing laguage
     { value: 1, label: 'Damage' },
     { value: 2, label: 'Lost' },
 ]
 
 export const ExactClaimGroupedReason = {
-    2: [
+    2: [ // modify this for changing laguage
         { value: 2, label: 'Theft' },
         { value: 3, label: 'Burglary' },
         { value: 4, label: 'Robbery' },
     ],
-    1: [
+    1: [ // modify this for changing laguage
         { value: 1, label: 'Accidental Damage' },
         { value: 5, label: 'Liquid Damage' },
     ]
 }
 
-export const ClaimLabels = {
+export const ClaimLabels = { // modify this for changing laguage
     2: 'Theft',
     3: 'Burglary',
     4: 'Robbery',
@@ -74,7 +74,9 @@ export const ClaimLabels = {
     5: 'Liquid Damage'
 }
 
-export const AppLabels = {
+export const AppLabels = { // modify this for changing laguage
+
+    'appName': 'Insureturn',
 
     'buttonToCancelPolicy': 'Cancel',
     'buttonToMakePayment' : 'Make Payment',
@@ -82,8 +84,86 @@ export const AppLabels = {
     'buttonToGenerateActvLink':  'Generate Activation Link',
     'buttonToViewClaims': "View Claim Details",
     'buttonToMakeClaim': "Make Claim",
+    'buttonToEditProfile': 'Edit Profile',
 
-    'userHomeMenu': 'Home',
-    'userClaimsMenu': 'Claims',
-    'userProfileMenu': 'Profile'
+    'logoutButton': 'Logout',
+    'fullScreenButton' : 'fullscreen',
+
+    'profileField': {
+        'email' : 'Email',
+        'location': 'Location',
+        'birthDay': 'Birthday'
+    },
+
+    'confirmationText': 'Are you sure ?',
+    
+    'claimConfirmTexts': {
+        'title' : 'You will be asked to submit following details',
+        'idProof' : 'Copy of ID Card (KTP. SIM, Passport, KITAS)',
+        'invoice' : 'Original Proof of Ownership',
+        'fir': 'For lost: an original police report letter',
+        'expenseReciept': `Official and original receipts for the costs of repair from 
+                            authorized service center or replacement together with any 
+                            report detailing required repairs`,
+        'videoDoc': `Video documentation which explaining the chronology with true
+                    statement (Make sure your webcame is working properly)`,
+        'devicePhotos' : 'Photograph of damaged unit from all side angles',
+        'entityPhotos' : 'Photograph of damaged (forced entry) home or car',
+        'hospitalReport' : `Proof of medical record summary from Hospital for Bodily
+                             Injury (loss due to robbery benefit)`,
+
+        'confirmButton' : 'Proceed',
+        'declineButton' : 'Not Now'
+    
+    },
+
+    'makeClaim': {
+        'title' : 'Please complete all four steps',
+        'warningForRequiredField' : 'This field is required',
+        'warningForRequiredDocuments' : 'Please select a file',
+        'warningForFileSize' : 'The total size must not exceed X (Y)',
+        'warningForInvalidFile' : 'Invalid file, suported formats are X',
+        'nextButton': 'Next',
+        'backButton' : 'Back',
+        'step1' : {
+            'title' : 'What happened ?',
+            'referenceNumber' : 'Reference No',
+            'reasonForClaim' : 'Reason for claim',
+            'preciseReason' : 'Precise Reason' 
+        },
+        'step2' : {
+            'title' : 'Upload supporting documents',
+        },
+        'step3' : {
+            'title' : `Explain what happens`,
+            
+        },
+        'step4' : {
+            'title' : 'Confirm and submit',
+            'submitButton' : 'Submit Claim',
+            'videoUploadProgressLabel' : 'Uploading Video Document'
+        }
+    },
+
+    'commonLabels' : {
+        'uploading' : 'Uploading',
+        'idProof' : 'Id proof',
+        'invoice' : 'Invoice',
+        'fir' : 'Police report',
+        'expenseReciept' : 'Repair/Replace invoice',
+        'hospitalReport': 'Medical report',
+        'devicePhotos': 'Device photos',
+        'entityPhotos': 'Entity photos',
+        'video' : 'Video doc',
+        'uploadCompleted': 'Completed',
+        'claimReason' : 'Reason for claim',
+        'documentsSubmited': 'Documents Submitted',
+        'noRecords': 'No Record Available'
+    },
+
+    'userMenu' : {
+        'home': 'Home',
+        'claim': 'Claims',
+        'profile': 'Profile'
+    }
 }

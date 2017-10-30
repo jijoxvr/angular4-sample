@@ -9,7 +9,7 @@ import * as moment from "moment";
 import 'firebase/storage';
 import * as firebase from 'firebase/app';
 import { Router } from "@angular/router";
-import { ClaimReason, ExactClaimGroupedReason, APIUrls } from "../../app-config";
+import { ClaimReason, ExactClaimGroupedReason, APIUrls, AppLabels } from "../../app-config";
 import { AjaxService } from "../../shared";
 
 @Component({
@@ -22,6 +22,7 @@ export class MakeClaimComponent implements OnInit {
   recordedBlob: any;
   nameFormGroup: FormGroup;
   emailFormGroup: FormGroup;
+  appLabel = AppLabels;
 
   basicFormGroup: FormGroup;
   documentFormGroup: FormGroup;
@@ -177,7 +178,7 @@ export class MakeClaimComponent implements OnInit {
     this.extractAndTriggerUpload('hospitalReport');
     this.extractAndTriggerUpload('devicePhotos', true);
     this.extractAndTriggerUpload('entityPhotos', true);
-    this.uploadVideo();
+    // this.uploadVideo();
     Promise.all(this.tasks).then((files) => {
       console.log(files)
       this.submitDataToServer(files)
@@ -200,7 +201,7 @@ export class MakeClaimComponent implements OnInit {
     });
 
     let dataToServer = Object.assign(fileDict, {
-      'issue_id': this.basicFormGroup.value.claimReason,
+      'issue_id': this.basicFormGroup.value.exactReason,
       'insurance_id': this.data.ref_no,
       'claimDay': moment().date(),
       'claimMonth': moment().month(),
@@ -258,6 +259,32 @@ export class MakeClaimComponent implements OnInit {
         }
       );
     })
+  }
+
+  isUpLoading(field:string, index?:number){
+    let value = index ? (this.uploadProgress[field].length > index ? this.uploadProgress[field][index] : 0) 
+                  : this.uploadProgress[field]
+    return (value < 100 && value > 0)
+  }
+
+  isUploadingCompleted(field:string, index?:number){
+    let value = index ? (this.uploadProgress[field].length > index ? this.uploadProgress[field][index] : 0) 
+    : this.uploadProgress[field]
+    return (value == 100)
+  }
+
+  getFileName(field:string, index:number = 0){
+    if(this.documentFormGroup.get(field) && this.documentFormGroup.get(field).value){
+      return (this.documentFormGroup.get(field).value as FileInput).files[index].name
+    }
+    return field.toUpperCase() 
+  }
+
+  getFileList(field:string){
+    if(this.documentFormGroup.get(field) && this.documentFormGroup.get(field).value){
+      return (this.documentFormGroup.get(field).value as FileInput).files
+    }
+    return []
   }
 
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 
+import { AppLabels } from "../../app-config";
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -8,6 +10,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class UserProfileComponent implements OnInit {
 
+  appLabel = AppLabels; 
   userData: any = {};
   constructor() {
     this.user();

@@ -14,7 +14,7 @@
               <i class="fa fa-user"></i>
             </span>
             <span>
-              Email: {{userData.email ? userData.email : 'N/A'}}
+              {{appLabel.profileField.email}}: {{userData.email ? userData.email : 'N/A'}}
             </span>
           </mat-card-subtitle>
          
@@ -23,7 +23,7 @@
               <i class="fa fa-location-arrow"></i>
             </span>
             <span>
-              Address: {{userData.address ? userData.address : 'N/A'}}
+                {{appLabel.profileField.location}}: {{userData.address ? userData.address : 'N/A'}}
             </span>
           </mat-card-subtitle>
           <mat-card-subtitle class="p-l-10">
@@ -31,12 +31,12 @@
               <i class="fa fa-birthday-cake"></i>
             </span>
             <span>
-              Bday: {{userData.birthday ? userData.birthday : 'N/A'}}
+                {{appLabel.profileField.birthDay}}: {{userData.birthday ? userData.birthday : 'N/A'}}
             </span>
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions class="text-align-right">
-          <button color="primary" mat-button>Edit</button>
+          <button color="primary" mat-button>{{appLabel.buttonToEditProfile}}</button>
         </mat-card-actions>
       </mat-card>
     </div>

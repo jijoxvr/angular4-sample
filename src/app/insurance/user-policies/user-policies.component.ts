@@ -1,8 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-import { PolicyStatus, AppConfig } from "../../app-config";
-import { APIUrls } from '../../app-config';
+import { PolicyStatus, AppConfig, APIUrls, AppLabels } from "../../app-config";
 import { AjaxService } from '../../shared';
 import { MakeClaimComponent } from "../../claim/make-claim/make-claim.component";
 
@@ -20,6 +19,7 @@ export class UserPoliciesComponent implements OnInit {
   claimConfirmDialogRef: MatDialogRef<any> | null; // for pre-claim confirmation
   claimDialogRef: MatDialogRef<any> | null; // for claim form
 
+  public appLabel = AppLabels;
   public isLoading: boolean;
   public isResolved: boolean;
   public policies: Array<any>;

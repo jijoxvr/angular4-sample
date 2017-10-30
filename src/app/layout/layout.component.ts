@@ -2,6 +2,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from "@angular/router";
 import { Component, ElementRef, Renderer2, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { AppLabels } from "../app-config";
 
 @Component({
     selector: 'app-layout',
@@ -12,10 +13,11 @@ import { Component, ElementRef, Renderer2, ViewEncapsulation, AfterViewInit } fr
 })
 export class LayoutComponent implements AfterViewInit {
 
+    applabel = AppLabels;
     navItems = [
-        { name: 'Home', route: '' },
-        { name: 'Claims', route: '/my-claims' },
-        { name: 'Profile', route: '/my-profile' },
+        { name: AppLabels.userMenu.home, route: '' },
+        { name: AppLabels.userMenu.claim, route: '/my-claims' },
+        { name: AppLabels.userMenu.profile, route: '/my-profile' },
 
     ];
 

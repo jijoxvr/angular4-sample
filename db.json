@@ -401,14 +401,20 @@
   "claims": [
     {
       "devicePhotos": [],
-      "entityPhotos": [],
-      "videoProof": "https://firebasestorage.googleapis.com/v0/b/sample-login-910ae.appspot.com/o/claim%2FINS124%2Fvideo%2Fvideo.webm?alt=media&token=6e855616-0db5-4fdf-9e9e-417904735d87",
-      "issue_id": "",
+      "entityPhotos": [
+        "https://firebasestorage.googleapis.com/v0/b/sample-login-910ae.appspot.com/o/claim%2FINS124%2FentityPhotos%2FScreenshot%20from%202017-10-04%2018-13-58.png?alt=media&token=2d8aa98b-3a09-4171-bf46-463553c65bb3",
+        "https://firebasestorage.googleapis.com/v0/b/sample-login-910ae.appspot.com/o/claim%2FINS124%2FentityPhotos%2FScreenshot%20from%202017-10-12%2017-07-47.png?alt=media&token=6e2e5c50-b748-477f-a059-1f497bb8b0b2"
+      ],
+      "idProof": "https://firebasestorage.googleapis.com/v0/b/sample-login-910ae.appspot.com/o/claim%2FINS124%2FidProof%2FInsureturn_Requirements_v_0.1.docx?alt=media&token=1b258928-d234-4d1f-8efe-235df263a4bb",
+      "invoice": "https://firebasestorage.googleapis.com/v0/b/sample-login-910ae.appspot.com/o/claim%2FINS124%2Finvoice%2FInsureturn_Requirements_v_0.1%20(1).docx?alt=media&token=7d9b20ec-4c5b-40c7-96c7-c91d1beaa7fd",
+      "fir": "https://firebasestorage.googleapis.com/v0/b/sample-login-910ae.appspot.com/o/claim%2FINS124%2Ffir%2FInsureturn_Requirements_v_0.1.docx?alt=media&token=08c8f53d-c9be-4c84-bad2-f60a14c0e6a2",
+      "expenseReciept": "https://firebasestorage.googleapis.com/v0/b/sample-login-910ae.appspot.com/o/claim%2FINS124%2FexpenseReciept%2FInsureturn_Requirements_v_0.1.docx?alt=media&token=7df44051-eae0-457f-8b0a-b9b44c76ff26",
+      "issue_id": 2,
       "insurance_id": "INS124",
-      "claimDay": 27,
+      "claimDay": 30,
       "claimMonth": 9,
       "claimYear": 2017,
-      "date_of_claim": "10/27/2017",
+      "date_of_claim": "10/30/2017",
       "user_id": 1,
       "ref_no": "CLAIM#1",
       "status": 0,

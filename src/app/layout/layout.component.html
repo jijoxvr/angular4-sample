@@ -6,7 +6,7 @@
                 </button>
     
                 <div class="demo-toolbar">
-                    <h1>Insureturn</h1>
+                    <h1>{{applabel.appName}}</h1>
                     <div>
                         <button mat-icon-button (click)="toggleFullscreen()" title="Toggle fullscreen">
                             <mat-icon>fullscreen</mat-icon>
@@ -15,7 +15,7 @@
                             {{root.dir.toUpperCase()}}
                         </button>
                         <button mat-button (click)="logout()" title="Logout">
-                            Logout
+                            {{applabel.logoutButton}}
                         </button>
                     </div>
                 </div>
