@@ -1,5 +1,21 @@
-<app-header></app-header>
-<app-side-bar></app-side-bar>
-<section class="main-container">
-    <router-outlet></router-outlet>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<app-header [userData]="userData"></app-header>
+<app-side-bar [userData]="userData"></app-side-bar>
+<section [@routerAnimation]="getRouteAnimation(route)" class="main-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <router-outlet  #route="outlet"></router-outlet>
+      </div>
+      <div class="col-md-4">
+          <app-time-line></app-time-line>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </div>
 </section>

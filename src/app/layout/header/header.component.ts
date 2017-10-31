@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 @Component({
   selector: 'app-header',
@@ -8,6 +8,9 @@ import { Router, NavigationEnd } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   pushRightClass: string = 'push-right';
+
+  @Input()
+  userData: any;
   
   constructor(public router: Router) {
       this.router.events.subscribe((val) => {

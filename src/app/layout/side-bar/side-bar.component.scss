@@ -4,9 +4,9 @@ $topnav-background-color: #E95575;
     position: fixed;
     z-index: 1000;
     top: 55px;
-    left: 235px;
-    width: 235px;
-    margin-left: -235px;
+    left: 220px;
+    width: 220px;
+    margin-left: -220px;
     border: none;
     border-radius: 0;
     overflow-y: auto;
@@ -118,9 +118,22 @@ $topnav-background-color: #E95575;
         }
     }
 }
+
 @media screen and (max-width: 992px) {
     .sidebar {
         top: 54px;
         left: 0px;
     }
 }
+.user-avatar{
+    
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+}
+.profile-info{
+    text-align: center;
+    color: white;
+    padding-bottom: 20px;
+}
+

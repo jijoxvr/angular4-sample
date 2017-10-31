@@ -16,7 +16,7 @@
               <li class="nav-item dropdown" ngbDropdown>
                   <!-- <div class="dropdown"> -->
                   <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
-                      <i class="fa fa-envelope"></i> <b class="caret"></b><span class="sr-only">(current)</span>
+                      <i class="fa fa-envelope"></i><span class="sr-only">(current)</span>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-right messages">
                       <li class="media">
@@ -47,7 +47,7 @@
               </li>
               <li class="nav-item dropdown" ngbDropdown>
                   <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                      <i class="fa fa-bell"></i> <b class="caret"></b><span class="sr-only">(current)</span>
+                      <i class="fa fa-bell"></i><span class="sr-only">(current)</span>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-right">
                       <a href="javascript:void(0)" class="dropdown-item">Pending Task <span class="badge badge-info">6</span></a>
@@ -59,7 +59,7 @@
               </li>
               <li class="nav-item dropdown" ngbDropdown>
                   <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                      <i class="fa fa-language"></i> {{ 'Language'}} <b class="caret"></b>
+                      <i class="fa fa-language"></i> {{ 'Language'}}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
                       <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('en')">{{ 'English'}}</a>
@@ -72,7 +72,7 @@
               </li>
               <li class="nav-item dropdown" ngbDropdown>
                   <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                      <i class="fa fa-user"></i> John Smith <b class="caret"></b>
+                      <i class="fa fa-user"></i> {{userData.displayName}}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
                       <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-user"></i> {{ 'Profile'}}</a>

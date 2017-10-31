@@ -26,6 +26,9 @@ import { UserProfileCompleteComponent } from './user-profile-complete/user-profi
     LayoutModule,
     ClaimModule
   ],
-  declarations: [UserListComponent, UserProfileComponent, UserProfileCompleteComponent]
+  declarations: [UserListComponent, UserProfileComponent, UserProfileCompleteComponent],
+  exports: [
+    UserProfileComponent
+  ]
 })
 export class UserModule { }

@@ -70,3 +70,6 @@ $topnav-background-color: #E95575;
 .header .navbar {
     background: $topnav-background-color !important;
 }
+.dropdown-toggle::after{
+    content: none!important;
+}

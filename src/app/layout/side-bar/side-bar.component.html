@@ -1,13 +1,19 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
   <ul class="list-group">
-      <a [routerLink]="['/my-home']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-          <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Home'}}
+    <div class="profile-info">
+      <a [routerLink]="['/my-profile']" class="logo">
+        <img [src]="userData.photoURL" class="user-avatar" />
       </a>
-      <a [routerLink]="['/my-claims']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-          <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;{{ 'Claims'}}
-      </a>
-      <a [routerLink]="['/my-profile']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-          <i class="fa fa-fw fa-table"></i>&nbsp;{{ 'Profile'}}
-      </a>
+      <div>{{userData.displayName}}</div>
+    </div>
+    <a [routerLink]="['/my-home']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-home"></i>&nbsp;{{ 'Home'}}
+    </a>
+    <a [routerLink]="['/my-claims']" [routerLinkActive]="['router-link-active']"  class="list-group-item">
+      <i class="fa fa-fw fa-life-ring"></i>&nbsp;{{ 'Claims'}}
+    </a>
+    <!-- <a [routerLink]="['/my-profile']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-user"></i>&nbsp;{{ 'Profile'}}
+    </a> -->
   </ul>
 </nav>

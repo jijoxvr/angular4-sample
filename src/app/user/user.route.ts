@@ -11,10 +11,10 @@ import { HomeComponent } from "../home/home.component";
 export const routes:Routes = [{
     path: '', component: LayoutContainerComponent,
     children: [
-        { path: 'my-home', component: HomeComponent },
+        { path: 'my-home', component: HomeComponent, data : {animation: 'home'} },
         { path: 'my-groups', component: GroupWiseUserListComponent },
         { path: 'my-profile', component: UserProfileComponent },
-        { path: 'my-claims', component: UserClaimsComponent },
+        { path: 'my-claims', component: UserClaimsComponent, data : {animation: 'claims'}},
         
     ]}
 ]

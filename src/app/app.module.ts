@@ -14,14 +14,10 @@ import { AuthGuard } from './login/login.gaurd';
 import { HomeModule } from './home/home.module';
 import { routing } from "./app.route";
 import { FacebookModule } from 'ngx-facebook';
+import { LoginPageComponent } from './login/login-page/login-page.component';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyB5L-dGRKg_eSb3QdIRg_NtSWc7hhsEDsU",
-  authDomain: "sample-login-910ae.firebaseapp.com",
-  databaseURL: "https://sample-login-910ae.firebaseio.com",
-  projectId: "sample-login-910ae",
-  storageBucket: "sample-login-910ae.appspot.com",
-  messagingSenderId: "448025007228"
+ 
 };
 
 
@@ -29,6 +25,7 @@ export const firebaseConfig = {
   declarations: [
     AppComponent,
     LoginComponent,
+    LoginPageComponent,
   ],
   providers: [
     AngularFireAuth,

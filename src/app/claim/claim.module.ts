@@ -20,7 +20,8 @@ import { UserClaimsComponent } from './user-claims/user-claims.component';
     UserClaimsComponent
   ],
   exports: [
-    MakeClaimComponent
+    MakeClaimComponent,
+    UserClaimsComponent
   ]
 })
 export class ClaimModule { }

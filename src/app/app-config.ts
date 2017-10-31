@@ -16,15 +16,15 @@ export const PolicyStatus = {
     label: { // modify this for changing laguage
         "0": "Payment Pending",
         "1": "Activation Pending",
-        "2": "Activation",
-        "3": "Activation Completed",
+        "2": "Activated",
+        "3": "Activated",
         "4": "Claimed"
     },
     policyInfo: { // modify this for changing laguage
         "0": "Complete payment for activating policy",
         "1": "Please, Activate your policy using mobile",
         "2": "You have to wait X day(s) to make a claim",
-        "3": "Active from X to Y",
+        "3": "From X to Y",
         "4": "You have made claim"
     },
     badgeClass: { // should not modiy this

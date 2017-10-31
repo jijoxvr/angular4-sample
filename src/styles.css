@@ -50,3 +50,16 @@
     min-height: 150px!important;
      padding: 60px!important;
 }
+
+.text-center{
+    text-align: center!important;   
+}
+
+@media screen and (max-width: 992px) {
+    .push-right .sidebar{
+            left: 220px !important;
+    }
+}
+.pading-10{
+    padding: 10!important;
+}
