@@ -16,7 +16,12 @@ import { routing } from "./app.route";
 import { FacebookModule } from 'ngx-facebook';
 
 export const firebaseConfig = {
-
+  apiKey: "AIzaSyB5L-dGRKg_eSb3QdIRg_NtSWc7hhsEDsU",
+  authDomain: "sample-login-910ae.firebaseapp.com",
+  databaseURL: "https://sample-login-910ae.firebaseio.com",
+  projectId: "sample-login-910ae",
+  storageBucket: "sample-login-910ae.appspot.com",
+  messagingSenderId: "448025007228"
 };
 
 
