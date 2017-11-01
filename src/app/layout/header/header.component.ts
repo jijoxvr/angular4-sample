@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,7 +14,7 @@ export class HeaderComponent implements OnInit {
   @Input()
   userData: any;
   
-  constructor(public router: Router) {
+  constructor(public router: Router, public angularFire: AngularFireAuth) {
       this.router.events.subscribe((val) => {
           if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
               this.toggleSidebar();
@@ -37,8 +39,10 @@ export class HeaderComponent implements OnInit {
       dom.classList.toggle('rtl');
   }
 
-  onLoggedout() {
-      localStorage.removeItem('isLoggedin');
+  logout() {
+    this.angularFire.auth.signOut();
+    localStorage.clear();
+    this.router.navigate(['login']);
   }
 
   changeLang(){

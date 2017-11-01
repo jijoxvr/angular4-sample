@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { fadeAnimation } from "./animation"
+import { fadeAnimation } from "./animation";
 
 
 @Component({
@@ -13,11 +13,11 @@ import { fadeAnimation } from "./animation"
 })
 export class LayoutContainerComponent implements OnInit {
 
-  constructor(public router: Router) { 
+  constructor(public router: Router) {
     this.user()
   }
 
-  userData:any;
+  userData: any;
 
   ngOnInit() {
     if (this.router.url === '/') {
@@ -29,9 +29,9 @@ export class LayoutContainerComponent implements OnInit {
     if (localStorage.getItem('userData')) {
       let data = JSON.parse(localStorage.getItem('userData'));
       this.userData = {
-        displayName : data.name,
+        displayName: data.name,
         email: data.email,
-        address: data.location ? data.location.name: 'N/A',
+        address: data.location ? data.location.name : 'N/A',
         birthday: data.birthday,
         photoURL: data.photoURL
       }
@@ -45,5 +45,7 @@ export class LayoutContainerComponent implements OnInit {
   getRouteAnimation(outlet) {
     return outlet.activatedRouteData.animation
   }
+
+ 
 
 }

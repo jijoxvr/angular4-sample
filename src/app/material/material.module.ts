@@ -21,7 +21,9 @@ import {
   MatPaginatorModule,
   MatChipsModule,
   MatDialogModule,
-  MatStepperModule
+  MatStepperModule,
+  MatDatepickerModule,
+  MatNativeDateModule
   
   
 } from '@angular/material';
@@ -50,7 +52,9 @@ const modules = [
   MatPaginatorModule,
   MatChipsModule,
   MatDialogModule,
-  MatStepperModule
+  MatStepperModule,
+  MatDatepickerModule,
+  MatNativeDateModule
   
 ];
 

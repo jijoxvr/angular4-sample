@@ -8,7 +8,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+          <button type="button" (click)="openSidenav()" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
             aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -51,9 +51,6 @@
     </nav>
 
 
-
-
-
     <section class="hero click-through" id="home">
       <div class="container">
         <div class="row">
@@ -65,7 +62,8 @@
               </h1>
               <h2>for you</h2>
               <h6>Insurance is now Social.</h6>
-              <a href="#" class="btn btn-primary">LOGIN TO CLAIM</a>
+              <h6 *ngIf="message">{{message}}</h6>
+              <button href="#" *ngIf="!loading" (click)="loginWithFB()"  class="btn btn-primary">LOGIN TO CLAIM</button>
             </div>
           </div>
 
@@ -83,7 +81,6 @@
   <section class="clients">
     <div class="container">
       <div class="row">
-
         <div class="col-md-3 col-sm-12">
           <h6>Our partners</h6>
         </div>
@@ -99,8 +96,6 @@
           </div>
 
         </div>
-
-
       </div>
     </div>
   </section>

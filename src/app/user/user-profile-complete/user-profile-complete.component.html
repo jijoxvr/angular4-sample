@@ -1,4 +1,39 @@
-<h2 mat-dialog-title>Please complete all three steps</h2>
+<h2 mat-dialog-title>Update your profile</h2>
 <mat-dialog-content>
-
+    <form [formGroup]="userFormGroup">
+        <!-- <ng-template matStepLabel>{{appLabel.makeClaim.step1.title}}</ng-template> -->
+        <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.email}}" formControlName="Email">
+            <mat-error *ngIf="userFormGroup.get('Email').hasError('pattern')">
+                {{appLabel.commonLabels.warninForInvalidEmail}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="{{appLabel.profileField.birthDay}}" formControlName="DOB">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <!-- <input matInput type="date" placeholder="{{appLabel.profileField.birthDay}}" formControlName="DOB"> -->
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.firstName}}" formControlName="FirstName">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.lastName}}" formControlName="LastName">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.middleName}}" formControlName="MiddleName">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.phoneNumber}}" formControlName="Users_PhoneNumber">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.passportId}}" formControlName="Users_Passport">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.ktp}}" formControlName="Users_KTP">
+        </mat-form-field>
+        <!-- <div>
+            <button class="pull-right" mat-raised-button color="primary" matStepperNext>{{appLabel.makeClaim.nextButton}}</button>
+        </div> -->
+    </form>
 </mat-dialog-content>

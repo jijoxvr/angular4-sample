@@ -1,11 +1,12 @@
 export const AppConfig = { 
-    'apiBaseUrl': "http://localhost:3000/", // modify this to change API base url
+    'apiBaseUrl': "https://www.octerine.com/api/", // modify this to change API base url
+    // 'apiBaseUrl': "http://localhost:3000/", // modify this to change API base url
     'defaultCurrency': 'IDR' // modify this to change currency
 
 }
 
 export const APIUrls = { // modify this only when service URL changes
-    'loginWithFB': 'users/',
+    'loginWithFB': 'user/',
     'userList': 'users/',
     "insuranceList": "insurances/",
     "claimList": "claims/",
@@ -76,6 +77,7 @@ export const ClaimLabels = { // modify this for changing laguage
 
 export const AppLabels = { // modify this for changing laguage
 
+
     'appName': 'Insureturn',
 
     'buttonToCancelPolicy': 'Cancel',
@@ -92,7 +94,13 @@ export const AppLabels = { // modify this for changing laguage
     'profileField': {
         'email' : 'Email',
         'location': 'Location',
-        'birthDay': 'Birthday'
+        'birthDay': 'Birthday',
+        'firstName': 'First Name',
+        'lastName': 'Last Name',
+        'middleName': 'Middle Name',
+        'phoneNumber': 'Phone Number',
+        'passportId': 'PassPort Number',
+        'ktp': 'KTP',
     },
 
     'confirmationText': 'Are you sure ?',
@@ -158,12 +166,22 @@ export const AppLabels = { // modify this for changing laguage
         'uploadCompleted': 'Completed',
         'claimReason' : 'Reason for claim',
         'documentsSubmited': 'Documents Submitted',
-        'noRecords': 'No Record Available'
+        'noRecords': 'No Record Available',
+        'warningForRequiredField' : 'This field is required',
+        'warningForRequiredDocuments' : 'Please select a file',
+        'warningForFileSize' : 'The total size must not exceed X (Y)',
+        'warningForInvalidFile' : 'Invalid file, suported formats are X',
+        'warninForInvalidEmail': 'Please enter a valid email address'
+
     },
 
     'userMenu' : {
         'home': 'Home',
         'claim': 'Claims',
         'profile': 'Profile'
+    },
+
+    'labelForPolicyStatus': {
+        'paymementPending' : '',
     }
 }

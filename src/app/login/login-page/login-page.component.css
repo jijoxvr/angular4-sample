@@ -1,3 +1,8 @@
 .not-transparent{
-    max-height: 100px!important;
+    /* max-height: 100px!important; */
+}
+
+.container{
+    min-height: 0px!important;
+    /* max-height: 150px!important; */
 }

@@ -15,6 +15,7 @@ import { HomeModule } from './home/home.module';
 import { routing } from "./app.route";
 import { FacebookModule } from 'ngx-facebook';
 import { LoginPageComponent } from './login/login-page/login-page.component';
+import { SharedModule } from "./shared/shared.module";
 
 export const firebaseConfig = {
  
@@ -42,7 +43,8 @@ export const firebaseConfig = {
     routing,
     MaterialModule,
     HomeModule,
-    FacebookModule.forRoot()
+    FacebookModule.forRoot(),
+    SharedModule
   ],
   bootstrap: [AppComponent]
 })

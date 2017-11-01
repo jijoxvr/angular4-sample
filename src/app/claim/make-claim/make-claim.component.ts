@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { Router } from "@angular/router";
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { FileValidators } from "../../shared/file-input/file-validators";
@@ -8,7 +9,6 @@ import { Observable } from "rxjs/Rx";
 import * as moment from "moment";
 import 'firebase/storage';
 import * as firebase from 'firebase/app';
-import { Router } from "@angular/router";
 import { ClaimReason, ExactClaimGroupedReason, APIUrls, AppLabels } from "../../app-config";
 import { AjaxService } from "../../shared";
 

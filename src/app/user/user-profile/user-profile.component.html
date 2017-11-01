@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6 offset-md-3 card-container">
+    <div [hidden]="!notEditing" class="col-md-10 offset-md-1 card-container">
       <mat-card>
         <mat-card-header>
           <img mat-card-avatar [src]="userData.photoURL">
           <mat-card-title class="p-l-10 font-25">
             <span>
-              {{userData.displayName}}
+              {{userData.FirstName}}
             </span>
           </mat-card-title>
           <mat-card-subtitle class="p-l-10">
@@ -14,16 +14,16 @@
               <i class="fa fa-user"></i>
             </span>
             <span>
-              {{appLabel.profileField.email}}: {{userData.email ? userData.email : 'N/A'}}
+              {{appLabel.profileField.email}}: {{userData.Email ? userData.Email : 'N/A'}}
             </span>
           </mat-card-subtitle>
-         
+
           <mat-card-subtitle class="p-l-10">
             <span>
               <i class="fa fa-location-arrow"></i>
             </span>
             <span>
-                {{appLabel.profileField.location}}: {{userData.address ? userData.address : 'N/A'}}
+              {{appLabel.profileField.location}}: {{userData.Location ? userData.Location : 'N/A'}}
             </span>
           </mat-card-subtitle>
           <mat-card-subtitle class="p-l-10">
@@ -31,14 +31,54 @@
               <i class="fa fa-birthday-cake"></i>
             </span>
             <span>
-                {{appLabel.profileField.birthDay}}: {{userData.birthday ? userData.birthday : 'N/A'}}
+              {{appLabel.profileField.birthDay}}: {{userData.birthday ? userData.birthday : 'N/A'}}
             </span>
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions class="text-align-right">
-          <button color="primary" mat-button>{{appLabel.buttonToEditProfile}}</button>
+          <button color="primary" (click)="updateProfile()" mat-button>{{appLabel.buttonToEditProfile}}</button>
         </mat-card-actions>
       </mat-card>
+    </div>
+    <div [hidden]="notEditing" class="col-md-10 offset-md-1 card-container">
+      <!-- <mat-card> -->
+          <form [formGroup]="userFormGroup">
+              <!-- <ng-template matStepLabel>{{appLabel.makeClaim.step1.title}}</ng-template> -->
+              <mat-form-field>
+                  <input matInput placeholder="{{appLabel.profileField.email}}" formControlName="Email">
+                  <mat-error *ngIf="userFormGroup.get('Email').hasError('pattern')">
+                      {{appLabel.commonLabels.warninForInvalidEmail}}
+                  </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput [matDatepicker]="picker" placeholder="{{appLabel.profileField.birthDay}}" formControlName="DOB">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <!-- <input matInput type="date" placeholder="{{appLabel.profileField.birthDay}}" formControlName="DOB"> -->
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput placeholder="{{appLabel.profileField.firstName}}" formControlName="FirstName">
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput placeholder="{{appLabel.profileField.lastName}}" formControlName="LastName">
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput placeholder="{{appLabel.profileField.middleName}}" formControlName="MiddleName">
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput placeholder="{{appLabel.profileField.phoneNumber}}" formControlName="Users_PhoneNumber">
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput placeholder="{{appLabel.profileField.passportId}}" formControlName="Users_Passport">
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput placeholder="{{appLabel.profileField.ktp}}" formControlName="Users_KTP">
+              </mat-form-field>
+              <!-- <div>
+                  <button class="pull-right" mat-raised-button color="primary" matStepperNext>{{appLabel.makeClaim.nextButton}}</button>
+              </div> -->
+          </form>
+      <!-- </mat-card> -->
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-$topnav-background-color: #E95575;
+$topnav-background-color: #202020;
 .topnav {
     border-radius: 0;
     background-color: $topnav-background-color;
@@ -72,4 +72,9 @@ $topnav-background-color: #E95575;
 }
 .dropdown-toggle::after{
     content: none!important;
+}
+
+.notification-icon{
+    height: 50px!important;
+    width: 50px!important;
 }
