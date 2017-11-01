@@ -7,6 +7,7 @@ export const AppConfig = {
 
 export const APIUrls = { // modify this only when service URL changes
     'loginWithFB': 'user/',
+    'updateProfile': 'updateuser/',
     'userList': 'users/',
     "insuranceList": "insurances/",
     "claimList": "claims/",
@@ -171,7 +172,9 @@ export const AppLabels = { // modify this for changing laguage
         'warningForRequiredDocuments' : 'Please select a file',
         'warningForFileSize' : 'The total size must not exceed X (Y)',
         'warningForInvalidFile' : 'Invalid file, suported formats are X',
-        'warninForInvalidEmail': 'Please enter a valid email address'
+        'warninForInvalidEmail': 'Please enter a valid email address',
+        'submitButton' : 'Submit',
+        'cancelButton' : 'Cancel'
 
     },
 

@@ -3,7 +3,7 @@
     <div [hidden]="!notEditing" class="col-md-10 offset-md-1 card-container">
       <mat-card>
         <mat-card-header>
-          <img mat-card-avatar [src]="userData.photoURL">
+          <img mat-card-avatar [src]="userData.ProfilePic">
           <mat-card-title class="p-l-10 font-25">
             <span>
               {{userData.FirstName}}
@@ -31,12 +31,12 @@
               <i class="fa fa-birthday-cake"></i>
             </span>
             <span>
-              {{appLabel.profileField.birthDay}}: {{userData.birthday ? userData.birthday : 'N/A'}}
+              {{appLabel.profileField.birthDay}}: {{userData.BirthDateFormated ? userData.BirthDateFormated : 'N/A'}}
             </span>
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions class="text-align-right">
-          <button color="primary" (click)="updateProfile()" mat-button>{{appLabel.buttonToEditProfile}}</button>
+          <button color="primary" (click)="triggerProfileUpdate()" mat-button>{{appLabel.buttonToEditProfile}}</button>
         </mat-card-actions>
       </mat-card>
     </div>
@@ -74,9 +74,10 @@
               <mat-form-field>
                   <input matInput placeholder="{{appLabel.profileField.ktp}}" formControlName="Users_KTP">
               </mat-form-field>
-              <!-- <div>
-                  <button class="pull-right" mat-raised-button color="primary" matStepperNext>{{appLabel.makeClaim.nextButton}}</button>
-              </div> -->
+              <div class="pull-right" >
+                  <button mat-raised-button color="warn" (click)="notEditing=true;" >{{appLabel.commonLabels.cancelButton}}</button>
+                  <button mat-raised-button color="primary" (click)="submitProfileUpdate()">{{appLabel.commonLabels.submitButton}}</button>
+              </div>
           </form>
       <!-- </mat-card> -->
     </div>

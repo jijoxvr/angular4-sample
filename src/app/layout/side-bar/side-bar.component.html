@@ -2,9 +2,9 @@
   <ul class="list-group">
     <div class="profile-info" style="margin-top: 50px">
       <a [routerLink]="['/my-profile']" class="logo">
-        <img [src]="userData.photoURL" class="user-avatar" />
+        <img [src]="userData.ProfilePic" class="user-avatar" />
       </a>
-      <div>{{userData.displayName}}</div>
+      <div>{{userData.FirstName}}</div>
     </div>
     <a [routerLink]="['/my-home']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <i class="fa fa-fw fa-home"></i>&nbsp;{{ 'Home'}}

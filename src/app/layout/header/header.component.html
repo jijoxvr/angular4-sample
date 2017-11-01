@@ -27,27 +27,27 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right messages">
                         <li class="media">
-                            <img class="d-flex align-self-center mr-3 notification-icon" [src]="userData.photoURL" alt="Generic placeholder image">
+                            <img class="d-flex align-self-center mr-3 notification-icon" [src]="userData.ProfilePic" alt="Generic placeholder image">
                             <div class="media-body">
-                                <h5 class="mt-0 mb-1">{{userData.displayName}}</h5>
+                                <h5 class="mt-0 mb-1">{{userData.FirstName}}</h5>
                                 <p class="small text-muted">
                                     <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                 <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
                             </div>
                         </li>
                         <li class="media">
-                            <img class="d-flex align-self-center mr-3 notification-icon" [src]="userData.photoURL" alt="Generic placeholder image">
+                            <img class="d-flex align-self-center mr-3 notification-icon" [src]="userData.ProfilePic" alt="Generic placeholder image">
                             <div class="media-body">
-                                <h5 class="mt-0 mb-1">{{userData.displayName}}</h5>
+                                <h5 class="mt-0 mb-1">{{userData.FirstName}}</h5>
                                 <p class="small text-muted">
                                     <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                 <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
                             </div>
                         </li>
                         <li class="media">
-                            <img class="d-flex align-self-center mr-3 notification-icon" [src]="userData.photoURL" alt="Generic placeholder image">
+                            <img class="d-flex align-self-center mr-3 notification-icon" [src]="userData.ProfilePic" alt="Generic placeholder image">
                             <div class="media-body">
-                                <h5 class="mt-0 mb-1">{{userData.displayName}}</h5>
+                                <h5 class="mt-0 mb-1">{{userData.FirstName}}</h5>
                                 <p class="small text-muted">
                                     <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                 <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
@@ -89,7 +89,7 @@
                 </li>
                 <li class="nav-item dropdown" ngbDropdown>
                     <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                        <i class="fa fa-user"></i> {{userData.displayName}}
+                        <i class="fa fa-user"></i> {{userData.FirstName}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" [routerLink]="['/my-profile']">

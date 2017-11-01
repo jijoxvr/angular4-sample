@@ -28,13 +28,7 @@ export class LayoutContainerComponent implements OnInit {
   user() {
     if (localStorage.getItem('userData')) {
       let data = JSON.parse(localStorage.getItem('userData'));
-      this.userData = {
-        displayName: data.name,
-        email: data.email,
-        address: data.location ? data.location.name : 'N/A',
-        birthday: data.birthday,
-        photoURL: data.photoURL
-      }
+      this.userData = data;
     }
     else {
     }
