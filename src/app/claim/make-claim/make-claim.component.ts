@@ -9,7 +9,7 @@ import { Observable } from "rxjs/Rx";
 import * as moment from "moment";
 import 'firebase/storage';
 import * as firebase from 'firebase/app';
-import { ClaimReason, ExactClaimGroupedReason, APIUrls, AppLabels } from "../../app-config";
+import { APIUrls, AppLabels } from "../../app-config";
 import { AjaxService } from "../../shared";
 
 @Component({
@@ -23,6 +23,7 @@ export class MakeClaimComponent implements OnInit {
   nameFormGroup: FormGroup;
   emailFormGroup: FormGroup;
   appLabel = AppLabels;
+  loading = false;
 
   basicFormGroup: FormGroup;
   documentFormGroup: FormGroup;
@@ -35,9 +36,9 @@ export class MakeClaimComponent implements OnInit {
   public uploading: boolean = false;
 
 
-  claimReason = ClaimReason;
+  claimMainReason = [];
 
-  exactReason = ExactClaimGroupedReason;
+  claimReasonGrouped = {};
 
 
   uploadProgress = {
@@ -57,9 +58,87 @@ export class MakeClaimComponent implements OnInit {
     public angularFire: AngularFireAuth, private ajaxService: AjaxService,
     private router: Router) { }
 
+  extractClaimReason(data) {
+
+    let claimMainReasonDict = {}
+    if (data.Details) {
+      for (let item of data.Details) {
+        if (this.claimReasonGrouped[item.Issue_Id])
+          this.claimReasonGrouped[item.Issue_Id].push({ value: item.IssueSub_Id, label: item.IssueSub_Name });
+        else
+          this.claimReasonGrouped[item.Issue_Id] = [{ value: item.IssueSub_Id, label: item.IssueSub_Name }];
+        claimMainReasonDict[item.Issue_Id] = item.Issue_Name;
+      }
+      Object.keys(claimMainReasonDict).forEach(key => {
+        this.claimMainReason.push({ value: key, label: claimMainReasonDict[key] })
+      })
+    }
+    console.log(this.claimMainReason)
+    console.log(this.claimReasonGrouped)
+  }
+
   ngOnInit() {
 
-
+    this.loading = true;
+    this.ajaxService.execute({ url: APIUrls.claimReason, method: 'GET' })
+      .subscribe(success => {
+        this.extractClaimReason(success);
+        this.loading = false;
+      }, error => {
+        let success = {
+          "Status": "SUCCESS",
+          "Message": "What happened to your device?",
+          "Details": [
+            {
+              "Issue_Id": 1,
+              "Issue_Name": "Damage",
+              "IssueSub_Id": 8,
+              "IssueSub_Name": "Accidental Damage",
+              "IssueSub_FirstMessage": null,
+              "IssueSub_SecondMessage": null,
+              "IssueSub_ClaimPercentage": 2
+            },
+            {
+              "Issue_Id": 1,
+              "Issue_Name": "Damage",
+              "IssueSub_Id": 9,
+              "IssueSub_Name": "Liquid Damage",
+              "IssueSub_FirstMessage": null,
+              "IssueSub_SecondMessage": null,
+              "IssueSub_ClaimPercentage": 3
+            },
+            {
+              "Issue_Id": 2,
+              "Issue_Name": "Lost",
+              "IssueSub_Id": 10,
+              "IssueSub_Name": "Theft",
+              "IssueSub_FirstMessage": null,
+              "IssueSub_SecondMessage": null,
+              "IssueSub_ClaimPercentage": 4
+            },
+            {
+              "Issue_Id": 2,
+              "Issue_Name": "Lost",
+              "IssueSub_Id": 11,
+              "IssueSub_Name": "Burglary",
+              "IssueSub_FirstMessage": null,
+              "IssueSub_SecondMessage": null,
+              "IssueSub_ClaimPercentage": 3
+            },
+            {
+              "Issue_Id": 2,
+              "Issue_Name": "Lost",
+              "IssueSub_Id": 12,
+              "IssueSub_Name": "Robbery",
+              "IssueSub_FirstMessage": null,
+              "IssueSub_SecondMessage": null,
+              "IssueSub_ClaimPercentage": 2
+            }
+          ]
+        }
+        this.extractClaimReason(success);
+        this.loading = false;
+      })
     this.basicFormGroup = this._formBuilder.group({
       insuranceRef: [{ value: this.data.ref_no, disabled: true }, [Validators.required]],
       claimReason: ['', [Validators.required]],
@@ -69,10 +148,10 @@ export class MakeClaimComponent implements OnInit {
 
 
     this.documentFormGroup = this._formBuilder.group({
-      idProof: [{ value: undefined, disabled: false }, [Validators.required,
-      FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]],
-      invoice: [{ value: undefined, disabled: false }, [Validators.required,
-      FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]],
+      // idProof: [{ value: undefined, disabled: false }, [Validators.required,
+      // FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]],
+      // invoice: [{ value: undefined, disabled: false }, [Validators.required,
+      // FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]],
 
       // should we add expense reciept ?
       expenseReciept: [{ value: undefined, disabled: false }, [Validators.required,
@@ -125,13 +204,15 @@ export class MakeClaimComponent implements OnInit {
 
 
   checkVideo() {
-    if(this.videoFormGroup.get('isVideoProofSubmitted').invalid){
+    if (this.videoFormGroup.get('isVideoProofSubmitted').invalid) {
       alert('Video record is mandatory')
     }
   }
 
   checkDocumets() {
-    let fields = ['idProof', 'invoice', 'expenseReciept', 'fir', 'devicePhotos', 'hospitalReport', 'entityPhotos']
+    let fields = [
+      // 'idProof', 'invoice', 
+      'expenseReciept', 'fir', 'devicePhotos', 'hospitalReport', 'entityPhotos']
     for (let field of fields) {
       if (this.documentFormGroup.get(field)) {
         this.documentFormGroup.get(field).markAsTouched();
@@ -171,8 +252,8 @@ export class MakeClaimComponent implements OnInit {
   makeClaimRequest() {
     this.uploading = true;
     this.tasks = []
-    this.extractAndTriggerUpload('idProof');
-    this.extractAndTriggerUpload('invoice');
+    // this.extractAndTriggerUpload('idProof');
+    // this.extractAndTriggerUpload('invoice');
     this.extractAndTriggerUpload('fir');
     this.extractAndTriggerUpload('expenseReciept');
     this.extractAndTriggerUpload('hospitalReport');
@@ -218,7 +299,6 @@ export class MakeClaimComponent implements OnInit {
         this.dialogRef.close(true);
         this.router.navigate(['my-claims']);
       })
-
   }
 
   extractAndTriggerUpload(field, multiple = false) {
@@ -261,27 +341,27 @@ export class MakeClaimComponent implements OnInit {
     })
   }
 
-  isUpLoading(field:string, index?:number){
-    let value = index ? (this.uploadProgress[field].length > index ? this.uploadProgress[field][index] : 0) 
-                  : this.uploadProgress[field]
+  isUpLoading(field: string, index?: number) {
+    let value = index ? (this.uploadProgress[field].length > index ? this.uploadProgress[field][index] : 0)
+      : this.uploadProgress[field]
     return (value < 100 && value > 0)
   }
 
-  isUploadingCompleted(field:string, index?:number){
-    let value = index ? (this.uploadProgress[field].length > index ? this.uploadProgress[field][index] : 0) 
-    : this.uploadProgress[field]
+  isUploadingCompleted(field: string, index?: number) {
+    let value = index ? (this.uploadProgress[field].length > index ? this.uploadProgress[field][index] : 0)
+      : this.uploadProgress[field]
     return (value == 100)
   }
 
-  getFileName(field:string, index:number = 0){
-    if(this.documentFormGroup.get(field) && this.documentFormGroup.get(field).value){
+  getFileName(field: string, index: number = 0) {
+    if (this.documentFormGroup.get(field) && this.documentFormGroup.get(field).value) {
       return (this.documentFormGroup.get(field).value as FileInput).files[index].name
     }
-    return field.toUpperCase() 
+    return field.toUpperCase()
   }
 
-  getFileList(field:string){
-    if(this.documentFormGroup.get(field) && this.documentFormGroup.get(field).value){
+  getFileList(field: string) {
+    if (this.documentFormGroup.get(field) && this.documentFormGroup.get(field).value) {
       return (this.documentFormGroup.get(field).value as FileInput).files
     }
     return []

@@ -10,7 +10,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="{{appLabel.makeClaim.step1.reasonForClaim}}" formControlName="claimReason" required>
-            <mat-option *ngFor="let reason of claimReason" [value]="reason.value">
+            <mat-option *ngFor="let reason of claimMainReason" [value]="reason.value">
               {{ reason.label }}
             </mat-option>
           </mat-select>
@@ -18,7 +18,7 @@
         </mat-form-field>
         <mat-form-field *ngIf="claimReasonSelected">
           <mat-select placeholder="{{appLabel.makeClaim.step1.preciseReason}}" formControlName="exactReason" required>
-            <mat-option *ngFor="let reason of exactReason[selectedReason]" [value]="reason.value">
+            <mat-option *ngFor="let reason of claimReasonGrouped[selectedReason]" [value]="reason.value">
               {{ reason.label }}
             </mat-option>
           </mat-select>
@@ -33,8 +33,8 @@
     <mat-step [stepControl]="documentFormGroup">
       <form [formGroup]="documentFormGroup">
         <ng-template matStepLabel>{{appLabel.makeClaim.step2.title}}</ng-template>
-        <!--  -->
-        <mat-form-field *ngIf="documentFormGroup.get('idProof')">
+        <!-- Temporarly removed Invoice and Id proof -->
+        <!-- <mat-form-field *ngIf="documentFormGroup.get('idProof')">
           <app-file-input formControlName="idProof" placeholder="{{appLabel.commonLabels.idProof}}" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
           <mat-error *ngIf="documentFormGroup.get('idProof').hasError('required')">
@@ -59,7 +59,7 @@
           <mat-error *ngIf="documentFormGroup.get('invoice').hasError('fileType')">
               {{documentFormGroup.get('invoice')?.getError('fileType').errormessage}}
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field *ngIf="documentFormGroup.get('fir')">
           <app-file-input formControlName="fir" placeholder="{{appLabel.commonLabels.fir}}" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
@@ -230,7 +230,9 @@
       </mat-card>
     </mat-step>
   </mat-horizontal-stepper>
-
+  <mat-card class="col-sm-12 col-md-12" *ngIf="isLoading">
+    <mat-progress-spinner class="loader" mode="indeterminate"></mat-progress-spinner>
+  </mat-card>
 </mat-dialog-content>
 
 <!-- <mat-dialog-actions class="pull-right">

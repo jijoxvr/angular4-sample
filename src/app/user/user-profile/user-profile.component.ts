@@ -8,7 +8,8 @@ import {
   FormGroup, Validators, FormControl
 } from '@angular/forms';
 
-import { AjaxService } from "../../shared"
+import { AjaxService } from "../../shared";
+import { UserServiceService } from "../../core/user-service.service";
 import * as moment from "moment";
 import { userProfileUpdateConfig } from "../user-profile-complete/user-profile-complete-config";
 import { AppLabels, APIUrls } from "../../app-config";
@@ -26,14 +27,21 @@ export class UserProfileComponent implements OnInit {
   userFormGroup: FormGroup;
   appLabel = AppLabels;
   notEditing = true;
+  isLoading = false;
   userData: any = {};
+
   constructor(public dialog: MatDialog, private _formBuilder: FormBuilder, 
-    private ajaxService:AjaxService) {
-      this.user();
+    private ajaxService:AjaxService, private userServiceService: UserServiceService) {
+      this.userServiceService.userObservable.subscribe(user=>{
+        this.userData = user;
+        this.createFormGroup();
+      })
+      this.userServiceService.getUserInfo();
     }
     
-    ngOnInit() { 
-      console.log(this.userData.Email)
+    ngOnInit() { }
+
+    createFormGroup(){
       this.userFormGroup = this._formBuilder.group({
         UserId: [this.userData.UserId],
         DOB: [this.userData.BirthDate, []],
@@ -45,19 +53,8 @@ export class UserProfileComponent implements OnInit {
         Users_Passport: [this.userData.Users_Passport ? this.userData.Users_Passport : ''],
         Users_KTP: [this.userData.Users_KTP ? this.userData.Users_KTP : '']
       });
-      
     }
     
-    user(user?) {
-      if (localStorage.getItem('userData') || user) {
-        let data = user ? user : JSON.parse(localStorage.getItem('userData'));
-        this.userData = data;
-        this.userData.BirthDateFormated = this.userData.BirthDate ? 
-        moment(this.userData.BirthDate).format('DD/MM/YYYY') : "";
-      }
-      else {
-      }
-    }
     
     triggerProfileUpdate(){
       this.notEditing = false;
@@ -88,11 +85,27 @@ export class UserProfileComponent implements OnInit {
         Users_Passport : this.userFormGroup.get('Users_Passport').value,
         Users_KTP : this.userFormGroup.get('Users_KTP').value
       }
-      console.log(dataToServer)
-      this.ajaxService.execute({url: APIUrls.updateProfile, body: dataToServer})
-      .subscribe(response=>{
-        console.log(response)
+      this.isLoading = true;
+      // console.log(dataToServer)
+      // this.ajaxService.execute({url: APIUrls.updateProfile, body: dataToServer})
+      // .subscribe(response=>{
+      //   console.log(response)
+      //   
+      // })
+      this.userServiceService.updateUser({
+        "UserId": 10048,
+        "FirstName": "Neww",
+        "LastName": "Test ",
+        "MiddleName": "Test ",
+        "Email": "Test ",
+        "BirthDate": "1990-12-12T00:00:00",
+        "Users_Location": "",
+        "Users_PhoneNumber": "Test ",
+        "Users_Passport": "Test ",
+        "Users_KTP": 1
       })
+      this.isLoading = false;
+      this.notEditing = true;
     }
   }
   

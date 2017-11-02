@@ -7,9 +7,13 @@ import { UserProfileComponent } from "./user-profile/user-profile.component";
 import { GroupWiseUserListComponent } from "../group/group-wise-user-list/group-wise-user-list.component"
 import { UserClaimsComponent } from "../claim/user-claims/user-claims.component";
 import { HomeComponent } from "../home/home.component";
+import { MasterResolver } from "../core/app-provider.service"
 
 export const routes:Routes = [{
     path: '', component: LayoutContainerComponent,
+    resolve : {
+        team: MasterResolver
+    },
     children: [
         { path: 'my-home', component: HomeComponent, data : {animation: 'home'} },
         { path: 'my-groups', component: GroupWiseUserListComponent },

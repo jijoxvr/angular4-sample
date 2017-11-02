@@ -41,7 +41,7 @@
       </mat-card>
     </div>
     <div [hidden]="notEditing" class="col-md-10 offset-md-1 card-container">
-      <!-- <mat-card> -->
+      <mat-card *ngIf="!isLoading">
           <form [formGroup]="userFormGroup">
               <!-- <ng-template matStepLabel>{{appLabel.makeClaim.step1.title}}</ng-template> -->
               <mat-form-field>
@@ -74,12 +74,15 @@
               <mat-form-field>
                   <input matInput placeholder="{{appLabel.profileField.ktp}}" formControlName="Users_KTP">
               </mat-form-field>
-              <div class="pull-right" >
+              <mat-card-actions class="text-align-right">
                   <button mat-raised-button color="warn" (click)="notEditing=true;" >{{appLabel.commonLabels.cancelButton}}</button>
                   <button mat-raised-button color="primary" (click)="submitProfileUpdate()">{{appLabel.commonLabels.submitButton}}</button>
-              </div>
+              </mat-card-actions>
           </form>
-      <!-- </mat-card> -->
+      </mat-card>
+      <mat-card class="col-sm-12 col-md-12" *ngIf="isLoading">
+        <mat-progress-spinner class="loader" mode="indeterminate"></mat-progress-spinner>
+      </mat-card>
     </div>
   </div>
 </div>

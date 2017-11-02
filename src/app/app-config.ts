@@ -11,30 +11,18 @@ export const APIUrls = { // modify this only when service URL changes
     'userList': 'users/',
     "insuranceList": "insurances/",
     "claimList": "claims/",
-    "addnewClaim": "claims/"
+    "addnewClaim": "claims/",
+    "claimReason": "reasonForClaim/"
 }
 
 export const PolicyStatus = { 
-    label: { // modify this for changing laguage
-        "0": "Payment Pending",
-        "1": "Activation Pending",
-        "2": "Activated",
-        "3": "Activated",
-        "4": "Claimed"
-    },
-    policyInfo: { // modify this for changing laguage
-        "0": "Complete payment for activating policy",
-        "1": "Please, Activate your policy using mobile",
-        "2": "You have to wait X day(s) to make a claim",
-        "3": "From X to Y",
-        "4": "You have made claim"
-    },
+  
     badgeClass: { // should not modiy this
-        "0": "badge badge-danger",
-        "1": "badge badge-warning",
+        "1": "badge badge-danger",
         "2": "badge badge-warning",
-        "3": "badge badge-success",
-        "4": "badge badge-primary"
+        "3": "badge badge-warning",
+        "4": "badge badge-success",
+        "5": "badge badge-primary"
     }
 }
 

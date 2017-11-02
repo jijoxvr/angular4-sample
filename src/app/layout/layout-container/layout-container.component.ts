@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { fadeAnimation } from "./animation";
+import { UserServiceService } from "../../core/user-service.service";
 
 
 @Component({
@@ -13,8 +14,11 @@ import { fadeAnimation } from "./animation";
 })
 export class LayoutContainerComponent implements OnInit {
 
-  constructor(public router: Router) {
-    this.user()
+  constructor(public router: Router, public userServiceService:UserServiceService) {
+    this.userServiceService.userObservable.subscribe(user=>{
+      this.userData = user;
+    })
+    this.userServiceService.getUserInfo();
   }
 
   userData: any;
@@ -25,14 +29,7 @@ export class LayoutContainerComponent implements OnInit {
     }
   }
 
-  user() {
-    if (localStorage.getItem('userData')) {
-      let data = JSON.parse(localStorage.getItem('userData'));
-      this.userData = data;
-    }
-    else {
-    }
-  }
+  
   public getState(outlet) {
     return outlet.isActivated ? outlet.activatedRoute : '';
   }

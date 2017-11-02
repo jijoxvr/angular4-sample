@@ -16,6 +16,9 @@ import { routing } from "./app.route";
 import { FacebookModule } from 'ngx-facebook';
 import { LoginPageComponent } from './login/login-page/login-page.component';
 import { SharedModule } from "./shared/shared.module";
+import { UserServiceService } from "./core/user-service.service";
+import { AppConfigService } from "./core/app-config.service";
+import { MasterResolver, UserResolver } from "./core/app-provider.service";
 
 export const firebaseConfig = {
  
@@ -30,7 +33,11 @@ export const firebaseConfig = {
   ],
   providers: [
     AngularFireAuth,
-    AuthGuard
+    AuthGuard,
+    UserServiceService,
+    UserResolver,
+    MasterResolver,
+    AppConfigService
   ],
   imports: [
     BrowserModule,
@@ -46,6 +53,7 @@ export const firebaseConfig = {
     FacebookModule.forRoot(),
     SharedModule
   ],
+ 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

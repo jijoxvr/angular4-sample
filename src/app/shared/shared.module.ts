@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 import { VideoRecordComponent } from './video-record/video-record.component';
 import { MaterialModule } from "../material/material.module";
@@ -36,7 +36,8 @@ import { TimeLineComponent } from './time-line/time-line.component';
     WebStorageService,
     CookieService,
     CurrencyPipe,
-    ByteFormatPipe
+    ByteFormatPipe,
+    DatePipe
   ]
 })
 export class SharedModule { }
