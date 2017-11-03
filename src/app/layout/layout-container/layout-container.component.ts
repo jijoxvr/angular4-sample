@@ -24,7 +24,7 @@ export class LayoutContainerComponent implements OnInit {
   userData: any;
 
   ngOnInit() {
-    if (this.router.url === '/') {
+    if (this.router.url === '/' || this.router.url === '') {
       this.router.navigate(['/my-home']);
     }
   }

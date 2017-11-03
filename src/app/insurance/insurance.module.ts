@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
@@ -14,7 +15,8 @@ import { UserPoliciesComponent } from './user-policies/user-policies.component';
     CommonModule,
     SharedModule,
     MaterialModule,
-    ClaimModule
+    ClaimModule,
+    AngularSvgIconModule
   ],
   declarations: [PolicyListComponent, UserPoliciesComponent],
   exports : [PolicyListComponent, UserPoliciesComponent],

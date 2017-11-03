@@ -23,7 +23,8 @@ import {
   MatDialogModule,
   MatStepperModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatTooltipModule
   
   
 } from '@angular/material';
@@ -54,7 +55,8 @@ const modules = [
   MatDialogModule,
   MatStepperModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatTooltipModule
   
 ];
 

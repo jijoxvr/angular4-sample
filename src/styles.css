@@ -63,3 +63,13 @@
 .pading-10{
     padding: 10!important;
 }
+
+.claim-button{
+    background-color:#fa3a61!important;
+}
+
+.mat-tooltip  {
+    background-color: #fa3a61; 
+    color: white !important;
+    font-size: 15px;
+}

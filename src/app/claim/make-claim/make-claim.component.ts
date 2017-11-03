@@ -11,6 +11,7 @@ import 'firebase/storage';
 import * as firebase from 'firebase/app';
 import { APIUrls, AppLabels } from "../../app-config";
 import { AjaxService } from "../../shared";
+import { AppConfigService } from "../../core/app-config.service";
 
 @Component({
   selector: 'app-make-claim',
@@ -20,10 +21,9 @@ import { AjaxService } from "../../shared";
 export class MakeClaimComponent implements OnInit {
 
   recordedBlob: any;
-  nameFormGroup: FormGroup;
-  emailFormGroup: FormGroup;
   appLabel = AppLabels;
   loading = false;
+  claimReason: any;
 
   basicFormGroup: FormGroup;
   documentFormGroup: FormGroup;
@@ -41,6 +41,7 @@ export class MakeClaimComponent implements OnInit {
   claimReasonGrouped = {};
 
 
+
   uploadProgress = {
     idProof: 0,
     invoice: 0,
@@ -52,11 +53,14 @@ export class MakeClaimComponent implements OnInit {
     videoProof: 0
   }
 
+
   constructor(
     public dialogRef: MatDialogRef<MakeClaimComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _formBuilder: FormBuilder,
     public angularFire: AngularFireAuth, private ajaxService: AjaxService,
-    private router: Router) { }
+    private router: Router, private appConfigService: AppConfigService) {
+      this.claimReason = appConfigService.claimReason;
+    }
 
   extractClaimReason(data) {
 
@@ -64,23 +68,22 @@ export class MakeClaimComponent implements OnInit {
     if (data.Details) {
       for (let item of data.Details) {
         if (this.claimReasonGrouped[item.Issue_Id])
-          this.claimReasonGrouped[item.Issue_Id].push({ value: item.IssueSub_Id, label: item.IssueSub_Name });
+          this.claimReasonGrouped[item.Issue_Id].push({ value: {id: item.IssueSub_Id, code: item.IssueSub_Code }, label: item.IssueSub_Name });
         else
-          this.claimReasonGrouped[item.Issue_Id] = [{ value: item.IssueSub_Id, label: item.IssueSub_Name }];
-        claimMainReasonDict[item.Issue_Id] = item.Issue_Name;
+          this.claimReasonGrouped[item.Issue_Id] = [{ value: {id: item.IssueSub_Id, code: item.IssueSub_Code }, label: item.IssueSub_Name }];
+        claimMainReasonDict[item.Issue_Id] = { label: item.Issue_Name, code: item.Issue_Code };
       }
       Object.keys(claimMainReasonDict).forEach(key => {
-        this.claimMainReason.push({ value: key, label: claimMainReasonDict[key] })
+        this.claimMainReason.push({ value: {id : key, code: claimMainReasonDict[key].code}, label: claimMainReasonDict[key].label })
       })
     }
-    console.log(this.claimMainReason)
-    console.log(this.claimReasonGrouped)
+    
   }
 
   ngOnInit() {
 
     this.loading = true;
-    this.ajaxService.execute({ url: APIUrls.claimReason, method: 'GET' })
+    this.ajaxService.execute({ url: APIUrls.claimReason, method: 'POST' })
       .subscribe(success => {
         this.extractClaimReason(success);
         this.loading = false;
@@ -92,7 +95,9 @@ export class MakeClaimComponent implements OnInit {
             {
               "Issue_Id": 1,
               "Issue_Name": "Damage",
+              "Issue_Code": "DMG",
               "IssueSub_Id": 8,
+              "IssueSub_Code": 'ACDMG',
               "IssueSub_Name": "Accidental Damage",
               "IssueSub_FirstMessage": null,
               "IssueSub_SecondMessage": null,
@@ -101,7 +106,9 @@ export class MakeClaimComponent implements OnInit {
             {
               "Issue_Id": 1,
               "Issue_Name": "Damage",
+              "Issue_Code": "DMG",
               "IssueSub_Id": 9,
+              "IssueSub_Code": 'LQDMG',
               "IssueSub_Name": "Liquid Damage",
               "IssueSub_FirstMessage": null,
               "IssueSub_SecondMessage": null,
@@ -110,7 +117,9 @@ export class MakeClaimComponent implements OnInit {
             {
               "Issue_Id": 2,
               "Issue_Name": "Lost",
+              "Issue_Code": "LST",
               "IssueSub_Id": 10,
+              "IssueSub_Code": 'TFT',
               "IssueSub_Name": "Theft",
               "IssueSub_FirstMessage": null,
               "IssueSub_SecondMessage": null,
@@ -119,7 +128,9 @@ export class MakeClaimComponent implements OnInit {
             {
               "Issue_Id": 2,
               "Issue_Name": "Lost",
+              "Issue_Code": "LST",
               "IssueSub_Id": 11,
+              "IssueSub_Code": 'BRG',
               "IssueSub_Name": "Burglary",
               "IssueSub_FirstMessage": null,
               "IssueSub_SecondMessage": null,
@@ -128,7 +139,9 @@ export class MakeClaimComponent implements OnInit {
             {
               "Issue_Id": 2,
               "Issue_Name": "Lost",
+              "Issue_Code": "LST",
               "IssueSub_Id": 12,
+              "IssueSub_Code": 'ROB',
               "IssueSub_Name": "Robbery",
               "IssueSub_FirstMessage": null,
               "IssueSub_SecondMessage": null,
@@ -140,7 +153,7 @@ export class MakeClaimComponent implements OnInit {
         this.loading = false;
       })
     this.basicFormGroup = this._formBuilder.group({
-      insuranceRef: [{ value: this.data.ref_no, disabled: true }, [Validators.required]],
+      insuranceRef: [{ value: this.data.Insurance_Id, disabled: true }, [Validators.required]],
       claimReason: ['', [Validators.required]],
       exactReason: ['', [Validators.required]],
 
@@ -166,14 +179,14 @@ export class MakeClaimComponent implements OnInit {
 
 
     this.basicFormGroup.get('claimReason').valueChanges.subscribe((value) => {
-      this.selectedReason = value;
+      this.selectedReason = value.id;
       this.claimReasonSelected = true;
-      if (value == 2) { // If Lost add police fir
+      if (value.code == this.claimReason.LOST) { // If Lost add police fir
         let fir = new FormControl({ value: undefined, disabled: false }, [Validators.required,
         FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]);
         this.documentFormGroup.addControl('fir', fir);
         this.documentFormGroup.removeControl('devicePhotos');
-      } else { // If damage add device photos  
+      } else if(value.code == this.claimReason.DAMAGE) { // If damage add device photos  
         let devicePhotos = new FormControl({ value: undefined, disabled: false }, [Validators.required,
         FileValidators.maxContentSize(104857600), FileValidators.fileType(['png', 'jpeg'])]);
         this.documentFormGroup.addControl('devicePhotos', devicePhotos);
@@ -182,13 +195,14 @@ export class MakeClaimComponent implements OnInit {
     })
 
     this.basicFormGroup.get('exactReason').valueChanges.subscribe((value) => {
-      if (value == 4) {  // If Robery add hospital report 
+      console.log(value)
+      if (value.code == this.claimReason.ROBBERY) {  // If Robery add hospital report 
         let hospitalReport = new FormControl({ value: undefined, disabled: false }, [Validators.required,
         FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]);
         this.documentFormGroup.removeControl('entityPhotos');
         this.documentFormGroup.addControl('hospitalReport', hospitalReport);
 
-      } else if (value == 3) { // If Burglary add entity(car/home) photos 
+      } else if (value.code == this.claimReason.BURGLARY) { // If Burglary add entity(car/home) photos 
         let entityPhotos = new FormControl({ value: undefined, disabled: false }, [Validators.required,
         FileValidators.maxContentSize(104857600), FileValidators.fileType(['png', 'jpeg'])]);
         this.documentFormGroup.removeControl('hospitalReport');
@@ -282,7 +296,7 @@ export class MakeClaimComponent implements OnInit {
     });
 
     let dataToServer = Object.assign(fileDict, {
-      'issue_id': this.basicFormGroup.value.exactReason,
+      'issue_id': this.basicFormGroup.value.exactReason.id,
       'insurance_id': this.data.ref_no,
       'claimDay': moment().date(),
       'claimMonth': moment().month(),

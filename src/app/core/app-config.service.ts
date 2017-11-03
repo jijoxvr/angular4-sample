@@ -5,20 +5,20 @@ import { Observable } from "rxjs/Rx";
 export class AppConfigService {
 
   insuranceStatus = {
-    'PAYMENT_PENDING': 1,
-    'ACTIVATION_PENDING': 2,
-    'ACTIVATION_PROGRESS': 3,
-    'ACTIVATED': 4,
-    'CLAIMED': 5
+    'PAYMENT_PENDING': 'PAY_PEND',
+    'ACTIVATION_PENDING': 'ACT_PEND',
+    'ACTIVATION_PROGRESS': 'ACT_PROG',
+    'ACTIVATED': 'ACTV',
+    'CLAIMED': 'CLM'
   }
   claimReason = {
-    'DAMAGE': 1,
-    'LOST': 2,
-    'ACCIDENTAL_DAMAGE': 10,
-    'LIQUID_DAMAGE': 11,
-    'THEFT': 10,
-    'BURGLARY': 11,
-    'ROBBERY': 12,
+    'DAMAGE': 'DMG',
+    'LOST': 'LST',
+    'ACCIDENTAL_DAMAGE': 'ACDMG',
+    'LIQUID_DAMAGE': 'LQDMG',
+    'THEFT': 'TFT',
+    'BURGLARY': 'BRG',
+    'ROBBERY': 'ROB',
   }
 
   constructor() { }

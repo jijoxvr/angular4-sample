@@ -7,6 +7,8 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+
 import { MaterialModule } from "./material/material.module";
 import { LayoutModule } from "./layout/layout.module";
 import { LoginComponent } from './login/login.component';
@@ -51,7 +53,8 @@ export const firebaseConfig = {
     MaterialModule,
     HomeModule,
     FacebookModule.forRoot(),
-    SharedModule
+    SharedModule,
+    AngularSvgIconModule
   ],
  
   bootstrap: [AppComponent]

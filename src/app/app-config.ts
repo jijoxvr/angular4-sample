@@ -9,10 +9,20 @@ export const APIUrls = { // modify this only when service URL changes
     'loginWithFB': 'user/',
     'updateProfile': 'updateuser/',
     'userList': 'users/',
-    "insuranceList": "insurances/",
+    "insuranceList": "policyForClaim/",
     "claimList": "claims/",
     "addnewClaim": "claims/",
     "claimReason": "reasonForClaim/"
+}
+
+export const SvgIcons = {
+    //for claim listing
+    'cancelPolicy' : "assets/images/icons/error.svg",
+    'makeClaim': "assets/images/icons/get-money.svg",
+    'insuranceDetails': "assets/images/icons/insurance.svg",
+    'claimDetails': "assets/images/icons/refund.svg",
+    'activationLink': "assets/images/icons/smartphone.svg",
+    'payment': "assets/images/icons/payment-method.svg"
 }
 
 export const PolicyStatus = { 
@@ -39,22 +49,6 @@ export const ClaimStatus = {
     }
 }
 
-export const ClaimReason = [ // modify this for changing laguage
-    { value: 1, label: 'Damage' },
-    { value: 2, label: 'Lost' },
-]
-
-export const ExactClaimGroupedReason = {
-    2: [ // modify this for changing laguage
-        { value: 2, label: 'Theft' },
-        { value: 3, label: 'Burglary' },
-        { value: 4, label: 'Robbery' },
-    ],
-    1: [ // modify this for changing laguage
-        { value: 1, label: 'Accidental Damage' },
-        { value: 5, label: 'Liquid Damage' },
-    ]
-}
 
 export const ClaimLabels = { // modify this for changing laguage
     2: 'Theft',

@@ -98,42 +98,46 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
       this.loading = true;
       this.message = 'Please wait while we configure your profile';
       let dataToServer = this.processDataFromFB(userDetails);
-      let data = {
-        "Status": "EXISTS",
-        "Message": "User already exists",
-        "Details": [
-          {
-            "UserId": 10042,
-            "FirstName": "Test ",
-            "LastName": "Test ",
-            "MiddleName": "Test ",
-            "Email": "Test ",
-            "BirthDate": "1990-12-12T00:00:00",
-            "Location": "Trivandrum, India",
-            "Users_PhoneNumber": "Test ",
-            "Users_Passport": "Test ",
-            "Users_KTP": 1,
-            "ProfilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p100x100/11863261_500169563470812_2778436704966522123_n.jpg?oh=5a4af55d5e319b3a8faf864dceefc06b&oe=5A815789",
-          }
-        ]
-      }
-      this.loading = false;
-      let response = data.Details[0];
-      console.log('Data from server', data);
-      localStorage.setItem('userData', JSON.stringify(response));
-      this.router.navigate(['my-profile']);
 
       // console.log(JSON.stringify(dataToServer))
       // let dataToServer = JSON.parse('{"AccessToken":"EAAYMYaZBJRX0BAAC62fsHCuMXCKrlcIy61gzJowpkOlBpPfw73yf5E4XgBP7aUAqvvmVlcRHXNGvDDTOOd4Px3PqSE7y35E1u923N1BxTY5QT773H3Xoen7DzMy9eR4OZBOZB5FPiiBdBSDKbSh6kTjb9ZBjtjpZBdxmnSMDAsAZDZD","UniqueId":"579179155569852","Name":"Joy John","Facebook_Birthday":"05/01/1984","Cover":"https://scontent.xx.fbcdn.net/v/t31.0-0/p180x540/15800803_710001389154294_687339573590361756_o.jpg?oh=ff94251c7f71e707689e80fa7ac95b4f&oe=5AA2E2B3","Facebook_Gender":"male","Facebook_ProfLink":"https://scontent.xx.fbcdn.net/v/t1.0-1/p100x100/11863261_500169563470812_2778436704966522123_n.jpg?oh=5a4af55d5e319b3a8faf864dceefc06b&oe=5A815789","Facebook_InstallType":"UNKNOWN","Facebook_Installed":"True","Facebook_IsVerified":"False","Facebook_Currency":"INR","Location":{"locationId":"110383752315912","locationName":"Trivandrum, India"},"Employer":[{"EmployerName":"TechVantage Systems Pvt Ltd","EmployerUniqueId":"206639193023867"}],"FriendsData":[{"FriendsUniqueId":"10153909911635590"}],"Family":[]}')
-      // this.ajaxService.execute({ url: APIUrls.loginWithFB, method: 'POST', body: dataToServer })
-      // .subscribe(data =>{
-      //   this.loading = false;
-      //   let response = data.Details[0];
-      //   response.ProfilePic = this.photoUrl;
-      //   console.log('Data from server', data);
-      //   localStorage.setItem('userData', JSON.stringify(response));
-      //   this.router.navigate(['my-profile']);
-      // })
+      this.ajaxService.execute({ url: 'models', method: 'post', body: {"BrandId":"1"} })
+      .subscribe(data =>{
+        console.log('Data from server', data);
+      })
+      this.ajaxService.execute({ url: APIUrls.loginWithFB, method: 'post', body: dataToServer })
+      .subscribe(data =>{
+        this.loading = false;
+        let response = data.Details[0];
+        response.ProfilePic = this.photoUrl;
+        console.log('Data from server', data);
+        localStorage.setItem('userData', JSON.stringify(response));
+        this.router.navigate(['my-profile']);
+      }, error=>{
+        let data = {
+          "Status": "EXISTS",
+          "Message": "User already exists",
+          "Details": [
+            {
+              "UserId": 10042,
+              "FirstName": "Test ",
+              "LastName": "Test ",
+              "MiddleName": "Test ",
+              "Email": "Test ",
+              "BirthDate": "1990-12-12T00:00:00",
+              "Location": "Trivandrum, India",
+              "Users_PhoneNumber": "Test ",
+              "Users_Passport": "Test ",
+              "Users_KTP": 1,
+              "ProfilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p100x100/11863261_500169563470812_2778436704966522123_n.jpg?oh=5a4af55d5e319b3a8faf864dceefc06b&oe=5A815789",
+            }
+          ]
+        }
+        this.loading = false;
+        let response = data.Details[0];
+        localStorage.setItem('userData', JSON.stringify(response));
+        this.router.navigate(['my-profile']);
+      })
       
     }
     
@@ -150,7 +154,7 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
         Name: dataToServer.name,
         Facebook_Birthday: dataToServer.birthday,
         Email: dataToServer.email,
-        Cover: dataToServer.cover ? dataToServer.cover.source : "",
+        // Cover: dataToServer.cover ? dataToServer.cover.source : "",
         Facebook_Gender: dataToServer.gender,
         Facebook_ProfLink: this.photoUrl,
         Facebook_InstallType : dataToServer.install_type,

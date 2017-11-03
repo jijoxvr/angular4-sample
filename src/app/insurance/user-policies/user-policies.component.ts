@@ -1,9 +1,14 @@
 import { Component, OnInit, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-import { PolicyStatus, AppConfig, APIUrls, AppLabels } from "../../app-config";
+import { MatIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
+import {
+  PolicyStatus, AppConfig, APIUrls,
+  AppLabels, SvgIcons
+} from "../../app-config";
 import { AjaxService } from '../../shared';
 import { UserServiceService } from '../../core/user-service.service';
+import { AppConfigService } from '../../core/app-config.service';
 import { MakeClaimComponent } from "../../claim/make-claim/make-claim.component";
 import * as moment from "moment";
 //configuration for claim form
@@ -26,11 +31,24 @@ export class UserPoliciesComponent implements OnInit {
   public policies: Array<any>;
   public defaultCurrency = AppConfig.defaultCurrency;
   public userData: any;
+  public insuranceStatus: any;
 
   @ViewChild('claimConfirmationDialogRef') template: TemplateRef<any>;
 
   constructor(private ajaxService: AjaxService,
-    public dialog: MatDialog, private userServiceService: UserServiceService) {
+    public dialog: MatDialog, private appConfigService: AppConfigService,
+    private userServiceService: UserServiceService,
+    private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
+
+    iconRegistry
+      .addSvgIcon('claimDetailsIcon', sanitizer.bypassSecurityTrustResourceUrl(SvgIcons.claimDetails))
+      .addSvgIcon('activateLinkIcon', sanitizer.bypassSecurityTrustResourceUrl(SvgIcons.activationLink))
+      .addSvgIcon('cancelPolicyIcon', sanitizer.bypassSecurityTrustResourceUrl(SvgIcons.cancelPolicy))
+      .addSvgIcon('insuranceDetailsIcon', sanitizer.bypassSecurityTrustResourceUrl(SvgIcons.insuranceDetails))
+      .addSvgIcon('paymentIcon', sanitizer.bypassSecurityTrustResourceUrl(SvgIcons.payment))
+      .addSvgIcon('makeClaimIcon', sanitizer.bypassSecurityTrustResourceUrl(SvgIcons.makeClaim))
+
+    this.insuranceStatus = appConfigService.insuranceStatus;
     this.userServiceService.userObservable.subscribe(user => {
       this.userData = user;
     })
@@ -62,6 +80,7 @@ export class UserPoliciesComponent implements OnInit {
               "StartDate": "2017-10-09T00:00:00",
               "EndDate": "2018-10-09T00:00:00",
               "StatusName": "Activated",
+              "StatusCode": 'ACTV',
               "StatusMessage": "From X to Y"
             },
             {
@@ -73,6 +92,7 @@ export class UserPoliciesComponent implements OnInit {
               "StartDate": "2017-11-08T00:00:00",
               "EndDate": "2018-10-09T00:00:00",
               "StatusName": "Claimed",
+              "StatusCode": 'CLM',
               "StatusMessage": "You have made claim"
             },
             {
@@ -84,6 +104,7 @@ export class UserPoliciesComponent implements OnInit {
               "StartDate": "2017-05-09T00:00:00",
               "EndDate": "2018-10-09T00:00:00",
               "StatusName": "Activated",
+              "StatusCode": 'ACTV',
               "StatusMessage": "From X to Y"
             }
           ]
@@ -119,20 +140,30 @@ export class UserPoliciesComponent implements OnInit {
     return PolicyStatus.badgeClass[status]
   }
 
+  getRibbonClass(code) {
+    
+    if(code == 'ACTV')
+      return 'acivated-policy-ribbon';
+    else if(code == 'CLM')
+      return 'pending-policy-ribbon';
+    else
+      return 'claimed-policy-ribbon';
+  }
+
   getPolicyInfo(policy) {
     switch (policy.StatusId) {
-      case 3: 
-        return policy.StatusMessage.replace('X', policy.DaysLeft ? policy.DaysLeft : 'N/A' );
+      case 3:
+        return policy.StatusMessage.replace('X', policy.DaysLeft ? policy.DaysLeft : 'N/A');
       case 4:
-        let startDate = policy.StartDate ? moment(policy.StartDate).format('DD/MM/YYY') : 'N/A';
-        let endDate = policy.EndDate ? moment(policy.EndDate).format('DD/MM/YYY') : 'N/A';
+        let startDate = policy.StartDate ? moment(policy.StartDate).format('DD/MM/YY') : 'N/A';
+        let endDate = policy.EndDate ? moment(policy.EndDate).format('DD/MM/YY') : 'N/A';
         return policy.StatusMessage.replace('X', startDate).replace('Y', endDate);
       default: return policy.StatusMessage;
     }
   }
 
-  getPolicyDate(date){
-    return date ? moment(date).format('DD/MM/YYYY') : 'N/A'
+  getPolicyDate(date) {
+    return date ? moment(date).format('DD/MM/YY') : 'N/A'
   }
   navigateToClaimTab() { }
 

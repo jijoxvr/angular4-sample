@@ -15,3 +15,103 @@
 .mat-card{
     /* min-height: 327px!important */
 }
+
+
+
+.ribbon {
+    width: 98%;
+    /* height: 188px; */
+    position: relative;
+    float: left;
+    margin-bottom: 30px;
+    background:linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.8)),
+    url('/assets/images/header.jpg');
+    background-size: cover;
+    text-transform: uppercase;
+    color: white;
+}
+
+.acivated-policy-ribbon{
+    background: rgb(19, 212, 45);
+}
+.acivated-policy-ribbon::after{
+    border-left: 15px solid rgb(19, 212, 45);
+}
+.pending-policy-ribbon{
+    background: rgb(219, 10, 90);
+}
+.pending-policy-ribbon::after{
+    border-left: 15px solid rgb(219, 10, 90);
+}
+.claimed-policy-ribbon{
+    background:  rgb(33, 19, 228);
+}
+.claimed-policy-ribbon::after{
+    border-left: 15px solid rgb(33, 19, 228);
+}
+.ribbon3 {
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 15px;
+    position: absolute;
+    left: -8px;
+    top: 10px;
+    /* background: #59324C; */
+}
+.ribbon3:before, .ribbon3:after {
+    content: "";
+    position: absolute;
+}
+.ribbon3:before {
+    height: 0;
+    width: 0;
+    top: -9.5px;
+    left: 0.1px;
+    border-bottom: 9px solid black;
+    border-left: 9px solid transparent;
+}
+.ribbon3:after {
+    height: 0;
+    width: 0;
+    right: -14.5px;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    /* border-left: 15px solid #59324C; */
+}
+.wrap {
+    width: 100%;
+    height: 188px;
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    overflow: hidden;
+}
+.wrap:before, .wrap:after {
+    content: ""; 
+    position: absolute;
+}
+.wrap:before {
+    width: 40px;
+    height: 8px;
+    right: 100px;
+    background: #4D6530;
+    border-radius: 8px 8px 0px 0px;
+}
+.wrap:after {
+    width: 8px;
+    height: 40px;
+    right: 0px;
+    top: 100px;
+    background: #4D6530;
+    border-radius: 0px 8px 8px 0px;
+}
+.card-content{
+    margin-top: 60px;
+    margin-left: 10px;
+}
+.card-actions{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

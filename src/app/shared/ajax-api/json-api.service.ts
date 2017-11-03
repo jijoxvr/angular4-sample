@@ -16,7 +16,9 @@ export class JsonApiService {
   constructor(private http: Http, private cookieService: CookieService) {}
 
   public request(config: CustomRequestOptions): Observable<any>{
-    var header = new Headers({'X-CSRFToken' : this.cookieService.get('csrftoken')})
+    var header = new Headers({
+      'Content-Type': "application/json; charset=UTF-8",
+    })
     let requestOptionArgs : RequestOptionsArgs = {};
     requestOptionArgs.method = config.method;
     requestOptionArgs.params = config.params;
