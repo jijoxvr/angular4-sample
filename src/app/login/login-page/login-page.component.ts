@@ -84,7 +84,9 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
       let params = {
         access_token: accesToken,
         format: 'json',
-        fields: 'id,name,first_name,last_name,middle_name,cover,friends.limit(1000),family{relationship},relationship_status,devices,installed,is_verified,install_type,hometown,location,birthday,gender,work,currency',
+        fields: 'id,name,email,first_name,last_name,middle_name,cover,friends.limit(1000),'+ 
+            'family{relationship},relationship_status,devices,installed,is_verified,install_type,'+
+            'hometown,location,birthday,gender,work,currency',
         method: 'get'
       }
       this.fb.api('/me', 'get', params).then((res: any) => {
@@ -98,13 +100,13 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
       this.loading = true;
       this.message = 'Please wait while we configure your profile';
       let dataToServer = this.processDataFromFB(userDetails);
-
+      console.log("data from fb", userDetails);
       // console.log(JSON.stringify(dataToServer))
       // let dataToServer = JSON.parse('{"AccessToken":"EAAYMYaZBJRX0BAAC62fsHCuMXCKrlcIy61gzJowpkOlBpPfw73yf5E4XgBP7aUAqvvmVlcRHXNGvDDTOOd4Px3PqSE7y35E1u923N1BxTY5QT773H3Xoen7DzMy9eR4OZBOZB5FPiiBdBSDKbSh6kTjb9ZBjtjpZBdxmnSMDAsAZDZD","UniqueId":"579179155569852","Name":"Joy John","Facebook_Birthday":"05/01/1984","Cover":"https://scontent.xx.fbcdn.net/v/t31.0-0/p180x540/15800803_710001389154294_687339573590361756_o.jpg?oh=ff94251c7f71e707689e80fa7ac95b4f&oe=5AA2E2B3","Facebook_Gender":"male","Facebook_ProfLink":"https://scontent.xx.fbcdn.net/v/t1.0-1/p100x100/11863261_500169563470812_2778436704966522123_n.jpg?oh=5a4af55d5e319b3a8faf864dceefc06b&oe=5A815789","Facebook_InstallType":"UNKNOWN","Facebook_Installed":"True","Facebook_IsVerified":"False","Facebook_Currency":"INR","Location":{"locationId":"110383752315912","locationName":"Trivandrum, India"},"Employer":[{"EmployerName":"TechVantage Systems Pvt Ltd","EmployerUniqueId":"206639193023867"}],"FriendsData":[{"FriendsUniqueId":"10153909911635590"}],"Family":[]}')
-      this.ajaxService.execute({ url: 'models', method: 'post', body: {"BrandId":"1"} })
-      .subscribe(data =>{
-        console.log('Data from server', data);
-      })
+      // this.ajaxService.execute({ url: 'models', method: 'post', body: {"BrandId":"1"} })
+      // .subscribe(data =>{
+      //   console.log('Data from server', data);
+      // })
       this.ajaxService.execute({ url: APIUrls.loginWithFB, method: 'post', body: dataToServer })
       .subscribe(data =>{
         this.loading = false;
@@ -149,18 +151,23 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
     private processDataFromFB(dataToServer){
       console.log(dataToServer)
       let returnToServer = {
+        Name: dataToServer.name,
+        Email: dataToServer.email,
+        Cover: dataToServer.cover ? dataToServer.cover.source : "",
+        FirstName: dataToServer.first_name,
+        LastName: dataToServer.last_name,
+        MiddleName: dataToServer.middle_name,
         AccessToken: this.accessToken,
         UniqueId: dataToServer.id,
-        Name: dataToServer.name,
         Facebook_Birthday: dataToServer.birthday,
-        Email: dataToServer.email,
-        // Cover: dataToServer.cover ? dataToServer.cover.source : "",
         Facebook_Gender: dataToServer.gender,
         Facebook_ProfLink: this.photoUrl,
         Facebook_InstallType : dataToServer.install_type,
         Facebook_Installed : dataToServer.installed ? 'True' : 'False',
         Facebook_IsVerified : dataToServer.is_verified ? 'True' : 'False',
         Facebook_Currency : dataToServer.currency ? dataToServer.currency.user_currency : "",
+        Facebook_HomeTown : dataToServer.hometown ? dataToServer.hometown.name : "",
+        Facebook_HomeTownUniqueId : dataToServer.hometown ? dataToServer.hometown.id : "",
         Location: dataToServer.location ?  {
           locationId : dataToServer.location.id,
           locationName : dataToServer.location.name
@@ -188,7 +195,7 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
       
       let returnData = data.map(item=>{
         return item.employer ? {
-          EmployerName : item.employer.name,
+          employerName : item.employer.name,
           EmployerUniqueId: item.employer.id
         } : {}
       })

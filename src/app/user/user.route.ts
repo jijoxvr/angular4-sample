@@ -11,9 +11,9 @@ import { MasterResolver } from "../core/app-provider.service"
 
 export const routes:Routes = [{
     path: '', component: LayoutContainerComponent,
-    resolve : {
-        team: MasterResolver
-    },
+    // resolve : {
+    //     team: MasterResolver
+    // },
     children: [
         { path: 'my-home', component: HomeComponent, data : {animation: 'home'} },
         { path: 'my-groups', component: GroupWiseUserListComponent },

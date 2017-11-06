@@ -83,7 +83,7 @@ export class MakeClaimComponent implements OnInit {
   ngOnInit() {
 
     this.loading = true;
-    this.ajaxService.execute({ url: APIUrls.claimReason, method: 'POST' })
+    this.ajaxService.execute({ url: APIUrls.claimReason, method:'GET'})
       .subscribe(success => {
         this.extractClaimReason(success);
         this.loading = false;
@@ -237,7 +237,6 @@ export class MakeClaimComponent implements OnInit {
   }
 
   onRecordComplete(videBlob) {
-    console.log(videBlob)
     this.recordedBlob = videBlob;
     this.videoFormGroup.get('isVideoProofSubmitted').setValue(true)
   }
@@ -250,7 +249,6 @@ export class MakeClaimComponent implements OnInit {
     this.tasks.push(new Promise((resolve, reject) => {
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {
-
           this.uploadProgress['videoProof'] = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100;
         }, (error) => {
           // upload failed

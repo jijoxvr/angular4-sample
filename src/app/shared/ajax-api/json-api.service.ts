@@ -17,7 +17,7 @@ export class JsonApiService {
 
   public request(config: CustomRequestOptions): Observable<any>{
     var header = new Headers({
-      'Content-Type': "application/json; charset=UTF-8",
+      // 'Content-Type': "application/json; charset=UTF-8",
     })
     let requestOptionArgs : RequestOptionsArgs = {};
     requestOptionArgs.method = config.method;

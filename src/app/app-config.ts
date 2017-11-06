@@ -9,9 +9,9 @@ export const APIUrls = { // modify this only when service URL changes
     'loginWithFB': 'user/',
     'updateProfile': 'updateuser/',
     'userList': 'users/',
-    "insuranceList": "policyForClaim/",
+    "insuranceList": "policyFrClaim/",
     "claimList": "claims/",
-    "addnewClaim": "claims/",
+    "addnewClaim": "submitForClaim/",
     "claimReason": "reasonForClaim/"
 }
 

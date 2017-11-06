@@ -59,7 +59,8 @@ export class UserPoliciesComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.isResolved = false;
-    this.ajaxService.execute({ url: APIUrls.insuranceList, params: { user_id: this.userData.UserId } }).
+    this.userData.UserId = '10034';
+    this.ajaxService.execute({ url: APIUrls.insuranceList, method: 'POST', body: { UserId: this.userData.UserId } }).
       subscribe(response => {
         this.isLoading = false;
         this.isResolved = true;
