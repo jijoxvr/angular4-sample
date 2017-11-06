@@ -18,7 +18,6 @@ export class UserServiceService {
     return Observable.create(observer => {
       this.user = JSON.parse(localStorage.getItem('userData'))
       observer.complete();
-      
     })
   }
 

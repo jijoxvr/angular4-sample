@@ -24,6 +24,11 @@
           </mat-select>
           <mat-error>{{appLabel.makeClaim.warningForRequiredField}}</mat-error>
         </mat-form-field>
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="{{appLabel.makeClaim.step1.incidentDate}}" formControlName="incidentDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #picker></mat-datepicker>
+        </mat-form-field>
         <div>
           <button class="pull-right" mat-raised-button color="primary" matStepperNext>{{appLabel.makeClaim.nextButton}}</button>
         </div>
@@ -60,69 +65,69 @@
               {{documentFormGroup.get('invoice')?.getError('fileType').errormessage}}
           </mat-error>
         </mat-form-field> -->
-        <mat-form-field *ngIf="documentFormGroup.get('fir')">
-          <app-file-input formControlName="fir" placeholder="{{appLabel.commonLabels.fir}}" required></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('Claim_FIR')">
+          <app-file-input formControlName="Claim_FIR" placeholder="{{appLabel.commonLabels.fir}}" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('fir').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('Claim_FIR').hasError('required')">
               {{appLabel.makeClaim.warningForRequiredDocuments}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('fir').hasError('maxContentSize')">
-              {{documentFormGroup.get('fir')?.getError('maxContentSize').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('Claim_FIR').hasError('maxContentSize')">
+              {{documentFormGroup.get('Claim_FIR')?.getError('maxContentSize').errormessage}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('fir').hasError('fileType')">
-              {{documentFormGroup.get('fir')?.getError('fileType').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('Claim_FIR').hasError('fileType')">
+              {{documentFormGroup.get('Claim_FIR')?.getError('fileType').errormessage}}
           </mat-error>
         </mat-form-field>
-        <mat-form-field *ngIf="documentFormGroup.get('expenseReciept')">
-          <app-file-input formControlName="expenseReciept" placeholder="{{appLabel.commonLabels.expenseReciept}}" required></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('Claim_ExpenseReciept')">
+          <app-file-input formControlName="Claim_ExpenseReciept" placeholder="{{appLabel.commonLabels.expenseReciept}}" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('expenseReciept').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('Claim_ExpenseReciept').hasError('required')">
               {{appLabel.makeClaim.warningForRequiredDocuments}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('expenseReciept').hasError('maxContentSize')">
-              {{documentFormGroup.get('expenseReciept')?.getError('maxContentSize').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('Claim_ExpenseReciept').hasError('maxContentSize')">
+              {{documentFormGroup.get('Claim_ExpenseReciept')?.getError('maxContentSize').errormessage}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('expenseReciept').hasError('fileType')">
-              {{documentFormGroup.get('expenseReciept')?.getError('fileType').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('Claim_ExpenseReciept').hasError('fileType')">
+              {{documentFormGroup.get('Claim_ExpenseReciept')?.getError('fileType').errormessage}}
           </mat-error>
         </mat-form-field>
-        <mat-form-field *ngIf="documentFormGroup.get('hospitalReport')">
-          <app-file-input formControlName="hospitalReport" placeholder="{{appLabel.commonLabels.hospitalReport}}" required></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('Claim_HospitalReport')">
+          <app-file-input formControlName="Claim_HospitalReport" placeholder="{{appLabel.commonLabels.hospitalReport}}" required></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('hospitalReport').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('Claim_HospitalReport').hasError('required')">
               {{appLabel.makeClaim.warningForRequiredDocuments}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('hospitalReport').hasError('maxContentSize')">
-            {{documentFormGroup.get('hospitalReport')?.getError('maxContentSize').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('Claim_HospitalReport').hasError('maxContentSize')">
+            {{documentFormGroup.get('Claim_HospitalReport')?.getError('maxContentSize').errormessage}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('hospitalReport').hasError('fileType')">
-              {{documentFormGroup.get('hospitalReport')?.getError('fileType').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('Claim_HospitalReport').hasError('fileType')">
+              {{documentFormGroup.get('Claim_HospitalReport')?.getError('fileType').errormessage}}
           </mat-error>
         </mat-form-field>
-        <mat-form-field *ngIf="documentFormGroup.get('devicePhotos')">
-          <app-file-input formControlName="devicePhotos" placeholder="{{appLabel.commonLabels.devicePhotos}}" required multiple></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('DevicePhoto')">
+          <app-file-input formControlName="DevicePhoto" placeholder="{{appLabel.commonLabels.devicePhotos}}" required multiple></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('devicePhotos').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('DevicePhoto').hasError('required')">
               {{appLabel.makeClaim.warningForRequiredDocuments}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('devicePhotos').hasError('maxContentSize')">
-              {{documentFormGroup.get('devicePhotos')?.getError('maxContentSize').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('DevicePhoto').hasError('maxContentSize')">
+              {{documentFormGroup.get('DevicePhoto')?.getError('maxContentSize').errormessage}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('devicePhotos').hasError('fileType')">
-              {{documentFormGroup.get('devicePhotos')?.getError('fileType').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('DevicePhoto').hasError('fileType')">
+              {{documentFormGroup.get('DevicePhoto')?.getError('fileType').errormessage}}
           </mat-error>
         </mat-form-field>
-        <mat-form-field *ngIf="documentFormGroup.get('entityPhotos')">
-          <app-file-input formControlName="entityPhotos" placeholder="{{appLabel.commonLabels.entityPhotos}}" required multiple></app-file-input>
+        <mat-form-field *ngIf="documentFormGroup.get('EntityPhoto')">
+          <app-file-input formControlName="EntityPhoto" placeholder="{{appLabel.commonLabels.entityPhotos}}" required multiple></app-file-input>
           <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('entityPhotos').hasError('required')">
+          <mat-error *ngIf="documentFormGroup.get('EntityPhoto').hasError('required')">
               {{appLabel.makeClaim.warningForRequiredDocuments}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('entityPhotos').hasError('maxContentSize')">
-              {{documentFormGroup.get('entityPhotos')?.getError('maxContentSize').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('EntityPhoto').hasError('maxContentSize')">
+              {{documentFormGroup.get('EntityPhoto')?.getError('maxContentSize').errormessage}}
           </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('entityPhotos').hasError('fileType')">
-              {{documentFormGroup.get('entityPhotos')?.getError('fileType').errormessage}}
+          <mat-error *ngIf="documentFormGroup.get('EntityPhoto').hasError('fileType')">
+              {{documentFormGroup.get('EntityPhoto')?.getError('fileType').errormessage}}
           </mat-error>
         </mat-form-field>
         <div>
@@ -162,63 +167,63 @@
         <div *ngIf="documentFormGroup.get('invoice') && documentFormGroup.get('invoice').value" class="progress-container">
           <li>
             <span>{{appLabel.commonLabels.invoice}} - {{getFileName('invoice')}}</span>
-            <span *ngIf="isUpLoading('invoice')">{{appLabel.commonLabels.idProof}}</span>
+            <span *ngIf="isUpLoading('invoice')">{{appLabel.commonLabels.uploading}}</span>
             <mat-progress-spinner *ngIf="isUpLoading('invoice')" [mode]="'determinate'" [value]="uploadProgress.invoice" color="warn"
               [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
             <i *ngIf="uploadProgress.invoice == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
           </li>
         </div>
-        <div *ngIf="documentFormGroup.get('fir') && documentFormGroup.get('fir').value" class="progress-container">
+        <div *ngIf="documentFormGroup.get('Claim_FIR') && documentFormGroup.get('Claim_FIR').value" class="progress-container">
           <li>
-            <span>{{appLabel.commonLabels.fir}} - {{getFileName('fir')}}</span>
-            <span *ngIf="isUpLoading('fir')">{{appLabel.commonLabels.idProof}}</span>
-            <mat-progress-spinner *ngIf="isUpLoading('fir')" [mode]="'determinate'" [value]="uploadProgress.fir" color="warn"
+            <span>{{appLabel.commonLabels.fir}} - {{getFileName('Claim_FIR')}}</span>
+            <span *ngIf="isUpLoading('Claim_FIR')">{{appLabel.commonLabels.uploading}}</span>
+            <mat-progress-spinner *ngIf="isUpLoading('Claim_FIR')" [mode]="'determinate'" [value]="uploadProgress.Claim_FIR" color="warn"
               [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
-            <i *ngIf="uploadProgress.fir == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
+            <i *ngIf="uploadProgress.Claim_FIR == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
           </li>
         </div>
-        <div *ngIf="documentFormGroup.get('expenseReciept') && documentFormGroup.get('expenseReciept').value" class="progress-container">
+        <div *ngIf="documentFormGroup.get('Claim_ExpenseReciept') && documentFormGroup.get('Claim_ExpenseReciept').value" class="progress-container">
           <li>
-            <span>{{appLabel.commonLabels.expenseReciept}} - {{getFileName('expenseReciept')}}</span>
-            <span *ngIf="isUpLoading('expenseReciept')">{{appLabel.commonLabels.idProof}}</span>
-            <mat-progress-spinner *ngIf="isUpLoading('expenseReciept')" [mode]="'determinate'" [value]="uploadProgress.expenseReciept"
+            <span>{{appLabel.commonLabels.expenseReciept}} - {{getFileName('Claim_ExpenseReciept')}}</span>
+            <span *ngIf="isUpLoading('Claim_ExpenseReciept')">{{appLabel.commonLabels.uploading}}</span>
+            <mat-progress-spinner *ngIf="isUpLoading('Claim_ExpenseReciept')" [mode]="'determinate'" [value]="uploadProgress.Claim_ExpenseReciept"
               color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
-            <i *ngIf="uploadProgress.expenseReciept == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
+            <i *ngIf="uploadProgress.Claim_ExpenseReciept == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
           </li>
         </div>
-        <div *ngIf="documentFormGroup.get('hospitalReport') && documentFormGroup.get('hospitalReport').value" class="progress-container">
+        <div *ngIf="documentFormGroup.get('Claim_HospitalReport') && documentFormGroup.get('Claim_HospitalReport').value" class="progress-container">
           <li>
-            <span>{{appLabel.commonLabels.hospitalReport}} - {{getFileName('hospitalReport')}}</span>
-            <span *ngIf="isUpLoading('hospitalReport')">{{appLabel.commonLabels.idProof}}</span>
-            <mat-progress-spinner *ngIf="isUpLoading('hospitalReport')" [mode]="'determinate'" [value]="uploadProgress.hospitalReport"
+            <span>{{appLabel.commonLabels.hospitalReport}} - {{getFileName('Claim_HospitalReport')}}</span>
+            <span *ngIf="isUpLoading('Claim_HospitalReport')">{{appLabel.commonLabels.uploading}}</span>
+            <mat-progress-spinner *ngIf="isUpLoading('Claim_HospitalReport')" [mode]="'determinate'" [value]="uploadProgress.Claim_HospitalReport"
               color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
-            <i *ngIf="uploadProgress.hospitalReport == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
+            <i *ngIf="uploadProgress.Claim_HospitalReport == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
           </li>
         </div>
-        <div *ngFor="let progress of getFileList('devicePhotos'); let index = index" class="progress-container">
+        <div *ngFor="let progress of getFileList('DevicePhoto'); let index = index" class="progress-container">
           <li>
-            <span>{{appLabel.commonLabels.devicePhotos}} - {{getFileName('devicePhotos', index)}}</span>
-            <span *ngIf="isUpLoading('devicePhotos', index)">{{appLabel.commonLabels.idProof}}</span>
-            <mat-progress-spinner *ngIf="isUpLoading('devicePhotos', index)" [mode]="'determinate'" [value]="uploadProgress.devicePhotos[index]"
+            <span>{{appLabel.commonLabels.devicePhotos}} - {{getFileName('DevicePhoto', index)}}</span>
+            <span *ngIf="isUpLoading('DevicePhoto', index)">{{appLabel.commonLabels.uploading}}</span>
+            <mat-progress-spinner *ngIf="isUpLoading('DevicePhoto', index)" [mode]="'determinate'" [value]="uploadProgress.DevicePhoto[index]"
               color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
-            <i *ngIf="isUploadingCompleted('devicePhotos', index)" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
+            <i *ngIf="isUploadingCompleted('DevicePhoto', index)" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
           </li>
         </div>
-        <div *ngFor="let progress of getFileList('entityPhotos'); let index = index" class="progress-container">
+        <div *ngFor="let progress of getFileList('EntityPhoto'); let index = index" class="progress-container">
           <li>
-            <span>{{appLabel.commonLabels.entityPhotos}} - {{getFileName('entityPhotos', index)}}</span>
-            <span *ngIf="isUpLoading('entityPhotos', index)">{{appLabel.commonLabels.idProof}}</span>
-            <mat-progress-spinner *ngIf="isUpLoading('entityPhotos', index)" [mode]="'determinate'" [value]="uploadProgress.entityPhotos[index]"
+            <span>{{appLabel.commonLabels.entityPhotos}} - {{getFileName('EntityPhoto', index)}}</span>
+            <span *ngIf="isUpLoading('EntityPhoto', index)">{{appLabel.commonLabels.uploading}}</span>
+            <mat-progress-spinner *ngIf="isUpLoading('EntityPhoto', index)" [mode]="'determinate'" [value]="uploadProgress.EntityPhoto[index]"
               color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
-            <i *ngIf="isUploadingCompleted('entityPhotos', index)" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
+            <i *ngIf="isUploadingCompleted('EntityPhoto', index)" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
           </li>
         </div>
-        <div *ngIf="uploadProgress.videoProof" class="progress-container">
+        <div *ngIf="uploadProgress.Claim_VideoURL" class="progress-container">
           <li>
             <span>{{appLabel.makeClaim.step4.videoUploadProgressLabel}}</span>
-            <mat-progress-spinner *ngIf="uploadProgress.videoProof != 100" [mode]="'determinate'" [value]="uploadProgress.videoProof"
+            <mat-progress-spinner *ngIf="uploadProgress.Claim_VideoURL != 100" [mode]="'determinate'" [value]="uploadProgress.Claim_VideoURL"
               color="warn" [strokeWidth]="4" [diameter]="32"></mat-progress-spinner>
-            <i *ngIf="uploadProgress.videoProof == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
+            <i *ngIf="uploadProgress.Claim_VideoURL == 100" class="fa fa-check-circle-o" style="color:green"> &nbsp;{{appLabel.commonLabels.uploadCompleted}}</i>
           </li>
         </div>
         <div>

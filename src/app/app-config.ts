@@ -10,9 +10,9 @@ export const APIUrls = { // modify this only when service URL changes
     'updateProfile': 'updateuser/',
     'userList': 'users/',
     "insuranceList": "policyFrClaim/",
-    "claimList": "claims/",
+    "claimList": "userClaim/",
     "addnewClaim": "submitForClaim/",
-    "claimReason": "reasonForClaim/"
+    "claimReason": "reasonFrClaim/"
 }
 
 export const SvgIcons = {
@@ -120,7 +120,8 @@ export const AppLabels = { // modify this for changing laguage
             'title' : 'What happened ?',
             'referenceNumber' : 'Reference No',
             'reasonForClaim' : 'Reason for claim',
-            'preciseReason' : 'Precise Reason' 
+            'preciseReason' : 'Precise Reason',
+            'incidentDate': 'Date of incident' 
         },
         'step2' : {
             'title' : 'Upload supporting documents',
@@ -155,6 +156,7 @@ export const AppLabels = { // modify this for changing laguage
         'warningForFileSize' : 'The total size must not exceed X (Y)',
         'warningForInvalidFile' : 'Invalid file, suported formats are X',
         'warninForInvalidEmail': 'Please enter a valid email address',
+        'warninForInvalidKTP' : 'Please enter a valid KTP',
         'submitButton' : 'Submit',
         'cancelButton' : 'Cancel'
 

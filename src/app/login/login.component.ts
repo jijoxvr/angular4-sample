@@ -78,7 +78,6 @@ export class LoginComponent implements OnInit {
 
 
   private fetchDetails(accesToken?) {
-    console.log(accesToken)
     let params = {
       access_token: accesToken,
       format: 'json',

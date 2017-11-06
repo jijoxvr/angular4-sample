@@ -4,6 +4,8 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { ClaimStatus, AppConfig, ClaimLabels } from "../../app-config";
 import { APIUrls, AppLabels } from '../../app-config';
 import { AjaxService } from '../../shared';
+import { UserServiceService } from '../../core/user-service.service';
+
 // import { MakeClaimComponent } from "../../claim/make-claim/make-claim.component";
 
 //configuration for claim form
@@ -25,19 +27,24 @@ export class UserClaimsComponent implements OnInit {
   public claims: Array<any>;
   public claimStatusLabel = ClaimStatus.label;
   public defaultCurrency = AppConfig.defaultCurrency;
-  public issuelabel = ClaimLabels
+  public issuelabel = ClaimLabels;
+  public userData: any;
 
   // @ViewChild('claimConfirmationDialogRef') template: TemplateRef<any>;
 
-  constructor(private ajaxService: AjaxService, public dialog: MatDialog) {
+  constructor(private ajaxService: AjaxService, public dialog: MatDialog,
+    public userServiceService:UserServiceService) {
     this.isLoading = true;
-    console.log(this.issuelabel)
+    this.userServiceService.userObservable.subscribe(user => {
+      this.userData = user;
+    })
+    this.userServiceService.getUserInfo();
   }
 
   ngOnInit() {
     this.isLoading = true;
     this.isResolved = false;
-    this.ajaxService.execute({ url: APIUrls.claimList, params: { user_id: 1 } }).
+    this.ajaxService.execute({ url: APIUrls.claimList, method: 'POST', body: { UserId: this.userData.UserId } }).
       subscribe(response => {
         this.isLoading = false;
         this.isResolved = true;

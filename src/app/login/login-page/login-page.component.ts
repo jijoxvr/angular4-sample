@@ -4,6 +4,7 @@ import * as firebase from 'firebase/app';
 import { Router } from "@angular/router";
 import { AjaxService } from '../../shared';
 import { APIUrls } from '../../app-config';
+import * as moment from  "moment";
 import { FacebookService, InitParams, LoginOptions, LoginResponse } from 'ngx-facebook';
 declare var $: any;
 
@@ -19,6 +20,7 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
   private accessToken : string;
   private photoUrl : string;
   public message:string;
+  public isLogged: boolean;
   
   constructor(public angularFire: AngularFireAuth, private router: Router,
     private fb: FacebookService, private ajaxService: AjaxService) {
@@ -32,7 +34,11 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
       fb.init(initParams);
     }
     
-    ngOnInit() {}
+    ngOnInit() {
+      if(localStorage.getItem('userData')){
+        this.isLogged = true;
+      }
+    }
     
     loginWithTwitter() {
       alert('Twitter login is not available now')
@@ -159,7 +165,11 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
         MiddleName: dataToServer.middle_name,
         AccessToken: this.accessToken,
         UniqueId: dataToServer.id,
+        UsersLevel_Id: "1", // hard-coded temporarly
         Facebook_Birthday: dataToServer.birthday,
+        BirthDay: dataToServer.birthday ?  moment(dataToServer.birthday, 'DD/MM/YY').date() : "",
+        BirthMonth: dataToServer.birthday ? moment(dataToServer.birthday, 'DD/MM/YY').month() + 1 : "",
+        BirthYear: dataToServer.birthday ? moment(dataToServer.birthday, 'DD/MM/YY').year() : "",
         Facebook_Gender: dataToServer.gender,
         Facebook_ProfLink: this.photoUrl,
         Facebook_InstallType : dataToServer.install_type,
@@ -180,6 +190,7 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
       console.log(returnToServer)
       return returnToServer;
     }
+
     extractFriendsFromFBData(data){
       if(data.data) data = data.data
         else return []
@@ -192,7 +203,6 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
     }
     
     extractWorkFromFBData(data){
-      
       let returnData = data.map(item=>{
         return item.employer ? {
           employerName : item.employer.name,

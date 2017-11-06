@@ -1,90 +1,57 @@
 <div class="container">
-
   <div class="row">
     <div *ngFor="let policy of policies; let index = index" class="col-sm-12 col-md-12 card-container">
       <div class="ribbon">
-        <span class="ribbon3 {{getRibbonClass(policy.StatusCode)}}">{{policy.StatusName}}</span>
-        <div class="card-content">
-          <span>#INS{{policy.Insurance_Id }}</span>
-          <span class="p-l-10">
-            <i class="fa fa-mobile" aria-hidden="true"></i> {{policy.Device}}
-          </span>
-          <div>{{getPolicyInfo(policy)}}</div>
-          <div>
-            <span>Insurance Date - </span>{{getPolicyDate(policy.InsuranceDate)}}
+        <div class="row">
+          <div class="col-sm-12 col-md-8">
+            <span class="ribbon3 {{getRibbonClass(policy.StatusCode)}}">{{policy.StatusName}}</span>
+            <div class="card-content">
+              <span>#INS{{policy.Insurance_Id }}</span>
+
+              <!-- <div>{{getPolicyInfo(policy)}}</div> -->
+              <div>
+                <span>Insurance Date - </span>{{getPolicyDate(policy.InsuranceDate)}}
+              </div>
+              <!-- <div>
+                <span>Premium Amount - {{policy.PremiumAmount | currency:defaultCurrency:true:'.0-0'}}</span>
+              </div> -->
+            </div>
+            <div class="card-actions">
+              <button class="m-l-10" color="warn" mat-raised-button>
+                  Premium Amount - {{policy.PremiumAmount | currency:defaultCurrency:true:'.0-0'}}
+              </button>
+              <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToViewPolicyDetails" color="primary">
+                  <mat-icon svgIcon="insuranceDetailsIcon"></mat-icon>
+                </button>
+              <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToCancelPolicy" color="warn" *ngIf="policy.StatusCode != insuranceStatus.CLAIMED">
+                <mat-icon svgIcon="cancelPolicyIcon"></mat-icon>
+              </button>
+              <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToMakePayment" color="primary" *ngIf="policy.StatusCode == insuranceStatus.PAYMENT_PENDING">
+                <mat-icon svgIcon="paymentIcon"></mat-icon>
+              </button>
+              <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToGenerateActvLink" color="primary" *ngIf="policy.StatusCode == insuranceStatus.ACTIVATION_PENDING">
+                <mat-icon svgIcon="activateLinkIcon"></mat-icon>
+              </button>
+              <button class="m-l-10 claim-button" mat-mini-fab [matTooltip]="appLabel.buttonToMakeClaim" color="primary" (click)="askConfirmationForClaim(policy, index)"
+                *ngIf="policy.StatusCode == insuranceStatus.ACTIVATED">
+                <mat-icon svgIcon="makeClaimIcon"></mat-icon>
+              </button>
+              <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToViewClaims" color="accent" (click)="navigateToClaimTab()"
+                *ngIf="policy.StatusCode == insuranceStatus.CLAIMED">
+                <mat-icon svgIcon="claimDetailsIcon"></mat-icon>
+              </button>
+            </div>
           </div>
-          <div>
-            <span>Premium Amount - {{policy.PremiumAmount | currency:defaultCurrency:true:'.0-0'}}</span>
+          <div class="col-sm-12 col-md-4 image-container">
+            <img src="assets/images/sample/mobile.jpg" style="height: 100px" class="rounded" alt="Test">
+            <div class="p-t-10">
+              <i class="fa fa-mobile" aria-hidden="true"></i> {{policy.Device}}
+            </div>
           </div>
-        </div>
-        <div class="card-actions">
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToCancelPolicy" color="warn" *ngIf="policy.StatusCode != insuranceStatus.CLAIMED">
-            <mat-icon svgIcon="cancelPolicyIcon"></mat-icon>
-          </button>
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToMakePayment" color="primary" *ngIf="policy.StatusCode == insuranceStatus.PAYMENT_PENDING">
-            <mat-icon svgIcon="paymentIcon"></mat-icon>
-          </button>
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToGenerateActvLink" color="primary" *ngIf="policy.StatusCode == insuranceStatus.ACTIVATION_PENDING">
-            <mat-icon svgIcon="activateLinkIcon"></mat-icon>
-          </button>
-          <button class="m-l-10 claim-button" mat-mini-fab [matTooltip]="appLabel.buttonToMakeClaim" color="primary" (click)="askConfirmationForClaim(policy, index)"
-            *ngIf="policy.StatusCode == insuranceStatus.ACTIVATED">
-            <mat-icon svgIcon="makeClaimIcon"></mat-icon>
-          </button>
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToViewClaims" color="accent" (click)="navigateToClaimTab()"
-            *ngIf="policy.StatusCode == insuranceStatus.CLAIMED">
-            <mat-icon svgIcon="claimDetailsIcon"></mat-icon>
-          </button>
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToViewPolicyDetails" color="primary">
-            <mat-icon svgIcon="insuranceDetailsIcon"></mat-icon>
-          </button>
         </div>
       </div>
-
     </div>
-    <!-- <div *ngFor="let policy of policies; let index = index" class="col-sm-12 col-md-6 card-container">
-
-      <mat-card>
-        <mat-card-subtitle class="title-color">
-          <span>#INS{{policy.Insurance_Id }}</span>
-          <span class="p-l-10">
-            <i class="fa fa-mobile" aria-hidden="true"></i> {{policy.Device}}
-          </span>
-          <div>{{getPolicyInfo(policy)}}</div>
-          <div>
-            <span>Insurance Date - </span>{{getPolicyDate(policy.InsuranceDate)}}
-          </div>
-        </mat-card-subtitle>
-        <mat-card-title>
-          <span class="badge ascent">{{policy.PremiumAmount | currency:defaultCurrency:true:'.0-0'}}</span>
-          <span [class]="getBadgeClass(policy.StatusId)">{{policy.StatusName}}</span>
-        </mat-card-title>
-        <mat-card-actions>
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToCancelPolicy" color="warn" *ngIf="policy.StatusCode != insuranceStatus.CLAIMED">
-            <mat-icon svgIcon="cancelPolicyIcon"></mat-icon>
-          </button>
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToMakePayment" color="primary" *ngIf="policy.StatusCode == insuranceStatus.PAYMENT_PENDING">
-            <mat-icon svgIcon="paymentIcon"></mat-icon>
-          </button>
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToGenerateActvLink" color="primary" *ngIf="policy.StatusCode == insuranceStatus.ACTIVATION_PENDING">
-            <mat-icon svgIcon="activateLinkIcon"></mat-icon>
-          </button>
-          <button class="m-l-10 claim-button" mat-mini-fab [matTooltip]="appLabel.buttonToMakeClaim" color="primary" (click)="askConfirmationForClaim(policy, index)"
-            *ngIf="policy.StatusCode == insuranceStatus.ACTIVATED">
-            <mat-icon svgIcon="makeClaimIcon"></mat-icon>
-          </button>
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToViewClaims" color="accent" (click)="navigateToClaimTab()"
-            *ngIf="policy.StatusCode == insuranceStatus.CLAIMED">
-            <mat-icon svgIcon="claimDetailsIcon"></mat-icon>
-          </button>
-          <button class="m-l-10" mat-mini-fab [matTooltip]="appLabel.buttonToViewPolicyDetails" color="primary">
-            <mat-icon svgIcon="insuranceDetailsIcon"></mat-icon>
-          </button>
-        </mat-card-actions>
-        <mat-card-footer>
-        </mat-card-footer>
-      </mat-card>
-    </div> -->
+   
     <mat-card *ngIf="isResolved && policies.length == 0" class="col-sm-12 col-md-12 no-records-card">
       <h3>No Record Available</h3>
     </mat-card>

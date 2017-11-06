@@ -14,6 +14,7 @@ import * as moment from "moment";
 import { userProfileUpdateConfig } from "../user-profile-complete/user-profile-complete-config";
 import { AppLabels, APIUrls } from "../../app-config";
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const NUMERIC_REGEX = /^[0-9]{1,10}$/;
 
 @Component({
   selector: 'app-user-profile',
@@ -51,7 +52,7 @@ export class UserProfileComponent implements OnInit {
         MiddleName: [this.userData.MiddleName ? this.userData.MiddleName : '', []],
         Users_PhoneNumber: [this.userData.Users_PhoneNumber ? this.userData.Users_PhoneNumber : ''],
         Users_Passport: [this.userData.Users_Passport ? this.userData.Users_Passport : ''],
-        Users_KTP: [this.userData.Users_KTP ? this.userData.Users_KTP : '']
+        Users_KTP: [this.userData.Users_KTP ? this.userData.Users_KTP : '', [Validators.pattern(NUMERIC_REGEX)]]
       });
     }
     
@@ -66,46 +67,55 @@ export class UserProfileComponent implements OnInit {
       //   }
       // })
     }
+
+    checkFormIsValid(){
+      return this.userFormGroup.invalid;
+    }
     
     submitProfileUpdate(){
       let BirthDay,BirthMonth,BirthYear;
       if(this.userFormGroup.get('DOB').value){
         let date = moment(this.userFormGroup.get('DOB').value);
-        BirthDay = date.date()
-        BirthMonth = date.month()
-        BirthYear = date.year()
+        BirthDay = date.date().toString()
+        BirthMonth = (date.month() + 1).toString()
+        BirthYear = date.year().toString()
       }
       let dataToServer = {
-        UserId : this.userData.UserId,
+        UserId : this.userData.UserId.toString(),
         BirthDay : BirthDay,
         BirthMonth : BirthMonth,
         BirthYear : BirthYear,
         Email : this.userFormGroup.get('Email').value,
+        FirstName: this.userFormGroup.get('FirstName').value,
+        LastName: this.userFormGroup.get('LastName').value,
+        MiddleName: this.userFormGroup.get('MiddleName').value,
         Users_PhoneNumber : this.userFormGroup.get('Users_PhoneNumber').value,
         Users_Passport : this.userFormGroup.get('Users_Passport').value,
         Users_KTP : this.userFormGroup.get('Users_KTP').value
       }
       this.isLoading = true;
-      // console.log(dataToServer)
-      // this.ajaxService.execute({url: APIUrls.updateProfile, body: dataToServer})
-      // .subscribe(response=>{
-      //   console.log(response)
-      //   
-      // })
-      this.userServiceService.updateUser({
-        "UserId": 10048,
-        "FirstName": "Neww",
-        "LastName": "Test ",
-        "MiddleName": "Test ",
-        "Email": "Test ",
-        "BirthDate": "1990-12-12T00:00:00",
-        "Users_Location": "",
-        "Users_PhoneNumber": "Test ",
-        "Users_Passport": "Test ",
-        "Users_KTP": 1
+      this.ajaxService.execute({url: APIUrls.updateProfile, method: 'POST', body: dataToServer})
+      .subscribe(response=>{
+        if(response.Status == 'SUCCESS' && response.Details.length > 0){
+          let user = Object.assign(this.userData, response.Details[0])
+          this.userServiceService.updateUser(user);
+        }
+        this.isLoading = false;
+        this.notEditing = true;
       })
-      this.isLoading = false;
-      this.notEditing = true;
+      // this.userServiceService.updateUser({
+      //   "UserId": 10048,
+      //   "FirstName": "Neww",
+      //   "LastName": "Test ",
+      //   "MiddleName": "Test ",
+      //   "Email": "Test ",
+      //   "BirthDate": "1990-12-12T00:00:00",
+      //   "Users_Location": "",
+      //   "Users_PhoneNumber": "Test ",
+      //   "Users_Passport": "Test ",
+      //   "Users_KTP": 1
+      // })
+      
     }
   }
   

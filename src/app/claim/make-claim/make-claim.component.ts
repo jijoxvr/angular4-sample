@@ -45,12 +45,12 @@ export class MakeClaimComponent implements OnInit {
   uploadProgress = {
     idProof: 0,
     invoice: 0,
-    fir: 0,
-    expenseReciept: 0,
-    hospitalReport: 0,
-    devicePhotos: [],
-    entityPhotos: [],
-    videoProof: 0
+    Claim_FIR: 0,
+    Claim_ExpenseReciept: 0,
+    Claim_HospitalReport: 0,
+    DevicePhoto: [],
+    EntityPhoto: [],
+    Claim_VideoURL: 0
   }
 
 
@@ -155,6 +155,7 @@ export class MakeClaimComponent implements OnInit {
     this.basicFormGroup = this._formBuilder.group({
       insuranceRef: [{ value: this.data.Insurance_Id, disabled: true }, [Validators.required]],
       claimReason: ['', [Validators.required]],
+      incidentDate: ['', [Validators.required]],
       exactReason: ['', [Validators.required]],
 
     });
@@ -167,7 +168,7 @@ export class MakeClaimComponent implements OnInit {
       // FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]],
 
       // should we add expense reciept ?
-      expenseReciept: [{ value: undefined, disabled: false }, [Validators.required,
+      Claim_ExpenseReciept: [{ value: undefined, disabled: false }, [Validators.required,
       FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]],
     });
 
@@ -182,35 +183,35 @@ export class MakeClaimComponent implements OnInit {
       this.selectedReason = value.id;
       this.claimReasonSelected = true;
       if (value.code == this.claimReason.LOST) { // If Lost add police fir
-        let fir = new FormControl({ value: undefined, disabled: false }, [Validators.required,
+        let Claim_FIR = new FormControl({ value: undefined, disabled: false }, [Validators.required,
         FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]);
-        this.documentFormGroup.addControl('fir', fir);
-        this.documentFormGroup.removeControl('devicePhotos');
+        this.documentFormGroup.addControl('Claim_FIR', Claim_FIR);
+        this.documentFormGroup.removeControl('DevicePhoto');
       } else if(value.code == this.claimReason.DAMAGE) { // If damage add device photos  
-        let devicePhotos = new FormControl({ value: undefined, disabled: false }, [Validators.required,
+        let DevicePhoto = new FormControl({ value: undefined, disabled: false }, [Validators.required,
         FileValidators.maxContentSize(104857600), FileValidators.fileType(['png', 'jpeg'])]);
-        this.documentFormGroup.addControl('devicePhotos', devicePhotos);
-        this.documentFormGroup.removeControl('fir');
+        this.documentFormGroup.addControl('DevicePhoto', DevicePhoto);
+        this.documentFormGroup.removeControl('Claim_FIR');
       }
     })
 
     this.basicFormGroup.get('exactReason').valueChanges.subscribe((value) => {
       console.log(value)
       if (value.code == this.claimReason.ROBBERY) {  // If Robery add hospital report 
-        let hospitalReport = new FormControl({ value: undefined, disabled: false }, [Validators.required,
+        let Claim_HospitalReport = new FormControl({ value: undefined, disabled: false }, [Validators.required,
         FileValidators.maxContentSize(104857600), FileValidators.fileType(['pdf', 'docx'])]);
-        this.documentFormGroup.removeControl('entityPhotos');
-        this.documentFormGroup.addControl('hospitalReport', hospitalReport);
+        this.documentFormGroup.removeControl('EntityPhoto');
+        this.documentFormGroup.addControl('Claim_HospitalReport', Claim_HospitalReport);
 
       } else if (value.code == this.claimReason.BURGLARY) { // If Burglary add entity(car/home) photos 
-        let entityPhotos = new FormControl({ value: undefined, disabled: false }, [Validators.required,
+        let EntityPhoto = new FormControl({ value: undefined, disabled: false }, [Validators.required,
         FileValidators.maxContentSize(104857600), FileValidators.fileType(['png', 'jpeg'])]);
-        this.documentFormGroup.removeControl('hospitalReport');
-        this.documentFormGroup.addControl('entityPhotos', entityPhotos);
+        this.documentFormGroup.removeControl('Claim_HospitalReport');
+        this.documentFormGroup.addControl('EntityPhoto', EntityPhoto);
       }
       else {
-        this.documentFormGroup.removeControl('hospitalReport');
-        this.documentFormGroup.removeControl('entityPhotos');
+        this.documentFormGroup.removeControl('Claim_HospitalReport');
+        this.documentFormGroup.removeControl('EntityPhoto');
       }
     })
 
@@ -226,7 +227,7 @@ export class MakeClaimComponent implements OnInit {
   checkDocumets() {
     let fields = [
       // 'idProof', 'invoice', 
-      'expenseReciept', 'fir', 'devicePhotos', 'hospitalReport', 'entityPhotos']
+      'Claim_ExpenseReciept', 'Claim_FIR', 'DevicePhoto', 'Claim_HospitalReport', 'EntityPhoto']
     for (let field of fields) {
       if (this.documentFormGroup.get(field)) {
         this.documentFormGroup.get(field).markAsTouched();
@@ -249,13 +250,13 @@ export class MakeClaimComponent implements OnInit {
     this.tasks.push(new Promise((resolve, reject) => {
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {
-          this.uploadProgress['videoProof'] = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100;
+          this.uploadProgress['Claim_VideoURL'] = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100;
         }, (error) => {
           // upload failed
           reject(error)
         }, () => {
           // upload success
-          resolve({ name: 'videoProof', url: uploadTask.snapshot.downloadURL })
+          resolve({ name: 'Claim_VideoURL', url: uploadTask.snapshot.downloadURL })
         }
       );
     }))
@@ -266,11 +267,11 @@ export class MakeClaimComponent implements OnInit {
     this.tasks = []
     // this.extractAndTriggerUpload('idProof');
     // this.extractAndTriggerUpload('invoice');
-    this.extractAndTriggerUpload('fir');
-    this.extractAndTriggerUpload('expenseReciept');
-    this.extractAndTriggerUpload('hospitalReport');
-    this.extractAndTriggerUpload('devicePhotos', true);
-    this.extractAndTriggerUpload('entityPhotos', true);
+    this.extractAndTriggerUpload('Claim_FIR');
+    this.extractAndTriggerUpload('Claim_ExpenseReciept');
+    this.extractAndTriggerUpload('Claim_HospitalReport');
+    this.extractAndTriggerUpload('DevicePhoto', true);
+    this.extractAndTriggerUpload('EntityPhoto', true);
     // this.uploadVideo();
     Promise.all(this.tasks).then((files) => {
       console.log(files)
@@ -283,26 +284,36 @@ export class MakeClaimComponent implements OnInit {
   submitDataToServer(files) {
     this.submitting = true;
     let fileDict = {
-      devicePhotos: [],
-      entityPhotos: []
+      DevicePhoto: [],
+      EntityPhoto: []
     }
     files.forEach(file => {
-      if (file.name == 'devicePhotos' || file.name == 'entityPhotos')
-        fileDict[file.name].push(file.url)
+      if (file.name == 'DevicePhoto' || file.name == 'EntityPhoto'){
+        let obj = {};
+        obj[file.name+'Url'] = file.url;
+        fileDict[file.name].push(obj)
+      }
       else
         fileDict[file.name] = file.url
     });
+    let incidentDay,incidentMonth,incidentYear;
+    if(this.basicFormGroup.get('incidentDate').value){
+      let date = moment(this.basicFormGroup.get('incidentDate').value);
+      incidentDay = date.date().toString()
+      incidentMonth = (date.month() + 1).toString()
+      incidentYear = date.year().toString()
+    }
 
     let dataToServer = Object.assign(fileDict, {
-      'issue_id': this.basicFormGroup.value.exactReason.id,
-      'insurance_id': this.data.ref_no,
-      'claimDay': moment().date(),
-      'claimMonth': moment().month(),
-      'claimYear': moment().year(),
-      'date_of_claim': moment().format('MM/DD/YYYY'),
-      'user_id': 1,
-      'ref_no': 'CLAIM#1', // to be removed
-      'status': 0, // to be removed
+      'Claim_ClaimDay': moment().date().toString(),
+      'Claim_ClaimMonth': (moment().month() + 1).toString(),
+      'Claim_ClaimYear': moment().year().toString(),
+      'Claim_DayOfIncident':incidentDay,
+      'Claim_MonthOfIncident': incidentMonth,
+      'Claim_YearOfIncident': incidentYear,
+      'Insurance_Id': this.data.Insurance_Id.toString(),
+      'Issue_Id': this.basicFormGroup.value.exactReason.id.toString(),
+      'RefNo': 'CLAIM#1', // currently hard coded
     });
     console.log(dataToServer);
     this.ajaxService.execute({ url: APIUrls.addnewClaim, method: 'post', body: dataToServer })
@@ -311,6 +322,13 @@ export class MakeClaimComponent implements OnInit {
         this.dialogRef.close(true);
         this.router.navigate(['my-claims']);
       })
+  }
+
+  time = {hour: 13, minute: 30};
+  meridian = true;
+
+  toggleMeridian() {
+      this.meridian = !this.meridian;
   }
 
   extractAndTriggerUpload(field, multiple = false) {

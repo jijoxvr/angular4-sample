@@ -42,43 +42,46 @@
     </div>
     <div [hidden]="notEditing" class="col-md-10 offset-md-1 card-container">
       <mat-card *ngIf="!isLoading">
-          <form [formGroup]="userFormGroup">
-              <!-- <ng-template matStepLabel>{{appLabel.makeClaim.step1.title}}</ng-template> -->
-              <mat-form-field>
-                  <input matInput placeholder="{{appLabel.profileField.email}}" formControlName="Email">
-                  <mat-error *ngIf="userFormGroup.get('Email').hasError('pattern')">
-                      {{appLabel.commonLabels.warninForInvalidEmail}}
-                  </mat-error>
-              </mat-form-field>
-              <mat-form-field>
-                  <input matInput [matDatepicker]="picker" placeholder="{{appLabel.profileField.birthDay}}" formControlName="DOB">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                  <!-- <input matInput type="date" placeholder="{{appLabel.profileField.birthDay}}" formControlName="DOB"> -->
-              </mat-form-field>
-              <mat-form-field>
-                  <input matInput placeholder="{{appLabel.profileField.firstName}}" formControlName="FirstName">
-              </mat-form-field>
-              <mat-form-field>
-                  <input matInput placeholder="{{appLabel.profileField.lastName}}" formControlName="LastName">
-              </mat-form-field>
-              <mat-form-field>
-                  <input matInput placeholder="{{appLabel.profileField.middleName}}" formControlName="MiddleName">
-              </mat-form-field>
-              <mat-form-field>
-                  <input matInput placeholder="{{appLabel.profileField.phoneNumber}}" formControlName="Users_PhoneNumber">
-              </mat-form-field>
-              <mat-form-field>
-                  <input matInput placeholder="{{appLabel.profileField.passportId}}" formControlName="Users_Passport">
-              </mat-form-field>
-              <mat-form-field>
-                  <input matInput placeholder="{{appLabel.profileField.ktp}}" formControlName="Users_KTP">
-              </mat-form-field>
-              <mat-card-actions class="text-align-right">
-                  <button mat-raised-button color="warn" (click)="notEditing=true;" >{{appLabel.commonLabels.cancelButton}}</button>
-                  <button mat-raised-button color="primary" (click)="submitProfileUpdate()">{{appLabel.commonLabels.submitButton}}</button>
-              </mat-card-actions>
-          </form>
+        <form [formGroup]="userFormGroup">
+          <!-- <ng-template matStepLabel>{{appLabel.makeClaim.step1.title}}</ng-template> -->
+          <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.email}}" formControlName="Email">
+            <mat-error *ngIf="userFormGroup.get('Email').hasError('pattern')">
+              {{appLabel.commonLabels.warninForInvalidEmail}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="{{appLabel.profileField.birthDay}}" formControlName="DOB">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <!-- <input matInput type="date" placeholder="{{appLabel.profileField.birthDay}}" formControlName="DOB"> -->
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.firstName}}" formControlName="FirstName">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.lastName}}" formControlName="LastName">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.middleName}}" formControlName="MiddleName">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.phoneNumber}}" formControlName="Users_PhoneNumber">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.passportId}}" formControlName="Users_Passport">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="{{appLabel.profileField.ktp}}" formControlName="Users_KTP">
+            <mat-error *ngIf="userFormGroup.get('Users_KTP').hasError('pattern')">
+              {{appLabel.commonLabels.warninForInvalidKTP}}
+            </mat-error>
+          </mat-form-field>
+          <mat-card-actions class="text-align-right">
+            <button mat-raised-button color="warn" (click)="notEditing=true;">{{appLabel.commonLabels.cancelButton}}</button>
+            <button mat-raised-button color="primary" [disabled]="checkFormIsValid()" (click)="submitProfileUpdate()">{{appLabel.commonLabels.submitButton}}</button>
+          </mat-card-actions>
+        </form>
       </mat-card>
       <mat-card class="col-sm-12 col-md-12" *ngIf="isLoading">
         <mat-progress-spinner class="loader" mode="indeterminate"></mat-progress-spinner>

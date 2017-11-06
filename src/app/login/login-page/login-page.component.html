@@ -63,7 +63,8 @@
               <h2>for you</h2>
               <h6>Insurance is now Social.</h6>
               <h6 *ngIf="message">{{message}}</h6>
-              <button href="#" *ngIf="!loading" (click)="loginWithFB()"  class="btn btn-primary">LOGIN TO CLAIM</button>
+              <button href="#" *ngIf="!loading && !isLogged" (click)="loginWithFB()"  class="btn btn-primary">LOGIN TO CLAIM</button>
+              <a [routerLink]="['/my-home']" *ngIf="isLogged" class="btn btn-primary">GO TO DASHBOARD</a>
             </div>
           </div>
 

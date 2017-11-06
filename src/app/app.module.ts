@@ -21,9 +21,11 @@ import { SharedModule } from "./shared/shared.module";
 import { UserServiceService } from "./core/user-service.service";
 import { AppConfigService } from "./core/app-config.service";
 import { MasterResolver, UserResolver } from "./core/app-provider.service";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Md2Module }  from 'md2';
 
 export const firebaseConfig = {
- 
+
 };
 
 
@@ -54,7 +56,9 @@ export const firebaseConfig = {
     HomeModule,
     FacebookModule.forRoot(),
     SharedModule,
-    AngularSvgIconModule
+    AngularSvgIconModule,
+    NgbModule.forRoot(),
+    Md2Module
   ],
  
   bootstrap: [AppComponent]

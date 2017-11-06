@@ -50,12 +50,12 @@
     border-left: 15px solid rgb(33, 19, 228);
 }
 .ribbon3 {
-    width: 150px;
+    width: auto;
     height: 40px;
     line-height: 40px;
     padding-left: 15px;
     position: absolute;
-    left: -8px;
+    left: 7px;
     top: 10px;
     /* background: #59324C; */
 }
@@ -111,7 +111,16 @@
     margin-left: 10px;
 }
 .card-actions{
-    text-align: center;
+    /* text-align: center; */
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.image-container{
+    text-align: center;
+    padding: 25px;
+}
+
+.mat-mini-fab{
+    top: 5px;
 }
