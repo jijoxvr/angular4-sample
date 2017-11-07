@@ -63,6 +63,17 @@
             left: 220px !important;
     }
 }
+
+@media screen and (max-width: 992px) {
+    .header{
+            left: 0px !important;
+    }
+}
+@media screen and (max-width: 992px) {
+    .sidebar{
+            top: 55px !important;
+    }
+}
 .pading-10{
     padding: 10!important;
 }

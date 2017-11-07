@@ -124,3 +124,22 @@
 .mat-mini-fab{
     top: 5px;
 }
+
+.contaner-with-single-content .container-cols{
+    min-height : 240px!important;
+}
+
+.contaner-with-single-content .card-actions{
+    margin-top: 60px!important;
+}
+
+.contaner-with-single-content .group, .contaner-with-single-content .weather{
+    min-height: 200px;
+}
+
+.group{
+    background-color: #5cb75d;
+}
+.weather{
+    background-color: #f0ad4e;
+}

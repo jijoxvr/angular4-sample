@@ -25,7 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Md2Module }  from 'md2';
 
 export const firebaseConfig = {
-
+  
 };
 
 

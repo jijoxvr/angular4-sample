@@ -1,9 +1,9 @@
 <div class="container">
-  <div class="row">
+  <div class="row policy-container">
     <div *ngFor="let policy of policies; let index = index" class="col-sm-12 col-md-12 card-container">
       <div class="ribbon">
         <div class="row">
-          <div class="col-sm-12 col-md-8">
+          <div class="col-sm-12 col-md-8 container-cols">
             <span class="ribbon3 {{getRibbonClass(policy.StatusCode)}}">{{policy.StatusName}}</span>
             <div class="card-content">
               <span>#INS{{policy.Insurance_Id }}</span>
@@ -50,8 +50,9 @@
           </div>
         </div>
       </div>
+      
     </div>
-   
+    
     <mat-card *ngIf="isResolved && policies.length == 0" class="col-sm-12 col-md-12 no-records-card">
       <h3>No Record Available</h3>
     </mat-card>
@@ -59,6 +60,17 @@
     <mat-card class="col-sm-12 col-md-12" *ngIf="isLoading">
       <mat-progress-spinner class="loader" mode="indeterminate"></mat-progress-spinner>
     </mat-card>
+    
+    <div class="col-md-6 pading-10">
+      <mat-card class="group">
+        Group
+      </mat-card>
+    </div>
+    <div class="col-md-6 pading-10">
+      <mat-card class="weather">
+        Climate
+      </mat-card>
+    </div>
   </div>
 </div>
 <ng-template let-data #claimConfirmationDialogRef>

@@ -1,10 +1,16 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+    <a class="navbar-brand kupu-logo" [routerLink]="['/my-home']">
+      <img src="assets/images/kupukoo.png" width="60px" style="float:left;">
+      <h2 class="kupu" style="margin-top: 10px">
+          <span class="whitey">Kupu</span>koo
+      </h2>
+  </a>
   <ul class="list-group">
-    <div class="profile-info" style="margin-top: 50px">
+    <div class="profile-info" style="margin-top: 15px">
       <a [routerLink]="['/my-profile']" class="logo">
         <img [src]="userData.ProfilePic" class="user-avatar" />
       </a>
-      <div>{{userData.FirstName}}</div>
+      <div style="margin-top: 15px">{{userData.FirstName}}</div>
     </div>
     <a [routerLink]="['/my-home']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <i class="fa fa-fw fa-home"></i>&nbsp;{{ 'Home'}}

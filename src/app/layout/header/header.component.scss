@@ -1,4 +1,4 @@
-$topnav-background-color: #202020;
+$topnav-background-color: #ffffff;
 .topnav {
     border-radius: 0;
     background-color: $topnav-background-color;
@@ -12,7 +12,7 @@ $topnav-background-color: #202020;
     .top-right-nav{
         .buy-now{
             a{
-                color:#999;
+                color:rgb(20, 19, 19);
             }
         }
         .dropdown-menu{
@@ -77,4 +77,10 @@ $topnav-background-color: #202020;
 .notification-icon{
     height: 50px!important;
     width: 50px!important;
+}
+.header{
+    left: 220px;
+}
+.navbar-inverse .navbar-nav .nav-link{
+    color: black!important;
 }
