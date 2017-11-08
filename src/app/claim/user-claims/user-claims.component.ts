@@ -48,7 +48,7 @@ export class UserClaimsComponent implements OnInit {
       subscribe(response => {
         this.isLoading = false;
         this.isResolved = true;
-        this.claims = response;
+        this.claims = response.Details ? response.Details : [];
       }, error => {
       })
   }

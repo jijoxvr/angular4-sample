@@ -5,3 +5,29 @@
   padding-left: 40px;
 }
 
+.form-help {
+  width: 48%;
+  /* height: 188px; */
+  min-height: 180px;
+  margin-left: 50px;
+  position: relative;
+  float: left;
+  margin-bottom: 30px;
+  background:linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.8)),
+  url('/assets/images/header.jpg');
+  background-size: cover;
+  text-transform: uppercase;
+  color: white;
+}
+.form-help-image{
+  height: auto;
+  width: 100%;
+  opacity: .2;
+}
+.img-container { 
+  background:linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.8)),
+  url('/assets/images/header.jpg');
+  height: auto;
+  height: 296px;
+  width: 446px;
+}

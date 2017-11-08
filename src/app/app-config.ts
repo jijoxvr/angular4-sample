@@ -9,10 +9,10 @@ export const APIUrls = { // modify this only when service URL changes
     'loginWithFB': 'user/',
     'updateProfile': 'updateuser/',
     'userList': 'users/',
-    "insuranceList": "policyFrClaim/",
+    "insuranceList": "policyForClaim/",
     "claimList": "userClaim/",
     "addnewClaim": "submitForClaim/",
-    "claimReason": "reasonFrClaim/"
+    "claimReason": "reasonForClaim/"
 }
 
 export const SvgIcons = {

@@ -1,140 +1,156 @@
 <h2 mat-dialog-title>{{appLabel.makeClaim.title}}</h2>
 <mat-dialog-content>
-  <mat-horizontal-stepper [linear]="false">
+  <mat-horizontal-stepper *ngIf="!loading" [linear]="false">
     <mat-step [stepControl]="basicFormGroup">
-      <form [formGroup]="basicFormGroup">
-        <ng-template matStepLabel>{{appLabel.makeClaim.step1.title}}</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="{{appLabel.makeClaim.step1.referenceNumber}}" formControlName="insuranceRef" required>
-          <mat-error>{{appLabel.makeClaim.warningForRequiredField}}</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="{{appLabel.makeClaim.step1.reasonForClaim}}" formControlName="claimReason" required>
-            <mat-option *ngFor="let reason of claimMainReason" [value]="reason.value">
-              {{ reason.label }}
-            </mat-option>
-          </mat-select>
-          <mat-error>{{appLabel.makeClaim.warningForRequiredField}}</mat-error>
-        </mat-form-field>
-        <mat-form-field *ngIf="claimReasonSelected">
-          <mat-select placeholder="{{appLabel.makeClaim.step1.preciseReason}}" formControlName="exactReason" required>
-            <mat-option *ngFor="let reason of claimReasonGrouped[selectedReason]" [value]="reason.value">
-              {{ reason.label }}
-            </mat-option>
-          </mat-select>
-          <mat-error>{{appLabel.makeClaim.warningForRequiredField}}</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="{{appLabel.makeClaim.step1.incidentDate}}" formControlName="incidentDate">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #picker></mat-datepicker>
-        </mat-form-field>
-        <div>
-          <button class="pull-right" mat-raised-button color="primary" matStepperNext>{{appLabel.makeClaim.nextButton}}</button>
+      <div class="row"> 
+        <div class="col-md-6 col-sm-12">
+          <img class="form-help-image" src="/assets/images/header.jpg">
+          <!-- <div class="img-container" ></div> -->
         </div>
-      </form>
+        <div class="col-md-6 col-sm-12">
+          <form [formGroup]="basicFormGroup">
+            <ng-template matStepLabel>{{appLabel.makeClaim.step1.title}}</ng-template>
+            <mat-form-field>
+              <input matInput placeholder="{{appLabel.makeClaim.step1.referenceNumber}}" formControlName="insuranceRef" required>
+              <mat-error>{{appLabel.makeClaim.warningForRequiredField}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="{{appLabel.makeClaim.step1.reasonForClaim}}" formControlName="claimReason" required>
+                <mat-option *ngFor="let reason of claimMainReason" [value]="reason.value">
+                  {{ reason.label }}
+                </mat-option>
+              </mat-select>
+              <mat-error>{{appLabel.makeClaim.warningForRequiredField}}</mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="claimReasonSelected">
+              <mat-select placeholder="{{appLabel.makeClaim.step1.preciseReason}}" formControlName="exactReason" required>
+                <mat-option *ngFor="let reason of claimReasonGrouped[selectedReason]" [value]="reason.value">
+                  {{ reason.label }}
+                </mat-option>
+              </mat-select>
+              <mat-error>{{appLabel.makeClaim.warningForRequiredField}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="{{appLabel.makeClaim.step1.incidentDate}}" formControlName="incidentDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #picker></mat-datepicker>
+            </mat-form-field>
+            <div>
+              <button class="pull-right" mat-raised-button color="primary" matStepperNext>{{appLabel.makeClaim.nextButton}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </mat-step>
 
     <mat-step [stepControl]="documentFormGroup">
-      <form [formGroup]="documentFormGroup">
-        <ng-template matStepLabel>{{appLabel.makeClaim.step2.title}}</ng-template>
-        <!-- Temporarly removed Invoice and Id proof -->
-        <!-- <mat-form-field *ngIf="documentFormGroup.get('idProof')">
-          <app-file-input formControlName="idProof" placeholder="{{appLabel.commonLabels.idProof}}" required></app-file-input>
-          <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('idProof').hasError('required')">
-              {{appLabel.makeClaim.warningForRequiredDocuments}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('idProof').hasError('maxContentSize')">
-              {{documentFormGroup.get('idProof')?.getError('maxContentSize').errormessage}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('idProof').hasError('fileType')">
-              {{documentFormGroup.get('idProof')?.getError('fileType').errormessage}}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field *ngIf="documentFormGroup.get('invoice')">
-          <app-file-input formControlName="invoice" placeholder="{{appLabel.commonLabels.invoice}}" required></app-file-input>
-          <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('invoice').hasError('required')">
-              {{appLabel.makeClaim.warningForRequiredDocuments}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('invoice').hasError('maxContentSize')">
-              {{documentFormGroup.get('invoice')?.getError('maxContentSize').errormessage}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('invoice').hasError('fileType')">
-              {{documentFormGroup.get('invoice')?.getError('fileType').errormessage}}
-          </mat-error>
-        </mat-form-field> -->
-        <mat-form-field *ngIf="documentFormGroup.get('Claim_FIR')">
-          <app-file-input formControlName="Claim_FIR" placeholder="{{appLabel.commonLabels.fir}}" required></app-file-input>
-          <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('Claim_FIR').hasError('required')">
-              {{appLabel.makeClaim.warningForRequiredDocuments}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('Claim_FIR').hasError('maxContentSize')">
-              {{documentFormGroup.get('Claim_FIR')?.getError('maxContentSize').errormessage}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('Claim_FIR').hasError('fileType')">
-              {{documentFormGroup.get('Claim_FIR')?.getError('fileType').errormessage}}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field *ngIf="documentFormGroup.get('Claim_ExpenseReciept')">
-          <app-file-input formControlName="Claim_ExpenseReciept" placeholder="{{appLabel.commonLabels.expenseReciept}}" required></app-file-input>
-          <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('Claim_ExpenseReciept').hasError('required')">
-              {{appLabel.makeClaim.warningForRequiredDocuments}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('Claim_ExpenseReciept').hasError('maxContentSize')">
-              {{documentFormGroup.get('Claim_ExpenseReciept')?.getError('maxContentSize').errormessage}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('Claim_ExpenseReciept').hasError('fileType')">
-              {{documentFormGroup.get('Claim_ExpenseReciept')?.getError('fileType').errormessage}}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field *ngIf="documentFormGroup.get('Claim_HospitalReport')">
-          <app-file-input formControlName="Claim_HospitalReport" placeholder="{{appLabel.commonLabels.hospitalReport}}" required></app-file-input>
-          <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('Claim_HospitalReport').hasError('required')">
-              {{appLabel.makeClaim.warningForRequiredDocuments}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('Claim_HospitalReport').hasError('maxContentSize')">
-            {{documentFormGroup.get('Claim_HospitalReport')?.getError('maxContentSize').errormessage}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('Claim_HospitalReport').hasError('fileType')">
-              {{documentFormGroup.get('Claim_HospitalReport')?.getError('fileType').errormessage}}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field *ngIf="documentFormGroup.get('DevicePhoto')">
-          <app-file-input formControlName="DevicePhoto" placeholder="{{appLabel.commonLabels.devicePhotos}}" required multiple></app-file-input>
-          <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('DevicePhoto').hasError('required')">
-              {{appLabel.makeClaim.warningForRequiredDocuments}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('DevicePhoto').hasError('maxContentSize')">
-              {{documentFormGroup.get('DevicePhoto')?.getError('maxContentSize').errormessage}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('DevicePhoto').hasError('fileType')">
-              {{documentFormGroup.get('DevicePhoto')?.getError('fileType').errormessage}}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field *ngIf="documentFormGroup.get('EntityPhoto')">
-          <app-file-input formControlName="EntityPhoto" placeholder="{{appLabel.commonLabels.entityPhotos}}" required multiple></app-file-input>
-          <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="documentFormGroup.get('EntityPhoto').hasError('required')">
-              {{appLabel.makeClaim.warningForRequiredDocuments}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('EntityPhoto').hasError('maxContentSize')">
-              {{documentFormGroup.get('EntityPhoto')?.getError('maxContentSize').errormessage}}
-          </mat-error>
-          <mat-error *ngIf="documentFormGroup.get('EntityPhoto').hasError('fileType')">
-              {{documentFormGroup.get('EntityPhoto')?.getError('fileType').errormessage}}
-          </mat-error>
-        </mat-form-field>
-        <div>
-          <button class="pull-right m-l-10" mat-raised-button color="primary" (click)="checkDocumets()" matStepperNext>{{appLabel.makeClaim.nextButton}}</button>
-          <button class="pull-right" mat-raised-button color="warn" matStepperPrevious>{{appLabel.makeClaim.backButton}}</button>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <img class="form-help-image" src="/assets/images/header.jpg">
         </div>
-      </form>
+        <div class="col-md-6 col-sm-12">
+          <form class="form-container" [formGroup]="documentFormGroup">
+            <ng-template matStepLabel>{{appLabel.makeClaim.step2.title}}</ng-template>
+          <!-- Temporarly removed Invoice and Id proof -->
+          <!-- <mat-form-field *ngIf="documentFormGroup.get('idProof')">
+              <app-file-input formControlName="idProof" placeholder="{{appLabel.commonLabels.idProof}}" required></app-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+              <mat-error *ngIf="documentFormGroup.get('idProof').hasError('required')">
+                  {{appLabel.makeClaim.warningForRequiredDocuments}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('idProof').hasError('maxContentSize')">
+                  {{documentFormGroup.get('idProof')?.getError('maxContentSize').errormessage}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('idProof').hasError('fileType')">
+                  {{documentFormGroup.get('idProof')?.getError('fileType').errormessage}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="documentFormGroup.get('invoice')">
+              <app-file-input formControlName="invoice" placeholder="{{appLabel.commonLabels.invoice}}" required></app-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+              <mat-error *ngIf="documentFormGroup.get('invoice').hasError('required')">
+                  {{appLabel.makeClaim.warningForRequiredDocuments}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('invoice').hasError('maxContentSize')">
+                  {{documentFormGroup.get('invoice')?.getError('maxContentSize').errormessage}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('invoice').hasError('fileType')">
+                  {{documentFormGroup.get('invoice')?.getError('fileType').errormessage}}
+              </mat-error>
+            </mat-form-field> -->
+            <mat-form-field *ngIf="documentFormGroup.get('Claim_FIR')">
+              <app-file-input formControlName="Claim_FIR" placeholder="{{appLabel.commonLabels.fir}}" required></app-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+              <mat-error *ngIf="documentFormGroup.get('Claim_FIR').hasError('required')">
+                {{appLabel.makeClaim.warningForRequiredDocuments}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('Claim_FIR').hasError('maxContentSize')">
+                {{documentFormGroup.get('Claim_FIR')?.getError('maxContentSize').errormessage}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('Claim_FIR').hasError('fileType')">
+                {{documentFormGroup.get('Claim_FIR')?.getError('fileType').errormessage}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="documentFormGroup.get('Claim_ExpenseReciept')">
+              <app-file-input formControlName="Claim_ExpenseReciept" placeholder="{{appLabel.commonLabels.expenseReciept}}" required></app-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+              <mat-error *ngIf="documentFormGroup.get('Claim_ExpenseReciept').hasError('required')">
+                {{appLabel.makeClaim.warningForRequiredDocuments}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('Claim_ExpenseReciept').hasError('maxContentSize')">
+                {{documentFormGroup.get('Claim_ExpenseReciept')?.getError('maxContentSize').errormessage}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('Claim_ExpenseReciept').hasError('fileType')">
+                {{documentFormGroup.get('Claim_ExpenseReciept')?.getError('fileType').errormessage}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="documentFormGroup.get('Claim_HospitalReport')">
+              <app-file-input formControlName="Claim_HospitalReport" placeholder="{{appLabel.commonLabels.hospitalReport}}" required></app-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+              <mat-error *ngIf="documentFormGroup.get('Claim_HospitalReport').hasError('required')">
+                {{appLabel.makeClaim.warningForRequiredDocuments}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('Claim_HospitalReport').hasError('maxContentSize')">
+                {{documentFormGroup.get('Claim_HospitalReport')?.getError('maxContentSize').errormessage}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('Claim_HospitalReport').hasError('fileType')">
+                {{documentFormGroup.get('Claim_HospitalReport')?.getError('fileType').errormessage}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="documentFormGroup.get('DevicePhoto')">
+              <app-file-input formControlName="DevicePhoto" placeholder="{{appLabel.commonLabels.devicePhotos}}" required multiple></app-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+              <mat-error *ngIf="documentFormGroup.get('DevicePhoto').hasError('required')">
+                {{appLabel.makeClaim.warningForRequiredDocuments}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('DevicePhoto').hasError('maxContentSize')">
+                {{documentFormGroup.get('DevicePhoto')?.getError('maxContentSize').errormessage}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('DevicePhoto').hasError('fileType')">
+                {{documentFormGroup.get('DevicePhoto')?.getError('fileType').errormessage}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="documentFormGroup.get('EntityPhoto')">
+              <app-file-input formControlName="EntityPhoto" placeholder="{{appLabel.commonLabels.entityPhotos}}" required multiple></app-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+              <mat-error *ngIf="documentFormGroup.get('EntityPhoto').hasError('required')">
+                {{appLabel.makeClaim.warningForRequiredDocuments}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('EntityPhoto').hasError('maxContentSize')">
+                {{documentFormGroup.get('EntityPhoto')?.getError('maxContentSize').errormessage}}
+              </mat-error>
+              <mat-error *ngIf="documentFormGroup.get('EntityPhoto').hasError('fileType')">
+                {{documentFormGroup.get('EntityPhoto')?.getError('fileType').errormessage}}
+              </mat-error>
+            </mat-form-field>
+            <div>
+              <button class="pull-right m-l-10" mat-raised-button color="primary" (click)="checkDocumets()" matStepperNext>{{appLabel.makeClaim.nextButton}}</button>
+              <button class="pull-right" mat-raised-button color="warn" matStepperPrevious>{{appLabel.makeClaim.backButton}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
     </mat-step>
 
     <mat-step [stepControl]="videoFormGroup">
@@ -235,8 +251,8 @@
       </mat-card>
     </mat-step>
   </mat-horizontal-stepper>
-  <mat-card class="col-sm-12 col-md-12" *ngIf="isLoading">
-    <mat-progress-spinner class="loader" mode="indeterminate"></mat-progress-spinner>
+  <mat-card class="col-sm-12 col-md-12" *ngIf="loading">
+    <mat-progress-spinner style="left: 40%" class="loader" mode="indeterminate"></mat-progress-spinner>
   </mat-card>
 </mat-dialog-content>
 

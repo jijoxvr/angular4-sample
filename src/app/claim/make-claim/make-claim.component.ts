@@ -272,7 +272,7 @@ export class MakeClaimComponent implements OnInit {
     this.extractAndTriggerUpload('Claim_HospitalReport');
     this.extractAndTriggerUpload('DevicePhoto', true);
     this.extractAndTriggerUpload('EntityPhoto', true);
-    // this.uploadVideo();
+    this.uploadVideo();
     Promise.all(this.tasks).then((files) => {
       console.log(files)
       this.submitDataToServer(files)

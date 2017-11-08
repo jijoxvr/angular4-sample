@@ -53,13 +53,17 @@
       
     </div>
     
-    <mat-card *ngIf="isResolved && policies.length == 0" class="col-sm-12 col-md-12 no-records-card">
-      <h3>No Record Available</h3>
-    </mat-card>
+    <div *ngIf="isResolved && policies.length == 0" class="col-sm-12 col-md-12 no-records-card">
+      <div class="ribbon" style="min-height: 150px">
+        <h3 style="margin-top: 60px">You have no policies</h3>
+      </div>
+    </div>
 
-    <mat-card class="col-sm-12 col-md-12" *ngIf="isLoading">
-      <mat-progress-spinner class="loader" mode="indeterminate"></mat-progress-spinner>
-    </mat-card>
+    <div class="col-sm-12 col-md-12" *ngIf="isLoading">
+      <div class="ribbon" style="min-height: 150px">
+        <mat-progress-spinner style="top: 28px" class="loader" mode="indeterminate"></mat-progress-spinner>
+      </div>
+    </div>
     
     <div class="col-md-6 pading-10">
       <mat-card class="group">

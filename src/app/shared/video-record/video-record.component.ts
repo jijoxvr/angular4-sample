@@ -99,7 +99,7 @@ export class VideoRecordComponent implements OnInit, AfterViewInit {
 
   submitRecording() {
     this.isRecordingCompleted = false;
-    this.recordRTC.save('video.webm');
+    // this.recordRTC.save('video.webm');
     this.onSubmission.emit(this.recordedBlob);
   }
 

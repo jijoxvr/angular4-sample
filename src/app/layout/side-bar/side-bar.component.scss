@@ -127,9 +127,10 @@ $topnav-background-color: #fa3a61;
 }
 .user-avatar{
     
-    width: 125px;
-    height: 125px;
+    width: 124px;
+    height: 118px;
     border-radius: 50%;
+    border: 4px solid darkred;
 }
 .profile-info{
     text-align: center;
@@ -144,4 +145,18 @@ $topnav-background-color: #fa3a61;
     color: white!important;
     margin-left: 8px!important;
     margin-top: 22px!important;
+}
+
+.imgProgress-svg {
+    transform: rotate(-90deg);
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.pic-cotainer{
+    width: 136px;
+    height: 130px;
+    border-radius: 50%;
+    border: 6px solid green;
 }

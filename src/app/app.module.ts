@@ -25,7 +25,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Md2Module }  from 'md2';
 
 export const firebaseConfig = {
-  
+  apiKey: "AIzaSyDJDnfIoQlMg-IBn_m5wA_5QHcejP2Bszg",
+  authDomain: "insureturn-1509529454175.firebaseapp.com",
+  databaseURL: "https://insureturn-1509529454175.firebaseio.com",
+  projectId: "insureturn-1509529454175",
+  storageBucket: "insureturn-1509529454175.appspot.com",
+  messagingSenderId: "21098362152"
 };
 
 

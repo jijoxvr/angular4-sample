@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-header',
@@ -10,9 +11,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class HeaderComponent implements OnInit {
 
   pushRightClass: string = 'push-right';
+  today = moment().format('DD/MM/YY');
 
   @Input()
-  userData: any;
+  public userData: any;
   
   constructor(public router: Router, public angularFire: AngularFireAuth) {
       this.router.events.subscribe((val) => {
@@ -45,7 +47,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
-  changeLang(){
+  changeLang(test){
     return;
   }
 }
